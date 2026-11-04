@@ -87,7 +87,10 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
     LessonContentData.init();
     final questions = <QuizQuestion>[];
     if (!_revision) {
-      final contenu = LessonContentData.get(widget.leconId!);
+      // Les leçons des séries C et TI reprennent souvent celles de la série D :
+      // à défaut de fiche propre, on prend la fiche jumelle (maths_c_ch1_l1 → maths_ch1_l1).
+      final contenu = LessonContentData.get(widget.leconId!) ??
+          LessonContentData.get(widget.leconId!.replaceFirst(RegExp(r'_(c|ti)_'), '_'));
       if (contenu != null) {
         if (contenu.introText.trim().isNotEmpty) _file.add(_Notion('Découverte', contenu.introText.trim()));
         if (contenu.lessonBody.trim().isNotEmpty) _file.add(_Notion('L\'essentiel', contenu.lessonBody.trim()));

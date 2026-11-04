@@ -84,7 +84,7 @@ void main() {
     await taper('Parcours');
 
     // ── une leçon : notions, exercice, vérification
-    routeur.push('/k/lecon/maths_ch1_l1');
+    routeur.push('/k/lecon/maths_c_ch1_l1');
     await attendre(2500);
     await capture('24_lecon_notion');
     for (var i = 0; i < 6; i++) {
@@ -118,7 +118,7 @@ void main() {
     routeur.go('/k');
     await attendre(2500);
     await capture('31_parcours_aube');
-    routeur.push('/k/lecon/maths_ch1_l2');
+    routeur.push('/k/lecon/maths_c_ch1_l2');
     await attendre(2000);
     for (var i = 0; i < 6; i++) {
       if (find.text('VÉRIFIER').evaluate().isNotEmpty) break;
@@ -133,7 +133,7 @@ void main() {
     routeur.go('/k');
     await attendre(1500);
     container.read(progressionProvider.notifier).terminer(
-        leconId: 'maths_ch1_l1', bonnes: 5, total: 5, duree: const Duration(minutes: 2), meilleurCombo: 5);
+        leconId: 'maths_c_ch1_l1', bonnes: 5, total: 5, duree: const Duration(minutes: 2), meilleurCombo: 5);
     await attendre(1000);
     await capture('33_parcours_fete');
     await attendre(1400);
