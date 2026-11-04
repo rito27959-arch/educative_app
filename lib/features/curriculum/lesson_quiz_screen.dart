@@ -12,6 +12,7 @@ import '../../core/providers/curriculum_provider.dart';
 import '../../design_system/ouro_colors.dart';
 import '../../design_system/design_tokens.dart';
 import '../../design_system/glassmorphism.dart';
+import '../../shared/widgets/kunfox/kunfox_rive.dart';
 
 enum _QuizPhase { answering, resultFeedback, finished }
 
@@ -170,7 +171,9 @@ class _LessonQuizScreenState extends ConsumerState<LessonQuizScreen>
         _buildQuestionTopBar(),
         const SizedBox(height: 12),
         _buildSegmentedProgress(),
-        const SizedBox(height: 24),
+        const SizedBox(height: 8),
+        _buildKunfox(question.correctIndex),
+        const SizedBox(height: 8),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: DesignTokens.grid3x),
@@ -307,6 +310,39 @@ class _LessonQuizScreenState extends ConsumerState<LessonQuizScreen>
     );
   }
 
+  /// Kunfox réfléchit pendant la question, saute de joie ou encourage
+  /// après la réponse ; la pastille Rive (coche ou croix) joue à côté.
+  Widget _buildKunfox(int bonneReponse) {
+    final repondu = _phase == _QuizPhase.resultFeedback && _selectedIndex != null;
+    final juste = repondu && _selectedIndex == bonneReponse;
+    return SizedBox(
+      height: 112,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          KunfoxMascotte(
+            taille: 96,
+            humeur: !repondu
+                ? HumeurKunfox.reflexion
+                : juste
+                    ? HumeurKunfox.joie
+                    : HumeurKunfox.courage,
+          ),
+          const SizedBox(width: 8),
+          SizedBox(
+            width: 72,
+            height: 72,
+            child: !repondu
+                ? null
+                : juste
+                    ? KunfoxEffet.reussite(key: ValueKey('ok$_currentQuestionIndex'), taille: 72)
+                    : KunfoxEffet.erreur(key: ValueKey('ko$_currentQuestionIndex'), taille: 72),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildQuestionTopBar() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(DesignTokens.grid2x, DesignTokens.gridBase, DesignTokens.grid2x, 0),
@@ -393,7 +429,18 @@ class _LessonQuizScreenState extends ConsumerState<LessonQuizScreen>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 32),
+                const SizedBox(height: 16),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    if (perfect) const KunfoxEffet.niveau(taille: 260),
+                    KunfoxMascotte(
+                      taille: 170,
+                      humeur: passed ? HumeurKunfox.fete : HumeurKunfox.courage,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
                 _buildScoreCircle(perfect, passed),
                 const SizedBox(height: 20),
                 Text(

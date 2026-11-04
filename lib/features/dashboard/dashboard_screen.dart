@@ -61,7 +61,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    _loadData();
+    // Après la première image : enregistrer l'activité du jour modifie un
+    // provider, ce qui est interdit pendant la construction de l'arbre.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _loadData();
+    });
     _startQuoteTimer();
   }
 
