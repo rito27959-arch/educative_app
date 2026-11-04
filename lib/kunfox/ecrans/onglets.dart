@@ -4,6 +4,7 @@
 // ============================================================================
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ScrollDirection;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,6 +30,20 @@ class AccueilKunfox extends StatefulWidget {
 
 class _AccueilKunfoxState extends State<AccueilKunfox> {
   late int _onglet = widget.onglet;
+  // Sur le parcours, la barre s'efface quand on descend pour ne rien cacher,
+  // et revient dès qu'on remonte ou qu'on touche le haut.
+  bool _barreVisible = true;
+
+  bool _surDefilement(UserScrollNotification n) {
+    if (_onglet != 0 || n.depth != 0) return false;
+    final visible = switch (n.direction) {
+      ScrollDirection.reverse => false,
+      ScrollDirection.forward => true,
+      ScrollDirection.idle => _barreVisible || n.metrics.pixels <= n.metrics.minScrollExtent + 4,
+    };
+    if (visible != _barreVisible) setState(() => _barreVisible = visible);
+    return false;
+  }
 
   static const _items = [
     OngletKunfox(icon: Icons.explore_outlined, activeIcon: Icons.explore_rounded, label: 'Parcours'),
@@ -45,24 +60,42 @@ class _AccueilKunfoxState extends State<AccueilKunfox> {
       body: Stack(children: [
         SafeArea(
           bottom: false,
-          child: IndexedStack(index: _onglet, children: const [
-            ParcoursEcran(),
-            _Reviser(),
-            _Quetes(),
-            _Profil(),
-          ]),
+          child: NotificationListener<UserScrollNotification>(
+            onNotification: _surDefilement,
+            child: IndexedStack(index: _onglet, children: const [
+              ParcoursEcran(),
+              _Reviser(),
+              _Quetes(),
+              _Profil(),
+            ]),
+          ),
         ),
         Positioned(
           left: 0,
           right: 0,
           bottom: 0,
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            BarreOnglets(
-              items: _items,
-              currentIndex: _onglet,
-              onTap: (i) => setState(() => _onglet = i),
+          child: AnimatedSlide(
+            offset: _barreVisible ? Offset.zero : const Offset(0, 1.4),
+            duration: const Duration(milliseconds: 340),
+            curve: const Cubic(0.16, 1, 0.3, 1),
+            child: AnimatedOpacity(
+              opacity: _barreVisible ? 1 : 0,
+              duration: const Duration(milliseconds: 220),
+              child: IgnorePointer(
+                ignoring: !_barreVisible,
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  BarreOnglets(
+                    items: _items,
+                    currentIndex: _onglet,
+                    onTap: (i) => setState(() {
+                      _onglet = i;
+                      _barreVisible = true;
+                    }),
+                  ),
+                ]),
+              ),
             ),
-          ]),
+          ),
         ),
       ]),
     );
