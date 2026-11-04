@@ -1,0 +1,2 @@
+Clé de signature de Kunfox, chiffrée avec le secret KUNFOX_PASSE.
+Ne pas supprimer : sans elle, les mises à jour ne s'installent plus.
