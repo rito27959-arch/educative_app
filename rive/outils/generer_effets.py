@@ -90,7 +90,7 @@ def flamme():
     e_et, e_al, e_vi = Etat(eteinte), Etat(allumage), Etat(vive)
     e_et.vers(e_al, egal(entree, 1)); e_al.vers(e_vi, fin=True); e_vi.vers(e_et, egal(entree, 0), duree=300)
     return dict(nom='flamme', taille=(300, 340), racine=racine, anims=[eteinte, allumage, vive], entrees=[entree],
-                etats=[e_et, e_al, e_vi], apercus={'eteinte': e_et, 'allumage': e_al})
+                etats=[e_et, e_al, e_vi], apercus={'eteinte': (e_et, 0), 'allumage': (e_al, 1)})
 
 
 # ================================================================ cœur
@@ -162,7 +162,7 @@ def coeur():
     ep, epe, ev, er = Etat(plein), Etat(perte), Etat(vide), Etat(recharge)
     ep.vers(epe, egal(entree, 1)); epe.vers(ev, fin=True); ev.vers(er, egal(entree, 0)); er.vers(ep, fin=True)
     return dict(nom='coeur', taille=(300, 300), racine=racine, anims=[plein, perte, vide, recharge], entrees=[entree],
-                etats=[ep, epe, ev, er], apercus={'perte': epe, 'recharge': er})
+                etats=[ep, epe, ev, er], apercus={'perte': (epe, 1), 'recharge': (er, 0)})
 
 
 # ================================================================ bonne réponse / erreur
@@ -195,7 +195,7 @@ def pastille(nom, couleurs, traits, secousse=False):
         a.cle(o[f'q{i}'], 'x', (0, 0, 'hold'), (10, 0, SORTIE), (48, math.cos(ang) * r, 'hold'))
         a.cle(o[f'q{i}'], 'y', (0, 0, 'hold'), (10, 0, SORTIE), (48, math.sin(ang) * r, 'hold'))
     e = Etat(a)
-    return dict(nom=nom.lower(), taille=(400, 400), racine=racine, anims=[a], entrees=[], etats=[e], apercus={})
+    return dict(nom=nom.lower(), taille=(400, 400), racine=racine, anims=[a], entrees=[], etats=[e], apercus={'jeu': (e, 0)})
 
 def reussite():
     return pastille('Reussite', ('6EDC7E', '27B04B', '4CC9F0'), ['M152 204 L188 240 L252 166'])
@@ -263,7 +263,7 @@ def niveau():
         brille.cle(o[f's{i}'], 'rotation', (0, 0, 'hold'), (d, 0, None), (d + 36, 1.2, 'hold'), (240, 0, None))
     e1, e2 = Etat(ent), Etat(brille)
     e1.vers(e2, fin=True)
-    return dict(nom='niveau', taille=(400, 400), racine=racine, anims=[ent, brille], entrees=[], etats=[e1, e2], apercus={})
+    return dict(nom='niveau', taille=(400, 400), racine=racine, anims=[ent, brille], entrees=[], etats=[e1, e2], apercus={'jeu': (e1, 0)})
 
 
 EFFETS = [flamme, coeur, reussite, erreur, niveau]
@@ -271,7 +271,8 @@ EFFETS = [flamme, coeur, reussite, erreur, niveau]
 def produire(fabrique, apercu=None, fond=None):
     nid.n = 100
     e = fabrique()
-    debut = e['apercus'][apercu] if apercu else e['etats'][0]
+    debut, v = e['apercus'][apercu] if apercu else (e['etats'][0], 0)
+    for ent in e['entrees']: ent.valeur = v
     w, h = e['taille']
     rml = scene(e['nom'].capitalize(), w, h, e['racine'], e['anims'], e['nom'].capitalize(), e['entrees'],
                 [Couche('Couche', debut, e['etats'])], fond=fond)

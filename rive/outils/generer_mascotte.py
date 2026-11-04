@@ -346,7 +346,7 @@ def produire(apercu=None, fond=None):
     racine, o = construire()
     A = animations(o)
     cl = clignement(o)
-    humeur_in = Entree('humeur', 'nombre')
+    humeur_in = Entree('humeur', 'nombre', apercu or 0)
     etats = [Etat(A[k]) for k in range(len(NOMS))]
     for i, e in enumerate(etats):
         for j, autre in enumerate(etats):

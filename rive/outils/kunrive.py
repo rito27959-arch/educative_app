@@ -279,8 +279,8 @@ class Couche:
 
 class Entree:
     """Entrée (dépréciée mais universelle) de la machine : 'nombre', 'declencheur' ou 'booleen'."""
-    def __init__(self, nom, genre):
-        self.nom = nom; self.genre = genre; self.id = nid()
+    def __init__(self, nom, genre, valeur=0):
+        self.nom = nom; self.genre = genre; self.valeur = valeur; self.id = nid()
 
 def egal(entree, valeur): return ('num', entree, 'equal', valeur)
 def different(entree, valeur): return ('num', entree, 'notEqual', valeur)
@@ -293,7 +293,9 @@ def _cond(c):
 
 def rml_machine(nom, mid, entrees, couches):
     genres = {'nombre': 'StateMachineNumber', 'declencheur': 'StateMachineTrigger', 'booleen': 'StateMachineBool'}
-    ent = ''.join(f'\n      <{genres[e.genre]} name="{e.nom}" id="{e.id}"/>' for e in entrees)
+    ent = ''.join(f'\n      <{genres[e.genre]} name="{e.nom}"'
+                  + (f' value="{_f(e.valeur)}"' if e.genre == 'nombre' and e.valeur else '')
+                  + f' id="{e.id}"/>' for e in entrees)
     cs = ''
     for c in couches:
         etats = ''
