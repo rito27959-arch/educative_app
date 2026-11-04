@@ -1,3 +1,12 @@
+import java.util.Properties
+
+// Signature de publication : android/key.properties, écrit par la CI de
+// publication à partir de la clé chiffrée (jamais dans le dépôt en clair).
+val cles = Properties().apply {
+    val f = rootProject.file("key.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -20,11 +29,22 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.ouroprep.app"
+        applicationId = "app.dropletmesh.kunfox"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+    }
+
+    signingConfigs {
+        if (cles.getProperty("storeFile") != null) {
+            create("publication") {
+                storeFile = file(cles.getProperty("storeFile"))
+                storePassword = cles.getProperty("storePassword")
+                keyAlias = cles.getProperty("keyAlias")
+                keyPassword = cles.getProperty("keyPassword")
+            }
+        }
     }
 
     buildTypes {
@@ -35,7 +55,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.findByName("publication") ?: signingConfigs.getByName("debug")
         }
         debug {
             isMinifyEnabled = false

@@ -1,0 +1,99 @@
+# Publication de Kunfox : APK signés, un par processeur, attachés à une
+# version GitHub. Se lance en poussant une étiquette `kunfox-v*`.
+#
+# LA CLÉ DE SIGNATURE
+#   Elle est créée ici une seule fois, puis gardée sur la branche
+#   `cle-kunfox`, CHIFFRÉE (AES-256, PBKDF2 600 000 tours) avec le secret
+#   KUNFOX_PASSE que seul le propriétaire du dépôt connaît. Sans ce secret,
+#   le fichier chiffré est inutilisable. Ne jamais supprimer cette branche
+#   ni changer le secret : les mises à jour ne s'installeraient plus.
+name: Publier Kunfox
+on:
+  push:
+    tags: ['kunfox-v*']
+permissions:
+  contents: write
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Clé de signature
+        env:
+          KUNFOX_PASSE: ${{ secrets.KUNFOX_PASSE }}
+        run: |
+          set -e
+          if [ -z "$KUNFOX_PASSE" ]; then
+            echo "::error::Le secret KUNFOX_PASSE manque (Settings → Secrets and variables → Actions)."
+            exit 1
+          fi
+          mkdir -p /tmp/cle
+          if git fetch -q origin cle-kunfox 2>/dev/null; then
+            git show origin/cle-kunfox:cle.tar.enc > /tmp/cle/cle.tar.enc
+            openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 -pass env:KUNFOX_PASSE \
+              -in /tmp/cle/cle.tar.enc -out /tmp/cle/cle.tar
+            tar -xf /tmp/cle/cle.tar -C /tmp/cle
+          else
+            echo "Première publication : création de la clé Kunfox."
+            openssl rand -base64 32 | tr -d '\n/+=' > /tmp/cle/passe.txt
+            keytool -genkeypair -keystore /tmp/cle/kunfox.jks -alias kunfox -keyalg RSA -keysize 4096 \
+              -validity 36500 -dname "CN=Kunfox, O=Kunfox" \
+              -storepass "$(cat /tmp/cle/passe.txt)" -keypass "$(cat /tmp/cle/passe.txt)" > /dev/null
+            tar -cf /tmp/cle/cle.tar -C /tmp/cle kunfox.jks passe.txt
+            openssl enc -aes-256-cbc -salt -pbkdf2 -iter 600000 -pass env:KUNFOX_PASSE \
+              -in /tmp/cle/cle.tar -out /tmp/cle/cle.tar.enc
+            mkdir /tmp/branche && cd /tmp/branche && git init -q && git checkout -q -b cle-kunfox
+            cp /tmp/cle/cle.tar.enc .
+            printf '%s\n' "Clé de signature de Kunfox, chiffrée avec le secret KUNFOX_PASSE." \
+              "Ne pas supprimer : sans elle, les mises à jour ne s'installent plus." > LISEZMOI.txt
+            git add . && git -c user.name=ci -c user.email=ci@kunfox.invalid commit -qm "Clé de signature Kunfox (chiffrée)"
+            git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" cle-kunfox
+            cd -
+          fi
+          P=$(cat /tmp/cle/passe.txt)
+          printf 'storeFile=/tmp/cle/kunfox.jks\nstorePassword=%s\nkeyAlias=kunfox\nkeyPassword=%s\n' "$P" "$P" > android/key.properties
+          # l'empreinte (publique) du certificat, utile pour les liens d'app
+          keytool -list -v -keystore /tmp/cle/kunfox.jks -storepass "$P" | grep -E "SHA256:" | head -1 > /tmp/empreinte.txt
+      - name: Construire les APK par processeur
+        run: |
+          set -e
+          V=${GITHUB_REF_NAME#kunfox-v}
+          N=$(git rev-list --count HEAD)
+          flutter pub get
+          flutter build apk --release --split-per-abi --build-name "$V" --build-number "$N"
+          mkdir -p sortie
+          for abi in arm64-v8a armeabi-v7a x86_64; do
+            cp build/app/outputs/flutter-apk/app-$abi-release.apk sortie/Kunfox-$abi.apk
+          done
+          (cd sortie && sha256sum *.apk > SHA256SUMS.txt)
+          ls -la sortie
+      - name: Publier la version
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Kunfox ${{ github.ref_name }}
+          body: |
+            **Quel fichier choisir ?**
+            - **Kunfox-arm64-v8a.apk** : presque tous les téléphones Android récents (2017 et après).
+            - **Kunfox-armeabi-v7a.apk** : anciens téléphones et modèles d'entrée de gamme.
+            - **Kunfox-x86_64.apk** : émulateurs et quelques tablettes.
+
+            Signature : voir l'empreinte SHA-256 du certificat dans le journal de la publication.
+          files: |
+            sortie/Kunfox-arm64-v8a.apk
+            sortie/Kunfox-armeabi-v7a.apk
+            sortie/Kunfox-x86_64.apk
+            sortie/SHA256SUMS.txt
+          make_latest: true
+      - name: Empreinte du certificat
+        run: cat /tmp/empreinte.txt
