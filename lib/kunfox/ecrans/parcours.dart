@@ -43,6 +43,9 @@ class _ParcoursEcranState extends ConsumerState<ParcoursEcran> {
   final _cleActuelle = GlobalKey();
   bool _actuelleVisible = true;
   String? _ouverte; // la pastille dont la carte est ouverte
+  String? _celebree; // la leçon qu'on vient de finir : sa pastille fête ça
+  Set<String>? _connues;
+  final _confettis = ConfettisControleur();
 
   @override
   void initState() {
@@ -94,6 +97,26 @@ class _ParcoursEcranState extends ConsumerState<ParcoursEcran> {
     final chapitres = [...matiere.chapters]..sort((a, b) => a.order.compareTo(b.order));
     final actuelle = leconActuelle(matiere, prog);
 
+    // Retour d'une leçon : la pastille faite se remplit, la suivante s'ouvre,
+    // le parcours glisse jusqu'à elle. On attend que l'écran soit au premier plan.
+    final nouvelles = _connues == null ? const <String>{} : prog.leconsFaites.difference(_connues!);
+    final auPremierPlan = ModalRoute.of(context)?.isCurrent ?? true;
+    if (_connues == null) {
+      _connues = {...prog.leconsFaites};
+    } else if (nouvelles.isNotEmpty && auPremierPlan) {
+      _connues = {...prog.leconsFaites};
+      final id = nouvelles.first;
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        setState(() => _celebree = id);
+        await Future<void>.delayed(const Duration(milliseconds: 900));
+        if (!mounted) return;
+        _allerALaLecon();
+        await Future<void>.delayed(const Duration(milliseconds: 1600));
+        if (mounted) setState(() => _celebree = null);
+      });
+    }
+
     return Column(children: [
       const BarreHaut(),
       Expanded(
@@ -102,30 +125,52 @@ class _ParcoursEcranState extends ConsumerState<ParcoursEcran> {
           GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () => setState(() => _ouverte = null),
-            child: ListView.builder(
+            child: CustomScrollView(
               controller: _defilement,
-              padding: const EdgeInsets.only(top: 16, bottom: 160),
-              itemCount: chapitres.length,
-              itemBuilder: (context, i) {
-                final c = chapitres[i];
-                final couleur = p.unites[i % p.unites.length];
-                // une unité s'ouvre quand la précédente est finie
-                final ouverte = i == 0 || chapitres[i - 1].lessons.every((l) => prog.leconsFaites.contains(l.id));
-                return _Unite(
-                  numero: i + 1,
-                  chapitre: c,
-                  couleur: couleur,
-                  matiere: matiere,
-                  progression: prog,
-                  actuelle: actuelle,
-                  accessible: ouverte,
-                  cleActuelle: _cleActuelle,
-                  ouverte: _ouverte,
-                  surOuvrir: (id) => setState(() => _ouverte = _ouverte == id ? null : id),
-                );
-              },
+              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              slivers: [
+                for (var i = 0; i < chapitres.length; i++)
+                  Builder(builder: (context) {
+                    final c = chapitres[i];
+                    final couleur = p.unites[i % p.unites.length];
+                    // une unité s'ouvre quand la précédente est finie
+                    final ouverte = i == 0 || chapitres[i - 1].lessons.every((l) => prog.leconsFaites.contains(l.id));
+                    return SliverMainAxisGroup(slivers: [
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: _EnTete(
+                          numero: i + 1,
+                          chapitre: c,
+                          couleur: couleur,
+                          matiere: matiere,
+                          faites: c.lessons.where((l) => prog.leconsFaites.contains(l.id)).length,
+                          total: c.lessons.length,
+                          accessible: ouverte,
+                          fond: p.fond,
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: _Unite(
+                          numero: i + 1,
+                          chapitre: c,
+                          couleur: couleur,
+                          matiere: matiere,
+                          progression: prog,
+                          actuelle: actuelle,
+                          accessible: ouverte,
+                          cleActuelle: _cleActuelle,
+                          ouverte: _ouverte,
+                          celebree: _celebree,
+                          surOuvrir: (id) => setState(() => _ouverte = _ouverte == id ? null : id),
+                        ),
+                      ),
+                    ]);
+                  }),
+                const SliverToBoxAdapter(child: SizedBox(height: 160)),
+              ],
             ),
           ),
+          Positioned.fill(child: ConfettisFlame(controleur: _confettis)),
           // Le bouton pour revenir à la leçon du moment quand elle est hors de l'écran.
           Positioned(
             right: 16,
@@ -164,9 +209,11 @@ class _Unite extends StatelessWidget {
     required this.accessible,
     required this.cleActuelle,
     required this.ouverte,
+    required this.celebree,
     required this.surOuvrir,
   });
 
+  final String? celebree;
   final int numero;
   final CurriculumChapter chapitre;
   final Color couleur;
@@ -192,40 +239,6 @@ class _Unite extends StatelessWidget {
     final indexActuel = lecons.indexWhere((l) => l.id == actuelle);
 
     return Column(children: [
-      // la bannière de l'unité
-      Padding(
-        padding: const EdgeInsets.fromLTRB(16, 18, 16, 6),
-        child: Container(
-          decoration: BoxDecoration(
-            color: accessible ? couleur : p.verrou,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [BoxShadow(color: Palette.fonce(accessible ? couleur : p.verrou, 0.25), offset: const Offset(0, 4))],
-          ),
-          padding: const EdgeInsets.fromLTRB(18, 14, 10, 14),
-          child: Row(children: [
-            Expanded(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('UNITÉ $numero · ${faites}/${lecons.length}',
-                    style: TextStyle(
-                        fontFamily: 'Inter', fontWeight: FontWeight.w800, fontSize: 12, letterSpacing: 1,
-                        color: (accessible ? Colors.white : p.doux).withValues(alpha: 0.85))),
-                const SizedBox(height: 4),
-                Text(chapitre.title,
-                    style: TextStyle(
-                        fontFamily: 'InterTight', fontWeight: FontWeight.w800, fontSize: 20, height: 1.15,
-                        color: accessible ? Colors.white : p.doux)),
-              ]),
-            ),
-            IconButton(
-              tooltip: 'Fiche du chapitre',
-              onPressed: accessible
-                  ? () => context.push('/curriculum/subject/${matiere.id}/chapter/${chapitre.id}/intro')
-                  : null,
-              icon: Icon(Icons.menu_book_rounded, color: accessible ? Colors.white : p.doux),
-            ),
-          ]),
-        ),
-      ),
       SizedBox(
         height: hauteur,
         child: Stack(clipBehavior: Clip.none, children: [
@@ -268,6 +281,8 @@ class _Unite extends StatelessWidget {
                         ? EtatNoeud.actuelle
                         : EtatNoeud.verrouillee,
                 ouverte: ouverte == lecons[k].id,
+                celebree: celebree == lecons[k].id,
+                apparait: celebree != null && lecons[k].id == actuelle,
                 surAppui: () => surOuvrir(lecons[k].id),
                 matiere: matiere,
                 chapitre: chapitre,
@@ -332,8 +347,11 @@ class _Noeud extends StatefulWidget {
     required this.surAppui,
     required this.matiere,
     required this.chapitre,
+    this.celebree = false,
+    this.apparait = false,
   });
 
+  final bool celebree, apparait;
   final Lesson lecon;
   final int rang, total;
   final Color couleur;
@@ -347,15 +365,34 @@ class _Noeud extends StatefulWidget {
   State<_Noeud> createState() => _NoeudState();
 }
 
-class _NoeudState extends State<_Noeud> with SingleTickerProviderStateMixin {
+class _NoeudState extends State<_Noeud> with TickerProviderStateMixin {
   late final AnimationController _flotte =
       AnimationController(vsync: this, duration: const Duration(milliseconds: 1400))..repeat(reverse: true);
+  // la « fête » d'une pastille : ressort qui gonfle puis se pose
+  late final AnimationController _fete = AnimationController(vsync: this, duration: const Duration(milliseconds: 900));
   bool _enfonce = false;
+
+  @override
+  void didUpdateWidget(covariant _Noeud ancien) {
+    super.didUpdateWidget(ancien);
+    if ((widget.celebree && !ancien.celebree) || (widget.apparait && !ancien.apparait)) {
+      _fete.forward(from: 0);
+      if (widget.apparait) HapticFeedback.mediumImpact();
+    }
+  }
 
   @override
   void dispose() {
     _flotte.dispose();
+    _fete.dispose();
     super.dispose();
+  }
+
+  /// 1 → 1.28 → 0.94 → 1, comme un ressort (iOS « spring »).
+  double get _echelle {
+    final t = _fete.value;
+    if (_fete.isDismissed || t >= 1) return 1;
+    return 1 + 0.28 * math.sin(t * math.pi * 2.6) * math.exp(-4.2 * t);
   }
 
   @override
@@ -421,7 +458,16 @@ class _NoeudState extends State<_Noeud> with SingleTickerProviderStateMixin {
           '${faite ? 'Faite' : actuelle ? 'À faire maintenant' : 'Verrouillée'}',
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         Stack(clipBehavior: Clip.none, alignment: Alignment.topCenter, children: [
-          pastille,
+          AnimatedBuilder(
+            animation: _fete,
+            builder: (context, enfant) => Transform.scale(scale: _echelle, child: enfant),
+            child: pastille,
+          ),
+          if (widget.celebree)
+            const Positioned(
+              top: -26,
+              child: IgnorePointer(child: KunfoxEffet.reussite(taille: 140)),
+            ),
           if (actuelle && !widget.ouverte)
             Positioned(
               top: -44,
@@ -561,6 +607,82 @@ class _Trophee extends StatelessWidget {
           child: Icon(Icons.emoji_events_rounded, size: 40, color: ouvert || fini ? Colors.white : p.doux),
         ),
       ),
+    );
+  }
+}
+
+
+/// La bannière d'unité, épinglée en haut tant qu'on est dans l'unité
+/// (comme les en-têtes de section d'iOS) ; un voile de la couleur du fond
+/// masque le chemin qui défile dessous.
+class _EnTete extends SliverPersistentHeaderDelegate {
+  _EnTete({required this.numero, required this.chapitre, required this.couleur, required this.matiere,
+      required this.faites, required this.total, required this.accessible, required this.fond});
+  final int numero, faites, total;
+  final CurriculumChapter chapitre;
+  final Color couleur, fond;
+  final SubjectCurriculum matiere;
+  final bool accessible;
+
+  @override
+  double get minExtent => 92;
+  @override
+  double get maxExtent => 92;
+
+  @override
+  bool shouldRebuild(covariant _EnTete o) =>
+      o.faites != faites || o.accessible != accessible || o.couleur != couleur || o.fond != fond || o.chapitre.id != chapitre.id;
+
+  @override
+  Widget build(BuildContext context, double decalage, bool chevauche) {
+    final p = Palette.of(context);
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [fond, fond, fond.withValues(alpha: 0)],
+          stops: const [0, 0.72, 1],
+        ),
+      ),
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+      // la bannière de l'unité
+        Padding(
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 6),
+        child: Container(
+          decoration: BoxDecoration(
+            color: accessible ? couleur : p.verrou,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [BoxShadow(color: Palette.fonce(accessible ? couleur : p.verrou, 0.25), offset: const Offset(0, 4))],
+          ),
+          padding: const EdgeInsets.fromLTRB(18, 14, 10, 14),
+          child: Row(children: [
+            Expanded(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text('UNITÉ $numero · $faites/$total',
+                    style: TextStyle(
+                        fontFamily: 'Inter', fontWeight: FontWeight.w800, fontSize: 12, letterSpacing: 1,
+                        color: (accessible ? Colors.white : p.doux).withValues(alpha: 0.85))),
+                const SizedBox(height: 4),
+                Text(chapitre.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontFamily: 'InterTight', fontWeight: FontWeight.w800, fontSize: 20, height: 1.15,
+                        color: accessible ? Colors.white : p.doux)),
+              ]),
+            ),
+            IconButton(
+              tooltip: 'Fiche du chapitre',
+              onPressed: accessible
+                  ? () => context.push('/curriculum/subject/${matiere.id}/chapter/${chapitre.id}/intro')
+                  : null,
+              icon: Icon(Icons.menu_book_rounded, color: accessible ? Colors.white : p.doux),
+            ),
+          ]),
+        ),
+      ),
+      ]),
     );
   }
 }

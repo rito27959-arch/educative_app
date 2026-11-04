@@ -54,19 +54,29 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/dashboard', name: 'dashboard', builder: (_, _) => const DashboardScreen()),
       // ── Kunfox : parcours, séances, fin de leçon ──
       GoRoute(path: '/k', name: 'kunfox', builder: (_, _) => const AccueilKunfox()),
-      GoRoute(path: '/k/revision', name: 'kunfox-revision', builder: (_, _) => const SeanceEcran()),
+      GoRoute(path: '/k/revision', name: 'kunfox-revision', pageBuilder: (_, state) => _monte(state, const SeanceEcran())),
       GoRoute(
         path: '/k/lecon/:leconId',
         name: 'kunfox-lecon',
-        builder: (_, state) => SeanceEcran(leconId: state.pathParameters['leconId']),
+        pageBuilder: (_, state) => _monte(state, SeanceEcran(leconId: state.pathParameters['leconId'])),
       ),
       GoRoute(
         path: '/k/fin',
         name: 'kunfox-fin',
-        builder: (_, state) {
+        pageBuilder: (_, state) {
           final bilan = state.extra;
-          if (bilan is! BilanLecon) return const AccueilKunfox();
-          return FinLeconEcran(bilan: bilan);
+          return CustomTransitionPage(
+            key: state.pageKey,
+            transitionDuration: const Duration(milliseconds: 420),
+            transitionsBuilder: (_, a, _, enfant) => FadeTransition(
+              opacity: a,
+              child: ScaleTransition(
+                scale: Tween(begin: 0.94, end: 1.0).animate(CurvedAnimation(parent: a, curve: const Cubic(0.16, 1, 0.3, 1))),
+                child: enfant,
+              ),
+            ),
+            child: bilan is BilanLecon ? FinLeconEcran(bilan: bilan) : const AccueilKunfox(),
+          );
         },
       ),
       GoRoute(path: '/courses', name: 'courses', builder: (_, _) => const CourseExplorerScreen()),
@@ -268,3 +278,18 @@ final routerProvider = Provider<GoRouter>((ref) {
     },
   );
 });
+
+
+/// Une séance monte du bas, comme une feuille iOS plein écran.
+CustomTransitionPage<void> _monte(GoRouterState state, Widget enfant) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      fullscreenDialog: true,
+      transitionDuration: const Duration(milliseconds: 480),
+      reverseTransitionDuration: const Duration(milliseconds: 360),
+      transitionsBuilder: (_, a, _, e) => SlideTransition(
+        position: Tween(begin: const Offset(0, 1), end: Offset.zero)
+            .animate(CurvedAnimation(parent: a, curve: const Cubic(0.16, 1, 0.3, 1), reverseCurve: Curves.easeInCubic)),
+        child: e,
+      ),
+      child: enfant,
+    );

@@ -66,6 +66,7 @@ class BarreHaut extends ConsumerWidget {
           texte: '$serie',
           couleur: prog.serieFaiteAujourdhui ? p.prim : p.doux,
           semantique: 'Série : $serie jours',
+          surAppui: () => montrerSerie(context, ref),
         ),
         const SizedBox(width: 6),
         pastille(
@@ -179,6 +180,74 @@ Future<void> montrerCoeurs(BuildContext context, WidgetRef ref) async {
             textAlign: TextAlign.center,
             style: TextStyle(color: p.doux, fontSize: 15, fontWeight: FontWeight.w600, height: 1.4),
           ),
+        ]),
+      ),
+    ),
+  );
+}
+
+
+/// Feuille de la série : la flamme, le nombre de jours et la semaine.
+Future<void> montrerSerie(BuildContext context, WidgetRef ref) async {
+  final p = Palette.of(context);
+  final prog = ref.read(progressionProvider);
+  final auj = DateTime.now();
+  final lundi = auj.subtract(Duration(days: auj.weekday - 1));
+  const jours = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+  HapticFeedback.selectionClick();
+  await showModalBottomSheet<void>(
+    context: context,
+    backgroundColor: p.surface,
+    showDragHandle: true,
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+    builder: (ctx) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Row(children: [
+            Expanded(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text('${prog.serieActuelle}',
+                    style: TextStyle(fontFamily: 'InterTight', fontWeight: FontWeight.w800, fontSize: 56, height: 1, color: p.prim)),
+                Text(prog.serieActuelle > 1 ? 'jours de série' : 'jour de série',
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18, color: p.prim)),
+                const SizedBox(height: 6),
+                Text(
+                  prog.serieFaiteAujourdhui
+                      ? 'C\'est fait pour aujourd\'hui. À demain !'
+                      : 'Fais une leçon aujourd\'hui pour garder ta flamme.',
+                  style: TextStyle(color: p.doux, fontWeight: FontWeight.w600, height: 1.35),
+                ),
+              ]),
+            ),
+            KunfoxFlamme(allumee: prog.serieFaiteAujourdhui, taille: 110),
+          ]),
+          const SizedBox(height: 18),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            for (var i = 0; i < 7; i++)
+              Builder(builder: (_) {
+                final cle = jourDe(lundi.add(Duration(days: i)));
+                final fait = (prog.xpParJour[cle] ?? 0) > 0;
+                final estAuj = cle == jourDe(auj);
+                return Column(children: [
+                  Text(jours[i], style: TextStyle(fontWeight: FontWeight.w800, color: estAuj ? p.prim : p.doux)),
+                  const SizedBox(height: 6),
+                  Container(
+                    width: 34,
+                    height: 34,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: fait ? p.prim : Colors.transparent,
+                      border: Border.all(color: fait ? p.prim : p.bord, width: 2),
+                    ),
+                    child: fait ? const Icon(Icons.local_fire_department_rounded, color: Colors.white, size: 18) : null,
+                  ),
+                ]);
+              }),
+          ]),
+          const SizedBox(height: 14),
+          Text('Meilleure série : ${prog.meilleureSerie} jour${prog.meilleureSerie > 1 ? 's' : ''}',
+              style: TextStyle(color: p.doux, fontWeight: FontWeight.w700)),
         ]),
       ),
     ),

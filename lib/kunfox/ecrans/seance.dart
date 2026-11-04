@@ -72,6 +72,8 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
   int _bonnes = 0, _reponses = 0, _combo = 0, _meilleurCombo = 0;
   final _debut = DateTime.now();
   final Set<String> _deja = {}; // questions déjà remises en fin de file
+  int _pertes = 0; // compte les cœurs perdus, pour rejouer l'animation
+  bool _coeurSeBrise = false;
 
   bool get _revision => widget.leconId == null;
 
@@ -144,7 +146,17 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
       }
     } else {
       HapticFeedback.heavyImpact();
-      if (!_revision) ref.read(progressionProvider.notifier).perdreCoeur();
+      if (!_revision) {
+        ref.read(progressionProvider.notifier).perdreCoeur();
+        // un cœur se brise au-dessus du compteur, puis s'efface
+        setState(() {
+          _pertes++;
+          _coeurSeBrise = true;
+        });
+        Future.delayed(const Duration(milliseconds: 1100), () {
+          if (mounted) setState(() => _coeurSeBrise = false);
+        });
+      }
     }
   }
 
@@ -287,14 +299,47 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
                     icon: Icon(Icons.close_rounded, color: p.doux, size: 30),
                   ),
                   const SizedBox(width: 4),
-                  Expanded(child: BarreProgres(valeur: _avancement, couleur: p.succes)),
+                  Expanded(
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 400),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: _combo >= 3
+                            ? [BoxShadow(color: p.or.withValues(alpha: 0.55), blurRadius: 14, spreadRadius: 1)]
+                            : const [],
+                      ),
+                      child: BarreProgres(valeur: _avancement, couleur: _combo >= 3 ? p.or : p.succes),
+                    ),
+                  ),
                   const SizedBox(width: 12),
                   if (_revision)
                     Icon(Icons.fitness_center_rounded, color: p.info)
                   else ...[
-                    KunfoxCoeur(perdu: coeurs == 0, taille: 30),
+                    SizedBox(
+                      width: 30,
+                      height: 30,
+                      child: Stack(clipBehavior: Clip.none, alignment: Alignment.center, children: [
+                        KunfoxCoeur(perdu: coeurs == 0, taille: 30),
+                        if (_coeurSeBrise)
+                          Positioned(
+                            left: -21,
+                            top: -21,
+                            child: IgnorePointer(child: KunfoxCoeur(key: ValueKey(_pertes), perdu: true, taille: 72)),
+                          ),
+                      ]),
+                    ),
                     const SizedBox(width: 2),
-                    Text('$coeurs', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 17, color: p.erreur)),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 320),
+                      transitionBuilder: (e, a) => SlideTransition(
+                        position: Tween(begin: const Offset(0, -0.8), end: Offset.zero)
+                            .animate(CurvedAnimation(parent: a, curve: const Cubic(0.34, 1.56, 0.64, 1))),
+                        child: FadeTransition(opacity: a, child: e),
+                      ),
+                      child: Text('$coeurs',
+                          key: ValueKey(coeurs),
+                          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 17, color: coeurs == 0 ? p.doux : p.erreur)),
+                    ),
                   ],
                 ]),
               ),

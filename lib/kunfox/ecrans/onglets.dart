@@ -12,6 +12,7 @@ import '../../core/providers/settings_provider.dart';
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
 import '../composants/barre_onglets.dart';
 import '../composants/bouton.dart';
+import '../composants/page_ios.dart';
 import '../composants/sons.dart';
 import '../donnees/matieres.dart';
 import '../donnees/progression.dart';
@@ -81,10 +82,7 @@ class _Reviser extends ConsumerWidget {
     final prog = ref.watch(progressionProvider);
     final matiere = ref.watch(matiereActiveProvider);
     final faites = matiere == null ? 0 : leconsDe(matiere).where((l) => prog.leconsFaites.contains(l.id)).length;
-    return ListView(padding: EdgeInsets.fromLTRB(20, 20, 20, margeBas(context)), children: [
-      Text('Réviser', style: Theme.of(context).textTheme.headlineMedium),
-      const SizedBox(height: 4),
-      Text('Ce qu\'on revoit, on le garde.', style: TextStyle(color: p.doux, fontWeight: FontWeight.w600)),
+    return PageIOS(titre: 'Réviser', sousTitre: 'Ce qu\'on revoit, on le garde.', margeBas: margeBas(context), enfants: [
       const SizedBox(height: 20),
       Container(
         padding: const EdgeInsets.all(20),
@@ -159,11 +157,7 @@ class _Quetes extends ConsumerWidget {
     ];
     final toutes = quetes.every((q) => q.$2 >= q.$3);
 
-    return ListView(padding: EdgeInsets.fromLTRB(20, 20, 20, margeBas(context)), children: [
-      Text('Quêtes du jour', style: Theme.of(context).textTheme.headlineMedium),
-      const SizedBox(height: 4),
-      Text('Elles se renouvellent chaque matin.', style: TextStyle(color: p.doux, fontWeight: FontWeight.w600)),
-      const SizedBox(height: 12),
+    return PageIOS(titre: 'Quêtes du jour', sousTitre: 'Elles se renouvellent chaque matin.', margeBas: margeBas(context), enfants: [
       Center(
         child: SizedBox(
           height: 170,
@@ -243,7 +237,7 @@ class _Profil extends ConsumerWidget {
           ),
         );
 
-    return ListView(padding: EdgeInsets.fromLTRB(20, 20, 20, margeBas(context)), children: [
+    return PageIOS(titre: 'Profil', margeBas: margeBas(context), enfants: [
       Row(children: [
         Container(
           width: 72,
