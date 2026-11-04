@@ -55,7 +55,8 @@ jobs:
           profile: pixel_6
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
-          script: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/captures_test.dart > resultats/drive.txt 2>&1 ; echo "drive: $?" >> resultats/journal.txt
+          script: |
+            flutter drive --driver=test_driver/integration_test.dart --target=integration_test/captures_test.dart > resultats/drive.txt 2>&1 ; echo "drive=$?" >> resultats/journal.txt
       - name: Publier
         if: always()
         run: |
