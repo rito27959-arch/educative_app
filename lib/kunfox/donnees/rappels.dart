@@ -336,6 +336,10 @@ class Rappels {
   /// Pour les captures d'écran de vérification : montre tout de suite un
   /// rappel ordinaire et une série en danger.
   static Future<void> essai() async {
+    final permis = await _plugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.areNotificationsEnabled();
+    debugPrint('[Rappels] essai : prêt=$_pret, autorisées=$permis');
     if (!_pret) return;
     var id = 900;
     for (final (mod, v) in [

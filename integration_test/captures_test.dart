@@ -193,6 +193,8 @@ void main() {
 
     // ── deux rappels montrés tout de suite (capturés ensuite par adb)
     await Rappels.essai();
+    // le script de l'émulateur guette la notification et la photographie
+    await attendre(12000);
 
     // ── l'arrivée dans l'app (sans créer de profil)
     routeur.go('/onboarding');
