@@ -1,0 +1,15 @@
+---
+import Page from '../layouts/Page.astro';
+import { CONTACT, EDITEUR, MISE_A_JOUR } from '../site';
+---
+<Page titre="Mentions légales" surtitre="Confiance" maj={MISE_A_JOUR}
+  description="Éditeur, hébergeur et propriété du site Kunfox.">
+  <h2>Éditeur</h2>
+  <p>Ce site et l'application Kunfox sont édités par {EDITEUR} (Cameroun).<br />Contact : <a href={`mailto:${CONTACT}`}>{CONTACT}</a></p>
+  <h2>Hébergement</h2>
+  <p>Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com</p>
+  <h2>Propriété</h2>
+  <p>Le nom Kunfox, son logo, sa mascotte, ce site et le contenu de l'application sont la propriété de leur éditeur. Toute reproduction sans autorisation est interdite.</p>
+  <h2>Données personnelles</h2>
+  <p>Voir la page <a href="/confidentialite">Confidentialité</a>.</p>
+</Page>

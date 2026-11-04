@@ -1,0 +1,23 @@
+---
+// Gabarit des pages de texte (confiance, aide, à propos).
+import Base from './Base.astro';
+import Nav from '../components/Nav.astro';
+import Pied from '../components/Pied.astro';
+interface Props { titre: string; description: string; surtitre?: string; chapo?: string; maj?: string }
+const { titre, description, surtitre, chapo, maj } = Astro.props;
+---
+<Base titre={`${titre} · Kunfox`} description={description}>
+  <Nav />
+  <main class="page">
+    <div class="conteneur page-tete apparait-page">
+      {surtitre && <span class="pastille">{surtitre}</span>}
+      <h1>{titre}</h1>
+      {chapo && <p class="page-chapo">{chapo}</p>}
+      {maj && <p class="page-maj">Dernière mise à jour : {maj}</p>}
+    </div>
+    <article class="conteneur texte apparait-page">
+      <slot />
+    </article>
+  </main>
+  <Pied />
+</Base>

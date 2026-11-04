@@ -1,0 +1,28 @@
+---
+import Page from '../layouts/Page.astro';
+import { CONTACT, EDITEUR, MISE_A_JOUR } from '../site';
+---
+<Page titre="Conditions d'utilisation" surtitre="Confiance" maj={MISE_A_JOUR}
+  description="Les règles d'utilisation de Kunfox."
+  chapo="Les règles du jeu, en clair.">
+  <h2>1. Le service</h2>
+  <p>Kunfox est une application d'aide à la révision éditée par {EDITEUR}. Elle propose des leçons, des quiz et des outils de suivi. Elle complète l'enseignement reçu en classe et ne le remplace pas.</p>
+  <h2>2. Ton compte</h2>
+  <p>Un compte en ligne est facultatif. Si tu en crées un, garde ton accès pour toi et choisis un pseudo respectueux. Nous pouvons suspendre un compte utilisé pour nuire à d'autres utilisateurs.</p>
+  <h2>3. Ce qui est interdit</h2>
+  <ul>
+    <li>Utiliser Kunfox pour tricher pendant un examen officiel.</li>
+    <li>Copier ou revendre le contenu de l'application.</li>
+    <li>Tenter de perturber le fonctionnement de l'application ou de ses serveurs.</li>
+  </ul>
+  <h2>4. Le contenu</h2>
+  <p>Les leçons, quiz, illustrations, la mascotte et le nom Kunfox sont protégés. Tu peux les utiliser pour réviser, pas les reproduire ailleurs. Nous faisons tout pour que le contenu soit exact ; si tu trouves une erreur, <a href="/contact">signale-la</a>.</p>
+  <h2>5. Disponibilité</h2>
+  <p>Kunfox fonctionne en grande partie sans Internet. Les fonctions en ligne (synchronisation, notifications) peuvent être momentanément indisponibles. Nous ne pouvons pas garantir un fonctionnement sans interruption.</p>
+  <h2>6. Gratuité</h2>
+  <p>Kunfox est gratuit. Si une offre payante est un jour proposée, son prix et son contenu seront affichés clairement avant tout achat, et rien ne sera débité sans ton accord.</p>
+  <h2>7. Changements</h2>
+  <p>Ces conditions peuvent évoluer. La version en vigueur est toujours celle de cette page.</p>
+  <h2>8. Contact</h2>
+  <p><a href={`mailto:${CONTACT}`}>{CONTACT}</a></p>
+</Page>

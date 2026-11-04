@@ -1,0 +1,56 @@
+---
+import Page from '../layouts/Page.astro';
+import { CONTACT, EDITEUR, MISE_A_JOUR } from '../site';
+---
+<Page titre="Confidentialité" surtitre="Confiance" maj={MISE_A_JOUR}
+  description="Quelles données Kunfox utilise, pourquoi, où elles vont et comment les supprimer."
+  chapo="Ce que Kunfox sait de toi, pourquoi, et comment tu gardes la main. Écrit pour être compris.">
+  <div class="encadre"><p><b>En bref :</b> l'essentiel reste sur ton téléphone. Un compte en ligne est facultatif. Pas de publicité ciblée, aucune revente de données.</p></div>
+
+  <h2>1. Qui est responsable</h2>
+  <p>Kunfox est édité par {EDITEUR}. Pour toute question sur tes données : <a href={`mailto:${CONTACT}`}>{CONTACT}</a>.</p>
+
+  <h2>2. Les données utilisées</h2>
+  <table class="tableau">
+    <thead><tr><th>Donnée</th><th>Pourquoi</th><th>Où</th></tr></thead>
+    <tbody>
+      <tr><td>Progression, scores, série, réglages</td><td>Faire fonctionner l'application</td><td>Sur ton téléphone</td></tr>
+      <tr><td>Pseudo et série du Bac</td><td>Personnaliser le contenu ; compte en ligne si tu en crées un</td><td>Téléphone, et serveur si compte en ligne</td></tr>
+      <tr><td>Progression synchronisée</td><td>La retrouver sur un autre téléphone (facultatif)</td><td>Serveur, seulement avec un compte en ligne</td></tr>
+      <tr><td>Statistiques d'utilisation (écrans visités, durées)</td><td>Améliorer l'application</td><td>Serveur, sans ton nom</td></tr>
+      <tr><td>Rapports de plantage</td><td>Corriger les bugs</td><td>Service de suivi d'erreurs</td></tr>
+      <tr><td>Jeton de notification</td><td>T'envoyer un rappel de révision, si tu l'acceptes</td><td>Serveur</td></tr>
+    </tbody>
+  </table>
+  <p>Les questions posées au tuteur intelligent sont traitées <b>sur ton téléphone</b> et ne sont pas envoyées sur Internet.</p>
+
+  <h2>3. Les permissions du téléphone</h2>
+  <ul>
+    <li><b>Micro</b> : pour le coach vocal, seulement quand tu l'utilises.</li>
+    <li><b>Bluetooth, Wi-Fi et position</b> : pour les quiz entre téléphones proches. Android exige la permission de position pour chercher les appareils à proximité ; Kunfox n'enregistre pas ta position.</li>
+    <li><b>Photos et fichiers</b> : seulement si tu choisis d'importer un document.</li>
+  </ul>
+  <p>Tu peux refuser ces permissions : seules les fonctions concernées ne marcheront pas.</p>
+
+  <h2>4. Ce que nous ne faisons jamais</h2>
+  <ul>
+    <li>Vendre ou louer tes données.</li>
+    <li>Afficher de la publicité ciblée.</li>
+    <li>Lire le contenu de tes échanges dans Droplet.</li>
+  </ul>
+
+  <h2>5. Qui d'autre intervient</h2>
+  <p>Pour fonctionner, Kunfox s'appuie sur des prestataires techniques : un hébergeur de base de données pour les comptes en ligne et la synchronisation, un service de suivi des plantages, et Vercel pour ce site. Ils n'utilisent pas tes données pour leur propre compte.</p>
+
+  <h2>6. Combien de temps</h2>
+  <p>Les données d'un compte en ligne sont conservées tant que le compte existe, puis supprimées au plus tard 30 jours après sa suppression. Les données présentes seulement sur le téléphone disparaissent quand tu désinstalles l'application.</p>
+
+  <h2>7. Tes droits</h2>
+  <p>Tu peux demander à consulter, corriger ou supprimer tes données, ou t'opposer à leur utilisation, en écrivant à <a href={`mailto:${CONTACT}`}>{CONTACT}</a>. Si tu es mineur, un parent peut faire la demande pour toi. Nous répondons sous 30 jours.</p>
+
+  <h2>8. Ce site</h2>
+  <p>Ce site n'utilise ni cookie publicitaire ni outil de suivi. Il retient seulement, dans ton navigateur, le thème clair ou sombre que tu as choisi.</p>
+
+  <h2>9. Changements</h2>
+  <p>Si cette page change de façon importante, nous le signalerons dans l'application. La date de dernière mise à jour figure en haut.</p>
+</Page>

@@ -1,0 +1,20 @@
+---
+import Page from '../layouts/Page.astro';
+const questions = [
+  ['Kunfox est-il gratuit ?', "Oui. Kunfox est gratuit pour réviser. Si une offre payante apparaît un jour, l'essentiel des leçons et des quiz restera accessible gratuitement, et rien ne sera débité sans ton accord explicite."],
+  ['Faut-il Internet pour utiliser Kunfox ?', "Non. Les leçons et les quiz sont enregistrés dans l'application. Une connexion sert seulement, si tu le souhaites, à sauvegarder ta progression et à la retrouver sur un autre téléphone."],
+  ['Quand Kunfox sera-t-il disponible ?', "L'application est en cours de finition. Elle arrivera d'abord sur Android. Ce site sera mis à jour dès sa sortie."],
+  ['Sur quels téléphones Kunfox fonctionne-t-il ?', "Kunfox est pensé pour les téléphones Android, y compris les modèles d'entrée de gamme avec peu de mémoire."],
+  ['Quelles matières sont couvertes ?', "Aujourd'hui, le programme du Baccalauréat camerounais : mathématiques, physique, chimie, SVT, informatique, français, anglais, philosophie, histoire-géographie, selon ta série."],
+  ['Puis-je discuter avec d’autres élèves ?', "Pour échanger, partager une fiche ou réviser en groupe, Kunfox t'oriente vers Droplet, une messagerie qui fonctionne même sans Internet. Kunfox reste concentré sur l'apprentissage."],
+  ['Une leçon contient une erreur, que faire ?', "Écris-nous depuis la page Contact en indiquant la matière, le chapitre et la leçon. Nous corrigeons au plus vite."],
+  ['Comment supprimer mes données ?', "Tout ce qui est enregistré seulement sur ton téléphone disparaît quand tu désinstalles l'application. Pour supprimer un compte en ligne, écris-nous : la suppression est faite sous 30 jours. Détails sur la page Confidentialité."],
+];
+---
+<Page titre="Aide et questions" surtitre="Aide" description="Les réponses aux questions les plus fréquentes sur Kunfox."
+  chapo="Les réponses aux questions qu'on nous pose le plus souvent.">
+  <div class="faq">
+    {questions.map(([q, r]) => <details><summary>{q}</summary><p>{r}</p></details>)}
+  </div>
+  <div class="encadre"><p>Tu ne trouves pas ta réponse ? <a href="/contact">Écris-nous</a>.</p></div>
+</Page>

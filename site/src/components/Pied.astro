@@ -1,0 +1,32 @@
+---
+// Le pied de page, commun à toutes les pages : les liens de confiance.
+import Renard from './Renard.astro';
+import { CONTACT } from '../site';
+---
+<footer class="pied">
+  <div class="conteneur pied-grille">
+    <div class="pied-marque">
+      <a class="logo" href="/"><Renard taille={30} />Kunfox</a>
+      <p>Révise. Progresse. Monte.<br />Une app de la famille <a href="https://dropletmesh.app">Droplet</a>.</p>
+    </div>
+    <div>
+      <b>Kunfox</b>
+      <a href="/a-propos">À propos</a>
+      <a href="/#fonctions">Fonctions</a>
+      <a href="/aide">Aide et questions</a>
+    </div>
+    <div>
+      <b>Confiance</b>
+      <a href="/securite">Élèves et parents</a>
+      <a href="/confidentialite">Confidentialité</a>
+      <a href="/conditions">Conditions d'utilisation</a>
+      <a href="/mentions-legales">Mentions légales</a>
+    </div>
+    <div>
+      <b>Contact</b>
+      <a href="/contact">Nous écrire</a>
+      <a href={`mailto:${CONTACT}`}>{CONTACT}</a>
+    </div>
+  </div>
+  <div class="conteneur pied-bas">© {new Date().getFullYear()} Kunfox</div>
+</footer>

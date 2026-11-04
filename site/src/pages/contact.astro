@@ -1,0 +1,21 @@
+---
+import Page from '../layouts/Page.astro';
+import { CONTACT } from '../site';
+const sujets = [
+  ['Une erreur dans une leçon', "Indique la matière, le chapitre et la leçon.", 'Erreur dans une leçon'],
+  ['Une question sur mes données', "Consultation, correction ou suppression.", 'Mes données'],
+  ['Un problème avec l’application', "Décris ce qui se passe et le modèle de ton téléphone.", "Problème avec l'application"],
+  ['Établissements et partenaires', "Écoles, enseignants, associations.", 'Partenariat'],
+];
+---
+<Page titre="Nous écrire" surtitre="Contact" description="Contacter l'équipe Kunfox."
+  chapo="Une question, une idée, une erreur repérée ? Chaque message est lu.">
+  <div class="cartes-contact">
+    {sujets.map(([t, d, objet]) => (
+      <a class="encadre" href={`mailto:${CONTACT}?subject=${encodeURIComponent('Kunfox — ' + objet)}`}>
+        <p><b>{t}</b></p><p>{d}</p>
+      </a>
+    ))}
+  </div>
+  <p>Ou directement : <a href={`mailto:${CONTACT}`}>{CONTACT}</a>. Nous répondons en général sous quelques jours.</p>
+</Page>
