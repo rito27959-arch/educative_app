@@ -60,10 +60,13 @@ jobs:
       - name: Publier
         if: always()
         run: |
+          # Un dépôt à part, qui ne contient QUE les résultats : publier depuis
+          # le dossier du projet embarquait build/ (l'APK, des centaines de Mo)
+          # et le dépôt refusait l'envoi.
           mkdir -p resultats; cp -r captures resultats/ 2>/dev/null || true
-          cp -r resultats /tmp/resultats
+          rm -rf /tmp/pub && mkdir /tmp/pub && cp -r resultats/* /tmp/pub/
+          cd /tmp/pub
+          git init -q -b journal-ouro
           git config user.name ci; git config user.email ci@users.noreply.github.com
-          git checkout -q --orphan journal-ouro
-          git rm -rfq . > /dev/null
-          cp -r /tmp/resultats/* .
-          git add -A; git commit -qm "journal $GITHUB_SHA"; git push -fq origin journal-ouro
+          git add -A; git commit -qm "journal $GITHUB_SHA"
+          git push -fq "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" journal-ouro
