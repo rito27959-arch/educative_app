@@ -1,5 +1,6 @@
 # Publication de Kunfox : APK signés, un par processeur, attachés à une
-# version GitHub. Se lance en poussant une étiquette `kunfox-v*`.
+# version GitHub. Se lance en poussant la branche `publication-kunfox` ;
+# le numéro de version vient de pubspec.yaml (version: X.Y.Z+N).
 #
 # LA CLÉ DE SIGNATURE
 #   Elle est créée ici une seule fois, puis gardée sur la branche
@@ -10,7 +11,7 @@
 name: Publier Kunfox
 on:
   push:
-    tags: ['kunfox-v*']
+    branches: [publication-kunfox]
 permissions:
   contents: write
 jobs:
@@ -68,8 +69,9 @@ jobs:
       - name: Construire les APK par processeur
         run: |
           set -e
-          V=${GITHUB_REF_NAME#kunfox-v}
+          V=$(grep -E '^version:' pubspec.yaml | sed -E 's/version: *([0-9.]+).*/\1/')
           N=$(git rev-list --count HEAD)
+          echo "VERSION=$V" >> $GITHUB_ENV
           flutter pub get
           flutter build apk --release --split-per-abi --build-name "$V" --build-number "$N"
           mkdir -p sortie
@@ -81,7 +83,9 @@ jobs:
       - name: Publier la version
         uses: softprops/action-gh-release@v2
         with:
-          name: Kunfox ${{ github.ref_name }}
+          tag_name: kunfox-v${{ env.VERSION }}
+          target_commitish: ${{ github.sha }}
+          name: Kunfox ${{ env.VERSION }}
           body: |
             **Quel fichier choisir ?**
             - **Kunfox-arm64-v8a.apk** : presque tous les téléphones Android récents (2017 et après).
