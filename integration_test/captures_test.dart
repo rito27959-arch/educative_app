@@ -17,6 +17,7 @@ void main() {
 
   testWidgets('captures', (tester) async {
     await StorageService.init();
+    await Rappels.initialiser();
     await tester.pumpWidget(const ProviderScope(child: OuroPrepApp()));
     await binding.convertFlutterSurfaceToImage();
 

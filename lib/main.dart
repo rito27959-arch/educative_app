@@ -11,11 +11,9 @@ import 'core/services/sync_service.dart';
 import 'core/router.dart';
 import 'core/providers/settings_provider.dart';
 import 'core/providers/ui_provider.dart';
-import 'core/providers/mesh_provider.dart';
 import 'core/providers/auth_provider.dart';
 import 'design_system/ouro_colors.dart';
 import 'core/services/app_lifecycle.dart';
-import 'core/models/mesh_message.dart';
 import 'core/providers/courses_provider.dart';
 import 'kunfox/donnees/compte_droplet.dart';
 import 'kunfox/donnees/progression.dart';
@@ -169,15 +167,9 @@ class OuroPrepApp extends ConsumerWidget {
     final settings = ref.watch(settingsProvider);
     final ui = ref.watch(uiProvider);
     final auth = ref.watch(authProvider);
-    ref.watch(meshRepositoryProvider);
-
-    if (auth.isLoggedIn && auth.user != null) {
-      Future.microtask(() async {
-        final repo = ref.read(meshRepositoryProvider);
-        await repo.init(auth.user!.cryptoIdentity, auth.user!.pseudo);
-        ref.read(callProvider.notifier).init(repo.transport);
-      });
-    }
+    // Kunfox ne démarre plus le maillage (Bluetooth, Wi-Fi direct, appels) :
+    // les échanges entre élèves se font sur Droplet. Plus de demande de
+    // permissions Bluetooth ni de batterie consommée pour rien.
 
     Future.microtask(() => ref.read(seedingProvider));
 
@@ -224,7 +216,6 @@ class OuroPrepApp extends ConsumerWidget {
                     ),
                   ),
                 // (Le coach IA a été retiré de Kunfox avec le tuteur sur l'appareil.)
-                const _IncomingCallDetector(),
                 const ToastHost(),
               ],
             ),
@@ -232,90 +223,5 @@ class OuroPrepApp extends ConsumerWidget {
         );
       },
     );
-  }
-}
-
-/// Écoute les appels entrants et affiche un dialogue.
-class _IncomingCallDetector extends ConsumerStatefulWidget {
-  const _IncomingCallDetector();
-  @override
-  ConsumerState<_IncomingCallDetector> createState() => _IncomingCallDetectorState();
-}
-
-class _IncomingCallDetectorState extends ConsumerState<_IncomingCallDetector> {
-  bool _dialogShown = false;
-
-  @override
-  Widget build(BuildContext context) {
-    ref.listen<CallState>(callProvider, (prev, next) {
-      if (next.isCallActive &&
-          next.direction == CallDirection.incoming &&
-          next.connectionState == CallConnectionState.connecting &&
-          !_dialogShown) {
-        _dialogShown = true;
-        _showIncomingDialog(next.peerId ?? '');
-      }
-      if (!next.isCallActive) {
-        _dialogShown = false;
-      }
-    });
-    return const SizedBox.shrink();
-  }
-
-  void _showIncomingDialog(String peerId) {
-    final navContext = navigatorKey.currentContext;
-    if (navContext == null) {
-      debugPrint('[IncomingCallDetector] navigatorKey not ready yet');
-      return;
-    }
-    try {
-      showDialog(
-        context: navContext,
-        barrierDismissible: false,
-        builder: (ctx) => AlertDialog(
-          backgroundColor: const Color(0xFF0F0F14),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: const Row(
-            children: [
-              Icon(Icons.phone_in_talk, color: Color(0xFF2563FF), size: 24),
-              SizedBox(width: 12),
-              Text('Appel entrant', style: TextStyle(color: Colors.white, fontSize: 18)),
-            ],
-          ),
-          content: Text('Pair $peerId vous appelle…',
-              style: const TextStyle(color: Color(0xFF8888A0), fontSize: 14)),
-          actions: [
-            TextButton.icon(
-              onPressed: () {
-                ref.read(callProvider.notifier).hangUp();
-                Navigator.of(ctx).pop();
-              },
-              icon: const Icon(Icons.call_end, color: Color(0xFFFF3B30)),
-              label: const Text('Refuser', style: TextStyle(color: Color(0xFFFF3B30))),
-            ),
-            const SizedBox(width: 8),
-            TextButton.icon(
-              onPressed: () {
-                Navigator.of(ctx).pop();
-                Future.microtask(() {
-                  ref.read(callProvider.notifier).answerCall();
-                  final c = ref.read(callProvider);
-                  final peers = ref.read(meshPeerListProvider);
-                  final peer = peers.where((p) => p.peerId == c.peerId).firstOrNull;
-                  final pseudo = peer?.pseudo ?? c.peerPseudo ?? '';
-                  ref.read(routerProvider).go(
-                    '/call?peerId=${c.peerId ?? ''}&peerPseudo=${Uri.encodeComponent(pseudo)}',
-                  );
-                });
-              },
-              icon: const Icon(Icons.phone, color: Color(0xFF00E676)),
-              label: const Text('Répondre', style: TextStyle(color: Color(0xFF00E676))),
-            ),
-          ],
-        ),
-      );
-    } catch (e, s) {
-      debugPrint('[IncomingCallDetector] showDialog error: $e\n$s');
-    }
   }
 }
