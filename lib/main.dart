@@ -17,7 +17,7 @@ import 'design_system/ouro_colors.dart';
 import 'core/services/app_lifecycle.dart';
 import 'core/models/mesh_message.dart';
 import 'core/providers/courses_provider.dart';
-import 'design_system/ouro_theme.dart';
+import 'kunfox/theme/kunfox_theme.dart';
 import 'shared/widgets/mesh_toast.dart';
 import 'shared/widgets/ouro_expert_bubble.dart';
 
@@ -118,7 +118,7 @@ class _ErrorBoundaryState extends State<ErrorBoundary> {
               const Icon(Icons.error_outline, color: Color(0xFFFF3B30), size: 48),
               const SizedBox(height: 16),
               Text(
-                'Erreur OURO PREP',
+                'Oups, Kunfox a trébuché',
                 style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 8),
@@ -173,9 +173,11 @@ class OuroPrepApp extends ConsumerWidget {
     Future.microtask(() => ref.read(seedingProvider));
 
     return MaterialApp.router(
-      title: 'OURO PREP',
+      title: 'Kunfox',
       debugShowCheckedModeBanner: false,
-      theme: OuroTheme.dark,
+      theme: KunfoxTheme.clair(),
+      darkTheme: KunfoxTheme.sombre(),
+      themeMode: settings.darkMode ? ThemeMode.dark : ThemeMode.light,
       routerConfig: router,
       builder: (context, child) {
         return MediaQuery(
@@ -207,7 +209,8 @@ class OuroPrepApp extends ConsumerWidget {
                     builder: (context, _) {
                       final chemin = router.routerDelegate.currentConfiguration.uri.path;
                       const sansCoach = {'/splash', '/onboarding', '/auth'};
-                      if (sansCoach.contains(chemin)) return const SizedBox.shrink();
+                      // ni sur le parcours Kunfox ni pendant une leçon
+                      if (sansCoach.contains(chemin) || chemin.startsWith('/k')) return const SizedBox.shrink();
                       return const OuroExpertBubble();
                     },
                   ),

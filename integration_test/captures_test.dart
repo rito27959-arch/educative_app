@@ -5,6 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:ouro_prep/core/providers/auth_provider.dart';
+import 'package:ouro_prep/core/providers/settings_provider.dart';
+import 'package:ouro_prep/kunfox/donnees/progression.dart';
 import 'package:ouro_prep/core/router.dart';
 import 'package:ouro_prep/core/services/storage_service.dart';
 import 'package:ouro_prep/main.dart';
@@ -58,32 +60,73 @@ void main() {
     }
     await attendre(1500);
 
-    const routes = {
-      '04_dashboard': '/dashboard',
-      '05_curriculum': '/curriculum',
-      '06_matiere': '/curriculum/subject/maths',
-      '07_chapitre_intro': '/curriculum/subject/maths/chapter/maths_ch1/intro',
-      '08_lecon': '/curriculum/subject/maths/chapter/maths_ch1/lesson/maths_ch1_l1/reader',
-      '09_quiz_lecon': '/curriculum/subject/maths/chapter/maths_ch1/lesson/maths_ch1_l1/quiz',
-      '10_chapitre_fini': '/curriculum/subject/maths/chapter/maths_ch1/complete',
-      '11_gamification': '/gamification',
-      '12_ligues': '/leagues',
-      '13_profil': '/profile',
-      '14_reglages': '/settings',
-      '15_forum': '/forum',
-      '16_quiz_p2p': '/p2p-quiz',
-      '17_carte_mentale': '/mindmap',
-      '18_coach_vocal': '/voice-coach',
-      '19_cours': '/courses',
-    };
-    for (final e in routes.entries) {
-      try {
-        GoRouter.of(navigatorKey.currentContext!).go(e.value);
-      } catch (err) {
-        debugPrint('route ${e.value} : $err');
+    final routeur = GoRouter.of(navigatorKey.currentContext!);
+    Future<void> taper(String texte) async {
+      final f = find.text(texte);
+      if (f.evaluate().isEmpty) {
+        debugPrint('pas de « $texte » à l\'écran');
+        return;
       }
-      await attendre(2500);
-      await capture(e.key);
+      await tester.tap(f.first, warnIfMissed: false);
+      await attendre(900);
     }
+
+    // ── Kunfox : le parcours et les onglets (thème sombre « Nuit de renard »)
+    routeur.go('/k');
+    await attendre(3000);
+    await capture('20_parcours');
+    await taper('Réviser');
+    await capture('21_reviser');
+    await taper('Quêtes');
+    await capture('22_quetes');
+    await taper('Profil');
+    await capture('23_profil');
+    await taper('Parcours');
+
+    // ── une leçon : notions, exercice, vérification
+    routeur.push('/k/lecon/maths_ch1_l1');
+    await attendre(2500);
+    await capture('24_lecon_notion');
+    for (var i = 0; i < 6; i++) {
+      if (find.text('VÉRIFIER').evaluate().isNotEmpty) break;
+      await taper('CONTINUER');
+    }
+    await capture('25_lecon_question');
+    final tuiles = find.byType(Semantics);
+    debugPrint('semantics : ${tuiles.evaluate().length}');
+    await taper('1');
+    await capture('26_lecon_choix');
+    await taper('VÉRIFIER');
+    await attendre(800);
+    await capture('27_lecon_verifiee');
+    await taper('CONTINUER');
+    await capture('28_lecon_suivante');
+
+    // ── fin de leçon et série
+    routeur.go('/k/fin', extra: const BilanLecon(
+      xp: 20, precision: 100, duree: Duration(minutes: 2, seconds: 14),
+      serieAvant: 4, serieApres: 5, premiereDuJour: true, niveauAvant: 2, niveauApres: 2, chapitreFini: false,
+    ));
+    await attendre(1800);
+    await capture('29_fin_lecon');
+    await taper('CONTINUER');
+    await attendre(1500);
+    await capture('30_serie');
+
+    // ── thème clair « Aube »
+    container.read(settingsProvider.notifier).toggleDarkMode();
+    routeur.go('/k');
+    await attendre(2500);
+    await capture('31_parcours_aube');
+    routeur.push('/k/lecon/maths_ch1_l2');
+    await attendre(2000);
+    for (var i = 0; i < 6; i++) {
+      if (find.text('VÉRIFIER').evaluate().isNotEmpty) break;
+      await taper('CONTINUER');
+    }
+    await taper('2');
+    await taper('VÉRIFIER');
+    await attendre(800);
+    await capture('32_lecon_aube');
   });
 }

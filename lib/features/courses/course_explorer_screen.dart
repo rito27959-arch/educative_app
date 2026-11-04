@@ -160,7 +160,7 @@ class _CourseExplorerScreenState extends ConsumerState<CourseExplorerScreen> {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () => context.go('/dashboard'),
+            onTap: () => context.go('/k'),
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(

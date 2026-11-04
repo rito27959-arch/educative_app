@@ -177,7 +177,7 @@ class _VoiceCallScreenState extends ConsumerState<VoiceCallScreen>
           GestureDetector(
             onTap: () {
               ref.read(callProvider.notifier).hangUp();
-              context.go('/dashboard');
+              context.go('/k');
             },
             child: Container(
               padding: const EdgeInsets.all(10),
@@ -484,7 +484,7 @@ class _VoiceCallScreenState extends ConsumerState<VoiceCallScreen>
             isDestructive: true,
             onTap: () {
               ref.read(callProvider.notifier).hangUp();
-              context.go('/dashboard');
+              context.go('/k');
             },
           ),
         ],

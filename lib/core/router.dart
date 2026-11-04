@@ -34,6 +34,10 @@ import '../features/curriculum/chapter_complete_screen.dart';
 import '../features/curriculum/chapter_exam_screen.dart' as curriculum_exam;
 import '../features/curriculum/lock_unlock_screen.dart';
 import '../features/curriculum/bac_exam_screen.dart';
+import '../kunfox/donnees/progression.dart' show BilanLecon;
+import '../kunfox/ecrans/fin_lecon.dart';
+import '../kunfox/ecrans/onglets.dart';
+import '../kunfox/ecrans/seance.dart';
 import '../features/curriculum/bac_complete_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -49,6 +53,23 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/onboarding', name: 'onboarding', builder: (_, _) => const OnboardingScreen()),
       GoRoute(path: '/auth', name: 'auth', builder: (_, _) => const AuthScreen()),
       GoRoute(path: '/dashboard', name: 'dashboard', builder: (_, _) => const DashboardScreen()),
+      // ── Kunfox : parcours, séances, fin de leçon ──
+      GoRoute(path: '/k', name: 'kunfox', builder: (_, _) => const AccueilKunfox()),
+      GoRoute(path: '/k/revision', name: 'kunfox-revision', builder: (_, _) => const SeanceEcran()),
+      GoRoute(
+        path: '/k/lecon/:leconId',
+        name: 'kunfox-lecon',
+        builder: (_, state) => SeanceEcran(leconId: state.pathParameters['leconId']),
+      ),
+      GoRoute(
+        path: '/k/fin',
+        name: 'kunfox-fin',
+        builder: (_, state) {
+          final bilan = state.extra;
+          if (bilan is! BilanLecon) return const AccueilKunfox();
+          return FinLeconEcran(bilan: bilan);
+        },
+      ),
       GoRoute(path: '/courses', name: 'courses', builder: (_, _) => const CourseExplorerScreen()),
       GoRoute(
         path: '/reader/:courseId/:chapterId',
@@ -242,7 +263,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       }
       if (!isLoggedIn && path != '/auth') return '/auth';
       if (isLoggedIn && path == '/auth') {
-        return '/dashboard';
+        return '/k';
       }
       return null;
     },

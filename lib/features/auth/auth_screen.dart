@@ -78,7 +78,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
 
     try {
       await ref.read(authProvider.notifier).login(pseudo, _selectedBac);
-      if (mounted) context.go('/dashboard');
+      if (mounted) context.go('/k');
     } catch (e) {
       setState(() => _errorMessage = 'Erreur lors de la connexion');
     }

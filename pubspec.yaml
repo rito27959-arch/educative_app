@@ -41,6 +41,8 @@ dependencies:
   speech_to_text: ^7.0.0
   # L'écran d'ouverture animé (fichier construit avec la Rive CLI).
   rive: ^0.13.20
+  # Effets de jeu (ciel du parcours, confettis, étincelles).
+  flame: ^1.18.0
 
 dev_dependencies:
   flutter_test:
@@ -57,3 +59,24 @@ flutter:
   assets:
     - assets/course_content.json
     - assets/rive/
+  # Inter et Inter Tight, les polices du site (licence OFL, assets/fonts/OFL-Inter.txt).
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-400.ttf
+        - asset: assets/fonts/Inter-500.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-600.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-700.ttf
+          weight: 700
+        - asset: assets/fonts/Inter-800.ttf
+          weight: 800
+    - family: InterTight
+      fonts:
+        - asset: assets/fonts/InterTight-600.ttf
+          weight: 600
+        - asset: assets/fonts/InterTight-700.ttf
+          weight: 700
+        - asset: assets/fonts/InterTight-800.ttf
+          weight: 800
