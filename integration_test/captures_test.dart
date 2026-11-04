@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:ouro_prep/core/providers/auth_provider.dart';
 import 'package:ouro_prep/core/providers/settings_provider.dart';
+import 'package:ouro_prep/core/data/quiz_data.dart';
+import 'package:ouro_prep/kunfox/donnees/duels.dart';
 import 'package:ouro_prep/kunfox/donnees/progression.dart';
 import 'package:ouro_prep/kunfox/donnees/rappels.dart';
 import 'package:ouro_prep/core/router.dart';
@@ -118,6 +120,11 @@ void main() {
     ));
     await attendre(1800);
     await capture('29_fin_lecon');
+    await onglet(Icons.ios_share_rounded);
+    await attendre(1200);
+    await capture('29b_carte_partage');
+    await tester.tapAt(const Offset(20, 60));
+    await attendre(800);
     await taper('CONTINUER');
     await attendre(1500);
     await capture('30_serie');
@@ -149,6 +156,40 @@ void main() {
     await capture('34_parcours_suite');
     await onglet(Icons.emoji_events_rounded);
     await capture('35_quetes_aube');
+
+    // ── duel : entrée « VS », séance avec le fantôme, résultat
+    final qs = QuizData.getQuestionsForLesson('maths_c_ch1_l1', count: 6);
+    final ami = Joueur(nom: 'Awa', traces: [for (var i = 0; i < qs.length; i++) (i != 2, 2500 + i * 300)]);
+    final duelAmi = Duel(
+      code: 'ABCD2345', lecon: 'maths_c_ch1_l1', titre: 'Les ensembles', matiere: 'Mathématiques',
+      questions: qs, createur: ami, adversaires: const [],
+    );
+    final partieAmi = PartieDuel(lecon: duelAmi.lecon, titre: duelAmi.titre, matiere: duelAmi.matiere, questions: qs, duel: duelAmi);
+    routeur.push('/k/duel/nouveau', extra: partieAmi);
+    await attendre(500);
+    await capture('36_duel_entree_vol');
+    await attendre(1500);
+    await capture('36b_duel_entree');
+    await taper('RELEVER LE DÉFI');
+    await attendre(200);
+    await capture('37_duel_compte');
+    await attendre(3500);
+    await attendre(4000);
+    await capture('37b_duel_fantome');
+    routeur.go('/k/duel-fin', extra: (
+      PartieDuel(lecon: duelAmi.lecon, titre: duelAmi.titre, matiere: duelAmi.matiere, questions: qs),
+      Joueur(nom: 'Miguel', traces: [for (var i = 0; i < qs.length; i++) (true, 1800 + i * 200)]),
+    ));
+    await attendre(1000);
+    await capture('38_duel_course');
+    await attendre(3500);
+    await capture('38b_duel_fin');
+    await onglet(Icons.fitness_center_rounded);
+    routeur.go('/k');
+    await attendre(1200);
+    await onglet(Icons.fitness_center_rounded);
+    await attendre(2500);
+    await capture('39_reviser_duels');
 
     // ── deux rappels montrés tout de suite (capturés ensuite par adb)
     await Rappels.essai();

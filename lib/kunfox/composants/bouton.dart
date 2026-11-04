@@ -18,6 +18,7 @@ class BoutonKunfox extends StatefulWidget {
     this.icone,
     this.hauteur = 54,
     this.largeurPleine = true,
+    this.etiquette,
   });
 
   final String libelle;
@@ -28,6 +29,9 @@ class BoutonKunfox extends StatefulWidget {
   final IconData? icone;
   final double hauteur;
   final bool largeurPleine;
+
+  /// Ce que lit le lecteur d'écran quand le bouton n'a qu'une icône.
+  final String? etiquette;
 
   @override
   State<BoutonKunfox> createState() => _BoutonKunfoxState();
@@ -50,8 +54,12 @@ class _BoutonKunfoxState extends State<BoutonKunfox> {
       mainAxisSize: widget.largeurPleine ? MainAxisSize.max : MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (widget.icone != null) ...[Icon(widget.icone, color: texte, size: 20), const SizedBox(width: 8)],
-        Flexible(
+        if (widget.icone != null) ...[
+          Icon(widget.icone, color: texte, size: widget.libelle.isEmpty ? 24 : 20),
+          if (widget.libelle.isNotEmpty) const SizedBox(width: 8),
+        ],
+        if (widget.libelle.isNotEmpty)
+          Flexible(
           child: Text(
             widget.libelle.toUpperCase(),
             overflow: TextOverflow.ellipsis,
@@ -64,7 +72,7 @@ class _BoutonKunfoxState extends State<BoutonKunfox> {
     return Semantics(
       button: true,
       enabled: actif,
-      label: widget.libelle,
+      label: widget.etiquette ?? widget.libelle,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: actif ? (_) => setState(() => _enfonce = true) : null,

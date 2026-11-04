@@ -34,13 +34,16 @@ import '../features/curriculum/lock_unlock_screen.dart';
 import '../features/curriculum/bac_exam_screen.dart';
 import '../kunfox/donnees/progression.dart' show BilanLecon;
 import '../kunfox/ecrans/bienvenue.dart';
+import '../kunfox/donnees/duels.dart' show PartieDuel, Joueur;
 import '../kunfox/ecrans/connexion_droplet.dart';
+import '../kunfox/ecrans/duel.dart';
 import '../kunfox/ecrans/fin_lecon.dart';
 import '../kunfox/ecrans/onglets.dart';
 import '../kunfox/ecrans/seance.dart';
 import '../features/curriculum/bac_complete_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
+const _duelEnAttente = 'kunfox.duel.attente';
 
 final routerProvider = Provider<GoRouter>((ref) {
   // Le routeur est créé UNE fois. Avant, il était recréé à chaque changement
@@ -91,6 +94,36 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
             ),
             child: bilan is BilanLecon ? FinLeconEcran(bilan: bilan) : const AccueilKunfox(),
+          );
+        },
+      ),
+      // ── Duels : kunfox://kunfox/duel/<CODE> ou le lien du site /d/<CODE>
+      GoRoute(path: '/duel/:code', redirect: (_, state) => '/k/duel/${state.pathParameters['code']!.toUpperCase()}'),
+      GoRoute(path: '/d/:code', redirect: (_, state) => '/k/duel/${state.pathParameters['code']!.toUpperCase()}'),
+      GoRoute(
+        path: '/k/duel/nouveau',
+        pageBuilder: (_, state) => _monte(state, DuelEntreeEcran(partie: state.extra as PartieDuel?)),
+      ),
+      GoRoute(
+        path: '/k/duel/:code',
+        pageBuilder: (_, state) => _monte(state, DuelEntreeEcran(code: state.pathParameters['code'])),
+      ),
+      GoRoute(
+        path: '/k/duel-seance',
+        pageBuilder: (_, state) {
+          final partie = state.extra;
+          return _monte(state, partie is PartieDuel ? SeanceEcran(duel: partie) : const AccueilKunfox());
+        },
+      ),
+      GoRoute(
+        path: '/k/duel-fin',
+        pageBuilder: (_, state) {
+          final x = state.extra;
+          return CustomTransitionPage(
+            key: state.pageKey,
+            transitionDuration: const Duration(milliseconds: 420),
+            transitionsBuilder: (_, a, _, enfant) => FadeTransition(opacity: a, child: enfant),
+            child: x is (PartieDuel, Joueur) ? DuelFinEcran(partie: x.$1, moi: x.$2) : const AccueilKunfox(),
           );
         },
       ),
@@ -282,6 +315,19 @@ final routerProvider = Provider<GoRouter>((ref) {
       final onboardingDone = StorageService.isOnboardingComplete();
       // Le retour de Droplet doit passer même avant l'inscription.
       if (path == '/splash' || path == '/connexion') return null;
+      // Un lien de duel ouvert avant l'inscription : on le garde pour après.
+      final duel = RegExp(r'^/k/duel/([A-Za-z0-9]{8})$').firstMatch(path);
+      if (duel != null && (!onboardingDone || !isLoggedIn)) {
+        StorageService.setString(_duelEnAttente, duel.group(1)!);
+        return onboardingDone ? '/auth' : '/onboarding';
+      }
+      if (isLoggedIn && path == '/k') {
+        final code = StorageService.getString(_duelEnAttente);
+        if (code != null && code.isNotEmpty) {
+          StorageService.remove(_duelEnAttente);
+          return '/k/duel/$code';
+        }
+      }
       if (!onboardingDone) {
         if (path != '/onboarding') return '/onboarding';
         return null;

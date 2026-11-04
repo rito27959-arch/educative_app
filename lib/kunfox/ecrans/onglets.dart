@@ -21,6 +21,7 @@ import '../composants/sons.dart';
 import '../donnees/matieres.dart';
 import '../donnees/progression.dart';
 import '../theme/palette.dart';
+import 'duel.dart';
 import 'parcours.dart';
 
 class AccueilKunfox extends StatefulWidget {
@@ -147,11 +148,100 @@ class _Reviser extends ConsumerWidget {
           const KunfoxMascotte(humeur: HumeurKunfox.reflexion, taille: 110),
         ]),
       ),
+      const SizedBox(height: 14),
+      // ── duel : le même sujet, les mêmes questions, contre un ami
+      _CarteAction(
+        couleur: violetDuel,
+        icone: Icons.sports_kabaddi_rounded,
+        titre: 'Défier un ami',
+        texte: 'Mêmes questions, même chrono. Le meilleur score gagne.',
+        bouton: 'Lancer un duel',
+        surAppui: () => lancerNouveauDuel(context, ref),
+        secondaire: ('J\'ai un code', () => saisirCodeDuel(context)),
+      ),
+      const SizedBox(height: 12),
+      // ── Droplet : réviser ensemble, discuter
+      _CarteAction(
+        couleur: const Color(0xFF2F80ED),
+        icone: Icons.water_drop_rounded,
+        titre: 'Réviser ensemble sur Droplet',
+        texte: 'Crée un groupe avec ta classe, partage tes fiches et discute des exercices.',
+        bouton: 'Ouvrir Droplet',
+        surAppui: CompteDroplet.ouvrirDroplet,
+      ),
+      const MesDuels(),
       const SizedBox(height: 16),
       _Ligne(icone: Icons.check_circle_rounded, couleur: p.succes, titre: '$faites leçons faites dans cette matière'),
       _Ligne(icone: Icons.local_fire_department_rounded, couleur: p.prim, titre: 'Meilleur combo : ${prog.meilleurCombo} d\'affilée'),
       _Ligne(icone: Icons.favorite_rounded, couleur: p.erreur, titre: '${prog.coeursActuels} cœurs sur $kCoeursMax'),
     ]);
+  }
+}
+
+/// Une carte « carton » colorée : titre, phrase, bouton.
+class _CarteAction extends StatelessWidget {
+  const _CarteAction({
+    required this.couleur,
+    required this.icone,
+    required this.titre,
+    required this.texte,
+    required this.bouton,
+    required this.surAppui,
+    this.secondaire,
+  });
+  final Color couleur;
+  final IconData icone;
+  final String titre;
+  final String texte;
+  final String bouton;
+  final VoidCallback surAppui;
+  final (String, VoidCallback)? secondaire;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = Palette.of(context);
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: p.surface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: p.bord, width: 2),
+        boxShadow: [BoxShadow(color: p.bord, offset: const Offset(0, 4))],
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(color: couleur.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(14)),
+            child: Icon(icone, color: couleur, size: 26),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(titre, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+              const SizedBox(height: 2),
+              Text(texte, style: TextStyle(color: p.doux, fontWeight: FontWeight.w600, height: 1.3)),
+            ]),
+          ),
+        ]),
+        const SizedBox(height: 12),
+        Row(children: [
+          Expanded(child: BoutonKunfox(libelle: bouton, couleur: couleur, hauteur: 46, surAppui: surAppui)),
+          if (secondaire != null) ...[
+            const SizedBox(width: 10),
+            BoutonKunfox(
+              libelle: secondaire!.$1,
+              contour: true,
+              hauteur: 46,
+              largeurPleine: false,
+              couleur: couleur,
+              surAppui: secondaire!.$2,
+            ),
+          ],
+        ]),
+      ]),
+    );
   }
 }
 

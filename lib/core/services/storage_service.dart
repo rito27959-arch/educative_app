@@ -401,6 +401,7 @@ class StorageService {
   static String? getString(String key) => _settingsCache[key]?.toString();
 
   static Future<void> setString(String key, String value) async {
+    _settingsCache[key] = value; // tout de suite : la lecture suivante le voit
     final d = _database;
     if (d != null) {
       await d.into(d.appSettings).insert(
@@ -412,6 +413,7 @@ class StorageService {
   }
 
   static Future<void> remove(String key) async {
+    _settingsCache.remove(key);
     final d = _database;
     if (d != null) {
       await (d.delete(d.appSettings)..where((t) => t.key.equals(key))).go();

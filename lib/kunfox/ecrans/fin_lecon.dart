@@ -15,6 +15,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
 import '../composants/bouton.dart';
+import '../composants/carte_partage.dart';
+import '../composants/fond_anime.dart';
 import '../composants/sons.dart';
 import '../../core/services/storage_service.dart';
 import '../donnees/progression.dart';
@@ -60,6 +62,25 @@ class _FinLeconEcranState extends ConsumerState<FinLeconEcran> with TickerProvid
     // l'élève — au moment où l'envie est là, pas au lancement de l'app.
     if (!Rappels.demandeFaite) await _proposerRappels();
     if (mounted) context.go('/k');
+  }
+
+  void _partager() {
+    final b = widget.bilan;
+    final serie = ref.read(progressionProvider).serie;
+    partagerCarte(
+      context,
+      CartePartage(
+        bandeau: b.precision == 100 ? 'SANS FAUTE' : (b.chapitreFini ? 'CHAPITRE FINI' : null),
+        titre: b.chapitreFini ? 'Chapitre terminé !' : (b.precision == 100 ? 'Sans faute !' : 'Leçon terminée !'),
+        sousTitre: serie > 1 ? '$serie jours de série d\'affilée 🔥' : 'Une leçon de plus vers le bac',
+        stats: [
+          StatCarte(Icons.bolt_rounded, '+${b.xp}', 'XP'),
+          StatCarte(Icons.track_changes_rounded, '${b.precision} %', 'PRÉCISION'),
+          StatCarte(Icons.local_fire_department_rounded, '$serie', 'SÉRIE'),
+        ],
+      ),
+      texte: 'Je révise le bac avec Kunfox : ${b.precision} % à ma dernière leçon. Viens réviser avec moi ! https://kunfox.dropletmesh.app',
+    );
   }
 
   Future<void> _proposerRappels() async {
@@ -117,6 +138,16 @@ class _FinLeconEcranState extends ConsumerState<FinLeconEcran> with TickerProvid
       },
       child: Scaffold(
         body: Stack(children: [
+          Positioned.fill(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 600),
+              child: FondRayons(
+                key: ValueKey(_serie),
+                couleur: _serie ? p.prim : p.or,
+                centre: Alignment(0, _serie ? -0.42 : -0.38),
+              ),
+            ),
+          ),
           SafeArea(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 420),
@@ -189,7 +220,18 @@ class _FinLeconEcranState extends ConsumerState<FinLeconEcran> with TickerProvid
                           ),
                         ]),
                         const Spacer(),
-                        BoutonKunfox(libelle: 'Continuer', surAppui: _suite),
+                        Row(children: [
+                          BoutonKunfox(
+                            libelle: '',
+                            etiquette: 'Partager mon résultat',
+                            icone: Icons.ios_share_rounded,
+                            contour: true,
+                            largeurPleine: false,
+                            surAppui: _partager,
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(child: BoutonKunfox(libelle: 'Continuer', surAppui: _suite)),
+                        ]),
                       ]),
                     ),
             ),

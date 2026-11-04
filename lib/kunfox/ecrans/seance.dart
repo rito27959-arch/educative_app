@@ -29,6 +29,8 @@ import '../donnees/progression.dart';
 import '../donnees/rappels.dart';
 import '../flame/effets_flame.dart';
 import '../theme/palette.dart';
+import '../donnees/duels.dart';
+import 'duel.dart' show FantomeDuel;
 
 sealed class _Etape {}
 
@@ -49,10 +51,13 @@ class _Exercice extends _Etape {
 }
 
 class SeanceEcran extends ConsumerStatefulWidget {
-  const SeanceEcran({super.key, this.leconId});
+  const SeanceEcran({super.key, this.leconId, this.duel});
 
   /// null : révision de la matière en cours.
   final String? leconId;
+
+  /// Une séance de duel : les questions sont fixées, pas de cœurs perdus.
+  final PartieDuel? duel;
 
   @override
   ConsumerState<SeanceEcran> createState() => _SeanceEcranState();
@@ -76,7 +81,12 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
   int _pertes = 0; // compte les cœurs perdus, pour rejouer l'animation
   bool _coeurSeBrise = false;
 
-  bool get _revision => widget.leconId == null;
+  bool get _revision => widget.leconId == null && widget.duel == null;
+  bool get _duel => widget.duel != null;
+
+  // duel : juste/faux et temps de chaque réponse
+  final List<(bool, int)> _traces = [];
+  DateTime _debutQuestion = DateTime.now();
 
   @override
   void initState() {
@@ -87,6 +97,11 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
   void _preparer() {
     LessonContentData.init();
     final questions = <QuizQuestion>[];
+    if (_duel) {
+      _file.addAll(widget.duel!.questions.map(_Exercice.new));
+      _totalInitial = math.max(1, _file.length);
+      return;
+    }
     if (!_revision) {
       // Les leçons des séries C et TI reprennent souvent celles de la série D :
       // à défaut de fiche propre, on prend la fiche jumelle (maths_c_ch1_l1 → maths_ch1_l1).
@@ -125,6 +140,7 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
     final e = _etape;
     if (e is! _Exercice || _choix == null) return;
     final juste = _choix == e.q.correctIndex;
+    if (_duel) _traces.add((juste, DateTime.now().difference(_debutQuestion).inMilliseconds));
     setState(() {
       _phase = _Phase.verifiee;
       _juste = juste;
@@ -136,7 +152,7 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
       } else {
         _combo = 0;
         // la question reviendra en fin de séance (une seule fois)
-        if (_deja.add(e.q.id)) _file.add(_Exercice(e.q, reprise: true));
+        if (!_duel && _deja.add(e.q.id)) _file.add(_Exercice(e.q, reprise: true));
       }
     });
     Sons.jouer(juste ? Son.juste : Son.faux);
@@ -150,7 +166,7 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
       }
     } else {
       HapticFeedback.heavyImpact();
-      if (!_revision) {
+      if (!_revision && !_duel) {
         ref.read(progressionProvider.notifier).perdreCoeur();
         // un cœur se brise au-dessus du compteur, puis s'efface
         setState(() {
@@ -165,7 +181,7 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
   }
 
   void _continuer() {
-    if (!_revision && ref.read(progressionProvider).coeursActuels <= 0 && _phase == _Phase.verifiee && !_juste) {
+    if (!_revision && !_duel && ref.read(progressionProvider).coeursActuels <= 0 && _phase == _Phase.verifiee && !_juste) {
       _plusDeCoeurs();
       return;
     }
@@ -177,10 +193,25 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
       _index++;
       _choix = null;
       _phase = _Phase.reponse;
+      _debutQuestion = DateTime.now();
     });
   }
 
   void _terminer() {
+    if (_duel) {
+      // un duel compte comme une révision : XP et série
+      ref.read(progressionProvider.notifier).terminer(
+            leconId: null,
+            bonnes: _bonnes,
+            total: _reponses,
+            duree: DateTime.now().difference(_debut),
+            meilleurCombo: _meilleurCombo,
+          );
+      Rappels.noterLecon();
+      context.pushReplacement('/k/duel-fin',
+          extra: (widget.duel!, Joueur(nom: Duels.monNom(), traces: List.of(_traces))));
+      return;
+    }
     final bilan = ref.read(progressionProvider.notifier).terminer(
           leconId: widget.leconId,
           bonnes: _bonnes,
@@ -317,7 +348,9 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  if (_revision)
+                  if (_duel)
+                    const Icon(Icons.sports_kabaddi_rounded, color: Color(0xFF8B5CF6))
+                  else if (_revision)
                     Icon(Icons.fitness_center_rounded, color: p.info)
                   else ...[
                     SizedBox(
@@ -360,6 +393,13 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
                       )
                     : const SizedBox(height: 18),
               ),
+              if (widget.duel?.duel != null)
+                FantomeDuel(
+                  adversaire: widget.duel!.duel!.createur,
+                  mesReponses: _traces.length,
+                  total: widget.duel!.questions.length,
+                  enCourse: _phase == _Phase.reponse,
+                ),
               Expanded(
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 380),

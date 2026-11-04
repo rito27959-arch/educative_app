@@ -65,6 +65,7 @@ flutter:
     - assets/course_content.json
     - assets/rive/
     - assets/sons/
+    - assets/images/
   # Inter et Inter Tight, les polices du site (licence OFL, assets/fonts/OFL-Inter.txt).
   fonts:
     - family: Inter
