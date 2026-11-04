@@ -258,7 +258,7 @@ class ProgressionNotifier extends StateNotifier<Progression> {
     final serieApres = premiere ? (p.dernierJour == hier ? p.serie + 1 : 1) : p.serie;
     final precision = total == 0 ? 100 : (bonnes * 100 / total).round();
     final sansFaute = total > 0 && bonnes == total;
-    final xp = (leconId == null ? 10 : 15) + (sansFaute ? 5 : 0) + math.min(5, meilleurCombo ~/ 3);
+    final int xp = ((leconId == null ? 10 : 15) + (sansFaute ? 5 : 0) + math.min(5, meilleurCombo ~/ 3)).toInt();
     final niveauAvant = p.niveau;
 
     var chapitreFini = false;
