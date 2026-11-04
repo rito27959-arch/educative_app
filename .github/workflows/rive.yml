@@ -15,7 +15,7 @@ jobs:
       - name: Installer la Rive CLI
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq libegl1 libgles2 libgl1 libgl1-mesa-dri xvfb libvulkan1 mesa-vulkan-drivers > /dev/null
+          sudo apt-get install -y -qq libegl1 libgles2 libgl1 libgl1-mesa-dri xvfb libvulkan1 mesa-vulkan-drivers ffmpeg > /dev/null
           curl -fsSL https://releases.rive.app/cli/install.sh | sh
           echo "$HOME/.rive/bin" >> "$GITHUB_PATH"
       - name: Documentation et construction
@@ -50,6 +50,15 @@ jobs:
             for ms in 0 120 250 400 550 700 900 1200 1600 2100 2600 3200; do
               rive $p --screenshot=/tmp/sortie/$n/c_$(printf %05d $ms).png --advance=${ms}ms >> /tmp/sortie/$n/captures.txt 2>&1
             done
+          done
+          # vidéos : une image toutes les 33 ms, assemblées en MP4 (30 i/s)
+          for n in mascotte_joie mascotte_courage mascotte_fete mascotte_attente; do
+            d=rive/apercus/$n; [ -d $d ] || continue
+            mkdir -p /tmp/images/$n
+            for i in $(seq 0 89); do
+              rive $d --screenshot=/tmp/images/$n/v_$(printf %03d $i).png --advance=$((i * 33))ms >/dev/null 2>&1
+            done
+            ffmpeg -loglevel error -y -framerate 30 -i /tmp/images/$n/v_%03d.png -vf "scale=480:-2" -pix_fmt yuv420p -movflags +faststart /tmp/sortie/$n/$n.mp4
           done
           grep -H "" /tmp/sortie/*/verification.txt /tmp/sortie/*/construction.txt > /tmp/sortie/bilan.txt
           true

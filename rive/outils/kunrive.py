@@ -126,7 +126,10 @@ class Forme(Objet):
 
 
 class F(Forme):
-    def __init__(self, nom, d, pivot=None, **k):
+    """Forme à chemin. `formes={'nom': d, ...}` en fait une forme qui se
+    MORPHE : chaque sommet reçoit un id et peut être animé d'une forme à
+    l'autre (même nombre de sommets partout), avec Anim.forme()."""
+    def __init__(self, nom, d, pivot=None, formes=None, nom_base='base', **k):
         self.d = d
         cs = contours(d)
         if pivot is None:
@@ -134,6 +137,42 @@ class F(Forme):
             pivot = ((min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2)
         super().__init__(nom, pivot, **k)
         self.contours = cs
+        self.formes = None
+        if formes:
+            self.nom_base = nom_base
+            self.formes = {nom_base: self.params(cs)}
+            for n, dd in formes.items():
+                p = self.params(contours(dd))
+                base = self.formes[nom_base]
+                assert len(p) == len(base), f'{nom}/{n} : {len(p)} sommets au lieu de {len(base)}'
+                self.formes[n] = _aligner(p, base)
+            self.vids = [nid() for _ in self.formes[nom_base]]
+
+    def params(self, cs):
+        """Sommets → [(x, y, inRot, inDist, outRot, outDist)] relatifs au pivot."""
+        out = []
+        for pts, _ in cs:
+            for (x, y), hi, ho in pts:
+                def pol(h):
+                    if h is None or math.dist(h, (x, y)) < 1e-6: return None, 0.0
+                    return math.atan2(h[1] - y, h[0] - x), math.dist(h, (x, y))
+                ir, idd = pol(hi); orr, od = pol(ho)
+                out.append([x - self.pivot[0], y - self.pivot[1], ir, idd, orr, od])
+        # une poignée nulle prend l'angle opposé à l'autre (ou 0) : pas de toupie
+        for v in out:
+            if v[2] is None: v[2] = (v[4] + math.pi) if v[4] is not None else 0.0
+            if v[4] is None: v[4] = v[2] - math.pi
+        return out
+
+
+def _proche(a, ref):
+    """L'angle a, ramené au tour le plus proche de ref (interpolation sans toupie)."""
+    while a - ref > math.pi: a -= 2 * math.pi
+    while a - ref < -math.pi: a += 2 * math.pi
+    return a
+
+def _aligner(p, base):
+    return [[v[0], v[1], _proche(v[2], b[2]), v[3], _proche(v[4], b[4]), v[5]] for v, b in zip(p, base)]
 
 
 class E(Forme):
@@ -197,7 +236,17 @@ def rml_objet(o, parent_pivot=(0, 0), ind='    '):
         corps = '\n'.join(rml_objet(e, o.pivot, ind + '  ') for e in o.enfants)
         return f'{ind}<Node {t} name="{o.nom}" id="{o.id}">\n{corps}\n{ind}</Node>'
     geo = ''
-    if isinstance(o, F):
+    if isinstance(o, F) and o.formes:
+        k = 0
+        for pts, ferme in o.contours:
+            som = ''
+            for _ in pts:
+                x, y, ir, idd, orr, od = o.formes[o.nom_base][k]
+                som += (f'<CubicDetachedVertex x="{_f(x)}" y="{_f(y)}" inRotation="{_f(ir)}" inDistance="{_f(idd)}" '
+                        f'outRotation="{_f(orr)}" outDistance="{_f(od)}" id="{o.vids[k]}"/>')
+                k += 1
+            geo += f'<PointsPath isClosed="{"true" if ferme else "false"}" name="P">{som}</PointsPath>'
+    elif isinstance(o, F):
         for pts, ferme in o.contours:
             som = ''.join(_sommet(p, o.pivot) for p in pts)
             geo += f'<PointsPath isClosed="{"true" if ferme else "false"}" name="P">{som}</PointsPath>'
@@ -232,6 +281,11 @@ class Anim:
     def cle(self, objet, prop, *images):
         self.pistes[(objet, prop)] = list(images)
         return self
+    def forme(self, objet, *images):
+        """Morph : images = (image, nom_de_forme, courbe), ..."""
+        self.pistes[(objet, 'forme')] = list(images)
+        return self
+
     def fixe(self, objet, prop, valeur):
         self.pistes[(objet, prop)] = [(0, valeur, 'hold')]
         return self
@@ -248,7 +302,13 @@ def _kf(image, valeur, courbe):
 def rml_anim(a):
     par_objet = {}
     for (o, p), imgs in a.pistes.items():
-        if p == 'trim':
+        if p == 'forme':
+            # un KeyedObject par sommet, six propriétés chacun
+            for k, vid in enumerate(o.vids):
+                for j, cle in enumerate((24, 25, 84, 85, 86, 87)):
+                    par_objet.setdefault(vid, []).append(
+                        (cle, [(f, o.formes[n][k][j], c) for f, n, c in imgs]))
+        elif p == 'trim':
             par_objet.setdefault(o.trim_id, []).append((CLE_TRIM_FIN, imgs))
         else:
             if p in ('x', 'y'):
@@ -349,15 +409,41 @@ def valeur(images, t):
             return v0 + (v1 - v0) * _ease(c0, u)
     return images[-1][1]
 
+def _forme_a(o, imgs, t):
+    def lerp(a, b, u): return [x + (y - x) * u for x, y in zip(a, b)]
+    P = o.formes
+    if t <= imgs[0][0]: return P[imgs[0][1]]
+    for (f0, n0, c0), (f1, n1, _) in zip(imgs, imgs[1:]):
+        if f0 <= t <= f1:
+            if c0 == 'hold': return P[n0] if t < f1 else P[n1]
+            u = _ease(c0, (t - f0) / (f1 - f0)) if f1 > f0 else 1
+            return [lerp(a, b, u) for a, b in zip(P[n0], P[n1])]
+    return P[imgs[-1][1]]
+
 def etat_a(anims_et_temps):
     """[(anim, image), ...] dans l'ordre des couches → {(objet, prop): valeur}"""
     v = {}
     for a, t in anims_et_temps:
         for k, imgs in a.pistes.items():
-            v[k] = valeur(imgs, t)
+            v[k] = _forme_a(k[0], imgs, t) if k[1] == 'forme' else valeur(imgs, t)
     return v
 
 def _pt(p, pv): return f'{_f(p[0] - pv[0])} {_f(p[1] - pv[1])}'
+
+def _svg_morph(o, params):
+    d = ''; k = 0
+    for pts, ferme in o.contours:
+        n = len(pts); vs = params[k:k + n]; k += n
+        def pt(v): return f'{_f(v[0])} {_f(v[1])}'
+        def h(v, entree):
+            a, dist = (v[2], v[3]) if entree else (v[4], v[5])
+            return (v[0] + math.cos(a) * dist, v[1] + math.sin(a) * dist)
+        d += f'M{pt(vs[0])}'
+        for i in range(1, n + (1 if ferme else 0)):
+            a = vs[i - 1]; b = vs[i % n]
+            d += f'C{pt(h(a, False))} {pt(h(b, True))} {pt(b)}'
+        if ferme: d += 'Z'
+    return d
 
 def _svg_chemin(o):
     d = ''
@@ -408,7 +494,8 @@ def svg_objet(o, v, parent_pivot, defs):
     if isinstance(o, G):
         corps = ''.join(svg_objet(e, v, o.pivot, defs) for e in reversed(o.enfants))
         return f'<g transform="{tr}" opacity="{op:.3f}">{corps}</g>'
-    if isinstance(o, F): d = _svg_chemin(o)
+    if isinstance(o, F) and o.formes: d = _svg_morph(o, v.get((o, 'forme'), o.formes[o.nom_base]))
+    elif isinstance(o, F): d = _svg_chemin(o)
     elif isinstance(o, E): d = None
     elif isinstance(o, Etoile): d = _etoile(o)
     else: d = None

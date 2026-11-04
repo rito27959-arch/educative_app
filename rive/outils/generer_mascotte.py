@@ -58,21 +58,60 @@ def toque():
         F('Calotte', t('M-72 30 L-72 78 Q0 112 72 78 L72 30 L0 62 Z'), remplissage='0C1630'),
     ], rotation=0.24)
 
+KAPPA = 0.5523
+
+def ellipse_c(cx, cy, rx, ry):
+    """Ellipse en 4 sommets cubiques (haut, droite, bas, gauche)."""
+    k, kx, ky = KAPPA, KAPPA * rx, KAPPA * ry
+    return (f'M{cx} {cy - ry} C{cx + kx} {cy - ry} {cx + rx} {cy - ky} {cx + rx} {cy} '
+            f'C{cx + rx} {cy + ky} {cx + kx} {cy + ry} {cx} {cy + ry} '
+            f'C{cx - kx} {cy + ry} {cx - rx} {cy + ky} {cx - rx} {cy} '
+            f'C{cx - rx} {cy - ky} {cx - kx} {cy - ry} {cx} {cy - ry} Z')
+
+def lisse(pts, coins=(), t=0.32):
+    """Chemin fermé et doux passant par `pts` (Catmull-Rom → cubiques) ;
+    les indices de `coins` restent pointus."""
+    n = len(pts)
+    def poignees(i):
+        if i in coins: return pts[i], pts[i]
+        a, b, c = pts[(i - 1) % n], pts[i], pts[(i + 1) % n]
+        dx, dy = (c[0] - a[0]) * t, (c[1] - a[1]) * t
+        return (b[0] - dx, b[1] - dy), (b[0] + dx, b[1] + dy)
+    h = [poignees(i) for i in range(n)]
+    d = f'M{pts[0][0]:.1f} {pts[0][1]:.1f}'
+    for i in range(1, n + 1):
+        j = i % n
+        d += f' C{h[i - 1][1][0]:.1f} {h[i - 1][1][1]:.1f} {h[j][0][0]:.1f} {h[j][0][1]:.1f} {pts[j][0]:.1f} {pts[j][1]:.1f}'
+    return d + ' Z'
+
+def formes_oeil(cx, cy=528):
+    """Un œil, quatre formes entre lesquelles il se MORPHE (même 4 sommets)."""
+    return {
+        'ouvert': ellipse_c(cx, cy, 35, 41),
+        # œil rieur « ^ » : un arc épais
+        'heureux': lisse([(cx, cy - 26), (cx + 38, cy + 14), (cx, cy - 6), (cx - 38, cy + 14)], coins=(1, 3), t=0.28),
+        # œil fermé, détendu (dodo)
+        'ferme': lisse([(cx, cy + 6), (cx + 36, cy - 2), (cx, cy + 18), (cx - 36, cy - 2)], coins=(1, 3), t=0.3),
+        # paupière à moitié baissée (réflexion, courage)
+        'mi_clos': lisse([(cx, cy - 8), (cx + 35, cy + 4), (cx, cy + 41), (cx - 35, cy + 4)], coins=(), t=0.36),
+    }
+
 def oeil(cote):
     cx = 404 if cote == 'g' else 620
-    return G(f'Oeil {cote.upper()}', (cx, 528), [
-        E('Reflet petit', (cx - 14, 552), 12, 12, remplissage=BLANC),
-        E('Reflet', (cx + 12, 510), 26, 26, remplissage=BLANC),
-        E('Iris', (cx, 528), 70, 82, remplissage=NUIT),
-    ])
+    f = formes_oeil(cx)
+    return F(f'Oeil {cote.upper()}', f.pop('ouvert'), formes=f, nom_base='ouvert', remplissage=NUIT)
 
-def oeil_heureux(cote):
+def reflets(cote):
     cx = 404 if cote == 'g' else 620
-    return F(f'Heureux {cote.upper()}', f'M{cx - 36} 546 Q{cx} 496 {cx + 36} 546', trait=NUIT, epaisseur=20)
+    return [E('Reflet petit', (cx - 14, 552), 12, 12, remplissage=BLANC), E('Reflet', (cx + 12, 510), 26, 26, remplissage=BLANC)]
 
-def oeil_ferme(cote):
-    cx = 404 if cote == 'g' else 620
-    return F(f'Ferme {cote.upper()}', f'M{cx - 34} 530 Q{cx} 562 {cx + 34} 530', trait=NUIT, epaisseur=16)
+# La bouche : une seule forme qui se morphe (six sommets, coins pointus aux commissures)
+BOUCHE = {
+    'sourire': lisse([(480, 746), (498, 760), (526, 760), (544, 746), (527, 776), (497, 776)], coins=(0, 3)),
+    'grand': lisse([(466, 738), (494, 736), (530, 736), (558, 738), (538, 808), (486, 808)], coins=(0, 3)),
+    'triste': lisse([(484, 772), (498, 754), (526, 754), (540, 772), (526, 764), (498, 764)], coins=(0, 3)),
+    'o': lisse([(496, 760), (504, 744), (520, 744), (528, 760), (520, 778), (504, 778)], coins=(), t=0.25),
+}
 
 def sourcil(cote):
     d = 'M370 456 Q404 438 440 450'
@@ -100,22 +139,15 @@ def construire():
     o = {}
     def n(cle, obj): o[cle] = obj; return obj
 
-    yeux_ouverts = n('yeux_ouverts', G('Yeux ouverts', (512, 528), [oeil('g'), oeil('d')]))
-    cligne = n('cligne', G('Clignement', (512, 528), [yeux_ouverts]))
-    regard = n('regard', G('Regard', (512, 528), [
-        cligne,
-        n('yeux_heureux', G('Yeux heureux', (512, 528), [oeil_heureux('g'), oeil_heureux('d')], opacity=0)),
-        n('yeux_fermes', G('Yeux fermes', (512, 528), [oeil_ferme('g'), oeil_ferme('d')], opacity=0)),
+    # les reflets n'existent que sur l'œil ouvert (clé historique : yeux_ouverts)
+    yeux_ouverts = n('yeux_ouverts', G('Reflets', (512, 528), [*reflets('g'), *reflets('d')]))
+    cligne = n('cligne', G('Clignement', (512, 528), [yeux_ouverts, n('oeil_g', oeil('g')), n('oeil_d', oeil('d'))]))
+    regard = n('regard', G('Regard', (512, 528), [cligne]))
+    f = dict(BOUCHE)
+    bouches = n('b_ouverte', G('Bouche', (512, 760), [
+        n('langue', F('Langue', 'M486 786 Q512 770 538 786 Q532 806 512 808 Q492 806 486 786 Z', remplissage=LANGUE, opacity=0)),
+        n('bouche', F('Bouche', f.pop('sourire'), formes=f, nom_base='sourire', remplissage=NUIT)),
     ]))
-    bouches = G('Bouches', (512, 760), [
-        n('b_sourire', G('Sourire', (512, 756), [F('Trait', 'M480 746 Q512 774 544 746', trait=NUIT, epaisseur=12)])),
-        n('b_ouverte', G('Bouche ouverte', (512, 744), [
-            F('Langue', 'M486 786 Q512 770 538 786 Q532 806 512 808 Q492 806 486 786 Z', remplissage=LANGUE),
-            F('Bouche', 'M468 740 Q512 734 556 740 Q550 806 512 812 Q474 806 468 740 Z', remplissage=NUIT),
-        ], opacity=0)),
-        n('b_triste', G('Triste', (512, 760), [F('Trait', 'M486 768 Q512 744 538 768', trait=NUIT, epaisseur=12)], opacity=0)),
-        n('b_o', G('Bouche o', (512, 762), [E('O', (512, 762), 28, 32, remplissage=NUIT)], opacity=0)),
-    ])
     tete = n('tete', G('Tete', (512, 790), [
         n('toque', toque()),
         n('sourcil_g', sourcil('g')), n('sourcil_d', sourcil('d')),
@@ -162,7 +194,7 @@ REPOS = {
     ('yeux_ouverts', 'opacity'): 1, ('yeux_heureux', 'opacity'): 0, ('yeux_fermes', 'opacity'): 0,
     ('regard', 'x'): 0, ('regard', 'y'): 0,
     ('b_sourire', 'opacity'): 1, ('b_ouverte', 'opacity'): 0, ('b_triste', 'opacity'): 0, ('b_o', 'opacity'): 0,
-    ('b_ouverte', 'scaleY'): 1, ('joues', 'opacity'): 0, ('zzz', 'opacity'): 0, ('zzz', 'y'): 0,
+    ('b_ouverte', 'scaleY'): 1, ('b_ouverte', 'scaleX'): 1, ('joues', 'opacity'): 0, ('zzz', 'opacity'): 0, ('zzz', 'y'): 0,
     ('sourcil_g', 'rotation'): 0, ('sourcil_g', 'y'): 0, ('sourcil_d', 'rotation'): 0, ('sourcil_d', 'y'): 0,
     ('oreille_g', 'rotation'): 0, ('oreille_d', 'rotation'): 0,
     ('tete', 'rotation'): 0, ('tete', 'y'): 0,
@@ -174,14 +206,53 @@ REPOS = {
     **{(f'cf{i}', 'opacity'): 0 for i in range(10)},
 }
 
-def humeur(o, nom, duree, pistes, boucle=True):
+def _morph(pistes, choix, duree):
+    """Pistes d'opacité « une forme parmi plusieurs » → keyframes de morph."""
+    images = sorted({f for k in choix for f, _, _ in pistes[k]} | {0})
+    suite = []
+    for f in images:
+        forme = choix[max(choix, key=lambda k: valeur(pistes[k], f + 0.01))] \
+            if any(valeur(pistes[k], f + 0.01) >= 0.5 for k in choix) else None
+        suite.append((f, forme))
+    out = []
+    for f, forme in suite:
+        if forme is None: forme = out[-1][1] if out else list(choix.values())[0]
+        if out and out[-1][1] == forme: continue
+        out.append((f, forme, DOUX))
+    # chaque changement dure au moins 5 images : la forme glisse, elle ne saute pas
+    lisses = []
+    for i, (f, forme, c) in enumerate(out):
+        if i > 0:
+            prec = lisses[-1]
+            lisses.append((max(f, prec[0] + 5) if f - prec[0] < 5 else f, forme, c))
+            if f - 5 > prec[0]:
+                lisses.insert(len(lisses) - 1, (f - 5 if f >= 5 else f, prec[1], DOUX))
+        else:
+            lisses.append((f, forme, c))
+    return lisses
+
+YEUX = {('yeux_heureux', 'opacity'): 'heureux', ('yeux_fermes', 'opacity'): 'ferme', ('yeux_ouverts', 'opacity'): 'ouvert'}
+BOUCHES = {('b_ouverte', 'opacity'): 'grand', ('b_triste', 'opacity'): 'triste', ('b_o', 'opacity'): 'o', ('b_sourire', 'opacity'): 'sourire'}
+
+def humeur(o, nom, duree, pistes, boucle=True, yeux=None):
     """Chaque humeur fixe toutes les pièces expressives : rien ne reste « collé »
-    de l'humeur précédente."""
+    de l'humeur précédente. Les anciennes pistes « quelle bouche, quels yeux »
+    deviennent des morphs : les formes glissent l'une vers l'autre."""
     a = Anim(nom, duree, boucle)
-    for (cle, prop), v in REPOS.items():
-        if (cle, prop) in pistes: continue
-        a.fixe(o[cle], prop, v)
-    for (cle, prop), images in pistes.items():
+    tout = {k: [(0, v, 'hold')] for k, v in REPOS.items()}
+    tout.update(pistes)
+    for k in list(YEUX) + list(BOUCHES):
+        tout.setdefault(k, [(0, 0, 'hold')])
+    m_yeux = _morph(tout, YEUX, duree)
+    m_bouche = _morph(tout, BOUCHES, duree)
+    if yeux:  # une forme d'œil imposée (ex. mi-clos)
+        m_yeux = [(f, yeux if forme == 'ouvert' else forme, c) for f, forme, c in m_yeux]
+    a.forme(o['oeil_g'], *m_yeux); a.forme(o['oeil_d'], *m_yeux)
+    a.forme(o['bouche'], *m_bouche)
+    a.cle(o['langue'], 'opacity', *[(f, 1 if forme == 'grand' else 0, DOUX) for f, forme, _ in m_bouche])
+    for (cle, prop), images in tout.items():
+        if (cle, prop) in YEUX and cle != 'yeux_ouverts': continue
+        if (cle, prop) in BOUCHES: continue
         a.cle(o[cle], prop, *images)
     return a
 
@@ -199,6 +270,31 @@ def oscille(a, b, periode, duree, courbe=DOUX, decal=0):
     imgs.append((duree, v[k % 2] if False else a, None))
     return imgs
 
+# --------------------------------------------------------------- mouvement
+# Petite bibliothèque des principes de l'animation, appliqués partout pareil.
+def ressort(t0, v0, v1, duree, freq=2.4, amorti=7.0, pas=2):
+    """Ressort amorti de v0 vers v1 (dépasse, revient, se pose)."""
+    imgs = []
+    for f in range(t0, t0 + duree, pas):
+        tau = (f - t0) / 60
+        imgs.append((f, v1 + (v0 - v1) * math.exp(-amorti * tau) * math.cos(2 * math.pi * freq * tau), None))
+    imgs.append((t0 + duree, v1, 'hold'))
+    return imgs
+
+def seq(*morceaux):
+    """Met bout à bout des listes de keyframes (la dernière image d'un morceau
+    est remplacée par la première du suivant si elles coïncident)."""
+    out = []
+    for m in morceaux:
+        for k in m:
+            if out and out[-1][0] >= k[0]: out.pop()
+            out.append(k)
+    return out
+
+def retard(images, d):
+    """Le même geste, d images plus tard : les parties souples suivent (overlap)."""
+    return [(0, images[0][1], 'hold')] + [(f + d, v, c) for f, v, c in images]
+
 def animations(o):
     A = {}
     # 0 — attente : respire, regarde autour, l'oreille frémit, la queue balance
@@ -215,25 +311,61 @@ def animations(o):
     })
     A[0] = humeur(o, 'Attente', 240, p)
 
-    # 1 — joie : petit bond plein de ressort, yeux rieurs, bras en l'air
-    A[1] = humeur(o, 'Joie', 60, {
-        ('yeux_ouverts', 'opacity'): [(0, 0, 'hold')], ('yeux_heureux', 'opacity'): [(0, 1, 'hold')],
-        ('b_sourire', 'opacity'): [(0, 0, 'hold')], ('b_ouverte', 'opacity'): [(0, 1, 'hold')],
-        ('joues', 'opacity'): [(0, 0.85, 'hold')],
-        ('saut', 'y'): [(0, 0, SORTIE), (22, -120, ENTREE), (38, 0, 'hold')],
-        ('saut', 'scaleY'): [(0, 0.9, SORTIE), (8, 1.08, DOUX), (22, 1, ENTREE), (38, 1.05, SORTIE), (44, 0.88, DOUX), (52, 1.02, DOUX), (60, 0.9, None)],
-        ('saut', 'scaleX'): [(0, 1.08, SORTIE), (8, 0.94, DOUX), (22, 1, ENTREE), (38, 0.97, SORTIE), (44, 1.1, DOUX), (52, 0.99, DOUX), (60, 1.08, None)],
-        ('ombre', 'scaleX'): [(0, 1, SORTIE), (22, 0.62, ENTREE), (38, 1, None)],
-        ('ombre', 'opacity'): [(0, 1, SORTIE), (22, 0.45, ENTREE), (38, 1, None)],
-        ('bras_g', 'rotation'): [(0, 0.7, SORTIE), (20, 2.3, DOUX), (44, 0.7, DOUX), (60, 0.7, None)],
-        ('bras_d', 'rotation'): [(0, -0.7, SORTIE), (20, -2.3, DOUX), (44, -0.7, DOUX), (60, -0.7, None)],
-        ('oreille_g', 'rotation'): [(0, 0, SORTIE), (22, 0.1, ENTREE), (40, -0.2, DOUX), (52, 0.04, DOUX), (60, 0, None)],
-        ('oreille_d', 'rotation'): [(0, 0, SORTIE), (22, -0.1, ENTREE), (40, 0.2, DOUX), (52, -0.04, DOUX), (60, 0, None)],
-        ('queue', 'rotation'): oscille(-0.28, 0.32, 15, 60),
-        ('tete', 'rotation'): [(0, 0, DOUX), (22, -0.06, DOUX), (44, 0.05, DOUX), (60, 0, None)],
-        ('toque', 'y'): [(0, 0, SORTIE), (22, 16, ENTREE), (40, -46, DOUX), (54, 0, None)],
-        ('toque', 'rotation'): [(0, 0.24, DOUX), (40, 0.4, DOUX), (60, 0.24, None)],
+    # 1 — BRAVO (bonne réponse) : se ramasse, bondit, bras au ciel, retombe
+    #     en s'écrasant et se pose sur un ressort. Les oreilles, la queue et la
+    #     toque suivent avec un temps de retard.
+    D = 84
+    b = {
+        ('yeux_ouverts', 'opacity'): [(0, 1, 'hold'), (5, 0, 'hold')],
+        ('yeux_heureux', 'opacity'): [(0, 0, 'hold'), (5, 1, 'hold')],
+        ('b_sourire', 'opacity'): [(0, 1, 'hold'), (4, 0, 'hold')],
+        ('b_ouverte', 'opacity'): [(0, 0, 'hold'), (4, 1, 'hold')],
+        ('b_ouverte', 'scaleY'): seq([(0, 0.6, SORTIE), (14, 1.18, DOUX)], ressort(14, 1.18, 1, 30)),
+        ('b_ouverte', 'scaleX'): seq([(0, 0.9, SORTIE), (14, 1.08, DOUX)], ressort(14, 1.08, 1, 30)),
+        ('joues', 'opacity'): [(0, 0, SORTIE), (10, 0.9, 'hold')],
+        ('saut', 'y'): [(0, 0, 'hold'), (9, 0, FREIN), (28, -150, ENTREE), (44, 0, 'hold')],
+        ('saut', 'scaleY'): seq([(0, 1, SORTIE), (8, 0.9, SORTIE), (14, 1.1, DOUX), (26, 1, ENTREE), (41, 1.05, None), (44, 0.87, None)],
+                                ressort(44, 0.87, 1, 40, freq=2.6)),
+        ('saut', 'scaleX'): seq([(0, 1, SORTIE), (8, 1.07, SORTIE), (14, 0.93, DOUX), (26, 1, ENTREE), (41, 0.97, None), (44, 1.1, None)],
+                                ressort(44, 1.1, 1, 40, freq=2.6)),
+        ('ombre', 'scaleX'): seq([(0, 1, SORTIE), (8, 1.08, FREIN), (28, 0.55, ENTREE), (44, 1.1, None)], ressort(44, 1.1, 1, 30)),
+        ('ombre', 'opacity'): [(0, 1, SORTIE), (9, 1, FREIN), (28, 0.45, ENTREE), (44, 1, 'hold')],
+        ('bras_g', 'rotation'): seq([(0, 0.16, SORTIE), (8, -0.15, SORTIE), (17, 2.5, DOUX), (30, 2.15, DOUX)],
+                                    [(30 + f, v, c) for f, v, c in oscille(2.15, 2.6, 7, 28)],
+                                    ressort(58, 2.15, 0.45, 26, freq=1.6, amorti=6)),
+        ('bras_d', 'rotation'): seq([(0, -0.16, SORTIE), (9, 0.15, SORTIE), (18, -2.5, DOUX), (31, -2.15, DOUX)],
+                                    [(31 + f, -v, c) for f, v, c in oscille(2.15, 2.6, 7, 28)],
+                                    ressort(59, -2.15, -0.45, 25, freq=1.6, amorti=6)),
+        ('tete', 'rotation'): seq([(0, 0, DOUX), (8, 0.04, DOUX), (20, -0.08, DOUX), (44, 0.07, None)], ressort(44, 0.07, 0, 36, freq=1.8)),
+        ('tete', 'y'): seq([(0, 0, SORTIE), (8, 9, SORTIE), (15, -6, DOUX), (44, 12, None)], ressort(44, 12, 0, 34, freq=2.2)),
+        ('oreille_g', 'rotation'): seq([(0, 0, DOUX), (11, -0.08, DOUX), (19, -0.34, DOUX), (31, 0.16, DOUX), (47, -0.36, None)],
+                                       ressort(47, -0.36, 0, 36, freq=2.2, amorti=6)),
+        ('oreille_d', 'rotation'): seq([(0, 0, DOUX), (12, 0.08, DOUX), (20, 0.34, DOUX), (32, -0.16, DOUX), (48, 0.36, None)],
+                                       ressort(48, 0.36, 0, 36, freq=2.2, amorti=6)),
+        ('queue', 'rotation'): seq([(0, 0, DOUX), (9, -0.22, DOUX), (19, 0.5, DOUX), (31, -0.32, DOUX), (46, 0.42, None)],
+                                   ressort(46, 0.42, 0, 38, freq=2.0, amorti=5)),
+        ('toque', 'y'): [(0, 0, DOUX), (14, 14, DOUX), (30, -44, ENTREE), (46, 0, FREIN), (51, -14, ENTREE), (57, 0, 'hold')],
+        ('toque', 'rotation'): [(0, 0.24, DOUX), (30, 0.5, DOUX), (56, 0.24, 'hold')],
+        ('sourcil_g', 'y'): [(0, 0, SORTIE), (14, -12, DOUX), (60, -5, 'hold')],
+        ('sourcil_d', 'y'): [(0, 0, SORTIE), (15, -12, DOUX), (61, -5, 'hold')],
+    }
+    for i, d in ((0, 18), (1, 23), (4, 27)):
+        for pr in ('scaleX', 'scaleY'):
+            b[(f'et{i}', pr)] = [(0, 0, 'hold'), (d, 0, REBOND), (d + 10, 1.1, ENTREE), (d + 30, 0, 'hold')]
+    A[1] = humeur(o, 'Bravo', D, b, boucle=False)
+
+    # 1 bis — joie calme : le sourire reste, il se balance doucement
+    p = respiration(150, 0.016)
+    p.update({
+        ('joues', 'opacity'): [(0, 0.6, 'hold')],
+        ('tete', 'rotation'): [(0, 0.05, DOUX), (75, -0.05, DOUX), (150, 0.05, None)],
+        ('queue', 'rotation'): oscille(-0.16, 0.22, 25, 150),
+        ('bras_g', 'rotation'): [(0, 0.45, DOUX), (75, 0.38, DOUX), (150, 0.45, None)],
+        ('bras_d', 'rotation'): [(0, -0.45, DOUX), (75, -0.38, DOUX), (150, -0.45, None)],
+        ('sourcil_g', 'y'): [(0, -5, 'hold')], ('sourcil_d', 'y'): [(0, -5, 'hold')],
+        ('saut', 'y'): [(0, 0, DOUX), (37, -6, DOUX), (75, 0, DOUX), (112, -6, DOUX), (150, 0, None)],
     })
+    A['calme'] = humeur(o, 'Joie calme', 150, p)
 
     # 2 — courage : oreilles basses, sourcils inquiets, puis un petit hochement « on y retourne »
     p = respiration(180, 0.012)
@@ -348,12 +480,18 @@ def produire(apercu=None, fond=None):
     cl = clignement(o)
     humeur_in = Entree('humeur', 'nombre', apercu or 0)
     etats = [Etat(A[k]) for k in range(len(NOMS))]
+    calme = Etat(A['calme'])
     for i, e in enumerate(etats):
         for j, autre in enumerate(etats):
             if i != j: e.vers(autre, egal(humeur_in, j), duree=180)
+    # Bravo se joue une fois puis se fond dans la joie calme
+    etats[1].vers(calme, fin=True, duree=320)
+    for j, autre in enumerate(etats):
+        if j != 1: calme.vers(autre, egal(humeur_in, j), duree=200)
+    etats = etats + [calme]
     debut = etats[apercu] if apercu is not None else etats[0]
     couches = [Couche('Humeur', debut, etats), Couche('Clignement', (ec := Etat(cl)), [ec])]
-    rml = scene('Kunfox', 600, 700, racine, list(A.values()) + [cl], 'Kunfox', [humeur_in], couches, fond=fond)
+    rml = scene('Kunfox', 600, 700, racine, [a for a in A.values()] + [cl], 'Kunfox', [humeur_in], couches, fond=fond)
     return rml, racine, o, A, cl
 
 if __name__ == '__main__':
