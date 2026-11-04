@@ -1,0 +1,138 @@
+<Rive version="1" kind="fragment">
+  <Artboard defaultStateMachineId="0:104" styleId="0:5" width="400" height="800" name="Ouverture" id="0:2">
+    <LayoutComponentStyle name="Style" id="0:5"/>
+    <Fill name="Fond"><SolidColor colorValue="FF0E1730" name="C"/></Fill>
+
+    <Shape x="92" y="250" scaleX="0" scaleY="0" name="Etincelle 1" id="0:110">
+      <Star width="26" height="26" points="4" innerRadius="0.32" cornerRadius="1" name="Path"/>
+      <Fill name="Fill"><SolidColor colorValue="FFFFC24B" name="C"/></Fill>
+    </Shape>
+    <Shape x="312" y="232" scaleX="0" scaleY="0" name="Etincelle 2" id="0:111">
+      <Star width="20" height="20" points="4" innerRadius="0.32" cornerRadius="1" name="Path"/>
+      <Fill name="Fill"><SolidColor colorValue="FFFFC24B" name="C"/></Fill>
+    </Shape>
+    <Shape x="70" y="420" scaleX="0" scaleY="0" name="Etincelle 3" id="0:112">
+      <Star width="16" height="16" points="4" innerRadius="0.32" cornerRadius="1" name="Path"/>
+      <Fill name="Fill"><SolidColor colorValue="FFFFC24B" name="C"/></Fill>
+    </Shape>
+    <Shape x="330" y="430" scaleX="0" scaleY="0" name="Etincelle 4" id="0:113">
+      <Star width="24" height="24" points="4" innerRadius="0.32" cornerRadius="1" name="Path"/>
+      <Fill name="Fill"><SolidColor colorValue="FFFFC24B" name="C"/></Fill>
+    </Shape>
+
+    <Node x="200" y="360" opacity="0" scaleX="0.2" scaleY="0.2" name="Renard" id="0:100">
+      <Node scaleX="0.3" scaleY="0.3" name="Echelle" id="0:101">
+        <Node x="188" y="-300" rotation="0.24" name="Toque" id="0:103">
+    <Shape x="102" y="56" name="Pompon"><Ellipse width="28" height="28" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFFFC24B" name="C"/></Fill></Shape>
+    <Shape name="Cordon">
+      <PointsPath isClosed="false" name="Path">
+        <StraightVertex x="0.00" y="-60.00"/>
+        <StraightVertex x="102.00" y="-28.00"/>
+        <StraightVertex x="102.00" y="50.00"/>
+      </PointsPath>
+      <Stroke thickness="10" cap="round" join="round" name="Stroke"><SolidColor colorValue="FFFFC24B" name="C"/></Stroke>
+    </Shape>
+    <Shape name="Plateau">
+      <PointsPath isClosed="true" name="Path">
+        <StraightVertex x="-130.00" y="-60.00"/>
+        <StraightVertex x="0.00" y="-120.00"/>
+        <StraightVertex x="130.00" y="-60.00"/>
+        <StraightVertex x="0.00" y="0.00"/>
+      </PointsPath>
+      <Fill name="Fill"><SolidColor colorValue="FFFFF4E8" name="C"/></Fill><Stroke thickness="10" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF0E1730" name="C"/></Stroke>
+    </Shape>
+    <Shape name="Calotte">
+      <PointsPath isClosed="true" name="Path">
+        <StraightVertex x="-70.00" y="-28.00"/>
+        <CubicDetachedVertex x="-70.00" y="20.00" inRotation="0.00000" inDistance="0.00" outRotation="0.42878" outDistance="51.31"/>
+        <CubicDetachedVertex x="70.00" y="20.00" inRotation="2.71281" inDistance="51.31" outRotation="0.00000" outDistance="0.00"/>
+        <StraightVertex x="70.00" y="-28.00"/>
+        <StraightVertex x="0.00" y="4.00"/>
+      </PointsPath>
+      <Fill name="Fill"><SolidColor colorValue="FFFFF4E8" name="C"/></Fill><Stroke thickness="10" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF0E1730" name="C"/></Stroke>
+    </Shape>
+  </Node>
+        <Node y="-2" name="Yeux" id="0:102">
+          <Shape x="-96" y="-16" name="Reflet G"><Ellipse width="24" height="24" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFFFFFFF" name="C"/></Fill></Shape>
+          <Shape x="120" y="-16" name="Reflet D"><Ellipse width="24" height="24" name="Path"/><Fill name="Fill"><SolidColor colorValue="FFFFFFFF" name="C"/></Fill></Shape>
+          <Shape x="-108" y="0" name="Oeil G"><Ellipse width="68" height="80" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF0E1730" name="C"/></Fill></Shape>
+          <Shape x="108" y="0" name="Oeil D"><Ellipse width="68" height="80" name="Path"/><Fill name="Fill"><SolidColor colorValue="FF0E1730" name="C"/></Fill></Shape>
+        </Node>
+        <Shape name="Truffe">
+      <PointsPath isClosed="true" name="Path">
+        <CubicDetachedVertex x="-38.00" y="134.00" inRotation="1.41419" inDistance="25.65" outRotation="-0.35299" outDistance="27.00"/>
+        <CubicDetachedVertex x="38.00" y="134.00" inRotation="-2.78860" inDistance="27.00" outRotation="1.72740" outDistance="25.65"/>
+        <CubicDetachedVertex x="0.00" y="188.00" inRotation="-0.46365" inDistance="23.85" outRotation="-2.67795" outDistance="23.85"/>
+      </PointsPath>
+      <Fill name="Fill"><SolidColor colorValue="FF0E1730" name="C"/></Fill>
+    </Shape>
+        <Shape name="Sourire">
+      <PointsPath isClosed="false" name="Path">
+        <CubicDetachedVertex x="-30.00" y="218.00" inRotation="0.00000" inDistance="0.00" outRotation="0.63275" outDistance="24.80"/>
+        <CubicDetachedVertex x="30.00" y="218.00" inRotation="2.50884" inDistance="24.80" outRotation="0.00000" outDistance="0.00"/>
+      </PointsPath>
+      <Stroke thickness="12" cap="round" join="round" name="Stroke"><SolidColor colorValue="FF0E1730" name="C"/></Stroke>
+    </Shape>
+        <Shape name="Masque">
+      <PointsPath isClosed="true" name="Path">
+        <CubicDetachedVertex x="-324.00" y="42.00" inRotation="0.75510" inDistance="124.51" outRotation="-0.35877" outDistance="79.74"/>
+        <CubicDetachedVertex x="-112.00" y="60.00" inRotation="-2.60117" inDistance="77.75" outRotation="0.54566" outDistance="43.68"/>
+        <CubicDetachedVertex x="0.00" y="170.00" inRotation="-2.20582" inDistance="62.94" outRotation="-0.93577" outDistance="62.94"/>
+        <CubicDetachedVertex x="112.00" y="60.00" inRotation="2.59594" inDistance="43.68" outRotation="-0.54042" outDistance="77.75"/>
+        <CubicDetachedVertex x="324.00" y="42.00" inRotation="-2.78282" inDistance="79.74" outRotation="2.38649" outDistance="124.51"/>
+        <CubicDetachedVertex x="0.00" y="282.00" inRotation="-0.53728" inDistance="145.89" outRotation="-2.60431" outDistance="145.89"/>
+      </PointsPath>
+      <Fill name="Fill"><SolidColor colorValue="FFFFF4E8" name="C"/></Fill>
+    </Shape>
+        <Shape name="Oreille G">
+      <PointsPath isClosed="true" name="Path">
+        <CubicDetachedVertex x="-200.00" y="-262.00" inRotation="2.09887" inDistance="55.57" outRotation="1.24905" outDistance="59.03"/>
+        <CubicDetachedVertex x="-128.00" y="-138.00" inRotation="-2.40378" inDistance="39.64" outRotation="2.72918" outDistance="46.57"/>
+        <CubicDetachedVertex x="-244.00" y="-78.00" inRotation="-0.55165" inDistance="40.70" outRotation="-1.55294" outDistance="74.68"/>
+      </PointsPath>
+      <Fill name="Fill"><SolidColor colorValue="FFE04E14" name="C"/></Fill>
+    </Shape>
+        <Shape name="Oreille D">
+      <PointsPath isClosed="true" name="Path">
+        <CubicDetachedVertex x="200.00" y="-262.00" inRotation="1.04272" inDistance="55.57" outRotation="1.89255" outDistance="59.03"/>
+        <CubicDetachedVertex x="128.00" y="-138.00" inRotation="-0.73782" inDistance="39.64" outRotation="0.41241" outDistance="46.57"/>
+        <CubicDetachedVertex x="244.00" y="-78.00" inRotation="-2.58994" inDistance="40.70" outRotation="-1.58865" outDistance="74.68"/>
+      </PointsPath>
+      <Fill name="Fill"><SolidColor colorValue="FFE04E14" name="C"/></Fill>
+    </Shape>
+        <Shape name="Tete">
+      <PointsPath isClosed="true" name="Path">
+        <CubicDetachedVertex x="-212.00" y="-320.00" inRotation="2.27206" inDistance="78.53" outRotation="1.31019" outDistance="82.80"/>
+        <CubicDetachedVertex x="-112.00" y="-138.00" inRotation="-2.40232" inDistance="61.35" outRotation="-0.34302" outDistance="39.64"/>
+        <CubicDetachedVertex x="0.00" y="-158.00" inRotation="3.14159" inDistance="37.33" outRotation="0.00000" outDistance="37.33"/>
+        <CubicDetachedVertex x="112.00" y="-138.00" inRotation="-2.79857" inDistance="39.64" outRotation="-0.73928" outDistance="61.35"/>
+        <CubicDetachedVertex x="212.00" y="-320.00" inRotation="1.83140" inDistance="82.80" outRotation="0.86954" outDistance="78.53"/>
+        <CubicDetachedVertex x="300.00" y="-80.00" inRotation="-1.65063" inDistance="100.32" outRotation="1.07345" outDistance="53.10"/>
+        <CubicDetachedVertex x="324.00" y="42.00" inRotation="-1.30780" inDistance="35.90" outRotation="2.38649" outDistance="124.51"/>
+        <CubicDetachedVertex x="0.00" y="282.00" inRotation="-0.53728" inDistance="145.89" outRotation="-2.60431" outDistance="145.89"/>
+        <CubicDetachedVertex x="-324.00" y="42.00" inRotation="0.75510" inDistance="124.51" outRotation="-1.83379" outDistance="35.90"/>
+        <CubicDetachedVertex x="-300.00" y="-80.00" inRotation="2.06814" inDistance="53.10" outRotation="-1.49097" outDistance="100.32"/>
+      </PointsPath>
+      <Fill name="Fill"><SolidColor colorValue="FFFF6B2B" name="C"/></Fill>
+    </Shape>
+      </Node>
+    </Node>
+
+    <StateMachine name="Ouverture" id="0:104">
+      <StateMachineLayer name="Couche" id="0:105">
+        <EntryState><StateTransition stateToId="0:106"/></EntryState>
+        <AnimationState animationId="0:108" name="Entree" id="0:106">
+          <StateTransition stateToId="0:107" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100"/>
+        </AnimationState>
+        <AnimationState animationId="0:109" name="Attente" id="0:107"/>
+      </StateMachineLayer>
+    </StateMachine>
+
+    <LinearAnimation loopValue="oneShot" duration="120" name="Entree" id="0:108">
+      <KeyedObject objectId="0:100"><KeyedProperty propertyKey="18"><KeyFrameDouble value="0" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.16" y1="1" x2="0.3" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="14" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:100"><KeyedProperty propertyKey="16"><KeyFrameDouble value="0.2" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.34" y1="1.56" x2="0.64" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="40" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:100"><KeyedProperty propertyKey="17"><KeyFrameDouble value="0.2" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.34" y1="1.56" x2="0.64" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="40" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:100"><KeyedProperty propertyKey="15"><KeyFrameDouble value="-0.35" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.16" y1="1" x2="0.3" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0" frame="44" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:103"><KeyedProperty propertyKey="18"><KeyFrameDouble value="0" frame="0" interpolationType="hold"/><KeyFrameDouble value="1" frame="30" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:103"><KeyedProperty propertyKey="14"><KeyFrameDouble value="-1400" frame="0" interpolationType="hold"/><KeyFrameDouble value="-1400" frame="30" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="1" y2="1"/></KeyFrameDouble><KeyFrameDouble value="-300" frame="50" interpolationType="cubic"><CubicEaseInterpolator x1="0" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="-370" frame="58" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="1" y2="1"/></KeyFrameDouble><KeyFrameDouble value="-300" frame="66" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:103"><KeyedProperty propertyKey="15"><KeyFrameDouble value="0.9" frame="30" interpolationType="cubic"><CubicEaseInterpolator x1="0.16" y1="1" x2="0.3" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0.24" frame="66" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:102"><KeyedProperty propertyKey="17"><KeyFrameDouble value="1" frame="0" interpolationType="hold"/><KeyFrameDouble value="1" frame="84" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0.08" frame="90" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="97" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:110"><KeyedProperty propertyKey="16"><KeyFrameDouble value="0" frame="0" interpolationType="hold"/><KeyFrameDouble value="0" frame="64" interpolationType="cubic"><CubicEaseInterpolator x1="0.34" y1="1.56" x2="0.64" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="76" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="1" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0" frame="94" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:110"><KeyedProperty propertyKey="17"><KeyFrameDouble value="0" frame="0" interpolationType="hold"/><KeyFrameDouble value="0" frame="64" interpolationType="cubic"><CubicEaseInterpolator x1="0.34" y1="1.56" x2="0.64" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="76" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="1" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0" frame="94" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:110"><KeyedProperty propertyKey="15"><KeyFrameDouble value="0" frame="64" interpolationType="linear"/><KeyFrameDouble value="1.6" frame="94" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:111"><KeyedProperty propertyKey="16"><KeyFrameDouble value="0" frame="0" interpolationType="hold"/><KeyFrameDouble value="0" frame="70" interpolationType="cubic"><CubicEaseInterpolator x1="0.34" y1="1.56" x2="0.64" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="82" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="1" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0" frame="100" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:111"><KeyedProperty propertyKey="17"><KeyFrameDouble value="0" frame="0" interpolationType="hold"/><KeyFrameDouble value="0" frame="70" interpolationType="cubic"><CubicEaseInterpolator x1="0.34" y1="1.56" x2="0.64" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="82" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="1" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0" frame="100" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:111"><KeyedProperty propertyKey="15"><KeyFrameDouble value="0" frame="70" interpolationType="linear"/><KeyFrameDouble value="1.6" frame="100" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:112"><KeyedProperty propertyKey="16"><KeyFrameDouble value="0" frame="0" interpolationType="hold"/><KeyFrameDouble value="0" frame="76" interpolationType="cubic"><CubicEaseInterpolator x1="0.34" y1="1.56" x2="0.64" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="88" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="1" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0" frame="106" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:112"><KeyedProperty propertyKey="17"><KeyFrameDouble value="0" frame="0" interpolationType="hold"/><KeyFrameDouble value="0" frame="76" interpolationType="cubic"><CubicEaseInterpolator x1="0.34" y1="1.56" x2="0.64" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="88" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="1" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0" frame="106" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:112"><KeyedProperty propertyKey="15"><KeyFrameDouble value="0" frame="76" interpolationType="linear"/><KeyFrameDouble value="1.6" frame="106" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:113"><KeyedProperty propertyKey="16"><KeyFrameDouble value="0" frame="0" interpolationType="hold"/><KeyFrameDouble value="0" frame="82" interpolationType="cubic"><CubicEaseInterpolator x1="0.34" y1="1.56" x2="0.64" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="94" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="1" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0" frame="112" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:113"><KeyedProperty propertyKey="17"><KeyFrameDouble value="0" frame="0" interpolationType="hold"/><KeyFrameDouble value="0" frame="82" interpolationType="cubic"><CubicEaseInterpolator x1="0.34" y1="1.56" x2="0.64" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="94" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="1" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0" frame="112" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:113"><KeyedProperty propertyKey="15"><KeyFrameDouble value="0" frame="82" interpolationType="linear"/><KeyFrameDouble value="1.6" frame="112" interpolationType="linear"/></KeyedProperty></KeyedObject>
+    </LinearAnimation>
+    <LinearAnimation loopValue="loop" duration="180" name="Attente" id="0:109">
+      <KeyedObject objectId="0:100"><KeyedProperty propertyKey="16"><KeyFrameDouble value="1" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1.035" frame="90" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="180" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:100"><KeyedProperty propertyKey="17"><KeyFrameDouble value="1" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1.035" frame="90" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="180" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:102"><KeyedProperty propertyKey="17"><KeyFrameDouble value="1" frame="0" interpolationType="hold"/><KeyFrameDouble value="1" frame="130" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0.08" frame="136" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="1" frame="143" interpolationType="linear"/></KeyedProperty></KeyedObject><KeyedObject objectId="0:103"><KeyedProperty propertyKey="15"><KeyFrameDouble value="0.24" frame="0" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0.32" frame="90" interpolationType="cubic"><CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/></KeyFrameDouble><KeyFrameDouble value="0.24" frame="180" interpolationType="linear"/></KeyedProperty></KeyedObject>
+    </LinearAnimation>
+  </Artboard>
+</Rive>

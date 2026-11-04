@@ -26,6 +26,7 @@ jobs:
           export LIBGL_ALWAYS_SOFTWARE=1
           mkdir -p /tmp/sortie/docs
           rive --version > /tmp/sortie/version.txt 2>&1
+          rive --help > /tmp/sortie/aide.txt 2>&1
           rive doctor >> /tmp/sortie/version.txt 2>&1
           rive docs --list > /tmp/sortie/docs/liste.txt 2>&1
           for t in $(rive docs --list 2>/dev/null | awk '{print $1}' | grep -E '^[a-z][a-z0-9_/-]*$' | head -60); do
@@ -36,6 +37,8 @@ jobs:
           done
           cp -r "$(rive samples --path 2>/dev/null)" /tmp/sortie/exemple 2>/dev/null
           if [ -d rive/kunfox_splash ]; then
+            rive inspect rive/kunfox_splash --summary > /tmp/sortie/inspection.txt 2>&1
+            rive inspect rive/kunfox_splash --json > /tmp/sortie/inspection.json 2>&1
             rive rive/kunfox_splash --verify > /tmp/sortie/verification.txt 2>&1; echo "verif: $?" >> /tmp/sortie/verification.txt
             rive rive/kunfox_splash --once > /tmp/sortie/construction.txt 2>&1; echo "construction: $?" >> /tmp/sortie/construction.txt
             cp rive/kunfox_splash/build/*.riv /tmp/sortie/ 2>/dev/null
