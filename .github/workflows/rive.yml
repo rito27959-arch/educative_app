@@ -14,11 +14,16 @@ jobs:
       - uses: actions/checkout@v4
       - name: Installer la Rive CLI
         run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libegl1 libgles2 libgl1 libgl1-mesa-dri xvfb libvulkan1 mesa-vulkan-drivers > /dev/null
           curl -fsSL https://releases.rive.app/cli/install.sh | sh
           echo "$HOME/.rive/bin" >> "$GITHUB_PATH"
       - name: Documentation et construction
         run: |
           set +e
+          Xvfb :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+          export DISPLAY=:99
+          export LIBGL_ALWAYS_SOFTWARE=1
           mkdir -p /tmp/sortie/docs
           rive --version > /tmp/sortie/version.txt 2>&1
           rive doctor >> /tmp/sortie/version.txt 2>&1
