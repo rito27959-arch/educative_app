@@ -50,6 +50,12 @@ class _BoutonKunfoxState extends State<BoutonKunfox> {
     final texte = !actif ? p.doux : (widget.contour ? (widget.couleur ?? p.texte) : widget.couleurTexte);
     final decalage = _enfonce ? _tranche : 0.0;
 
+    final libelle = Text(
+      widget.libelle.toUpperCase(),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w800, fontSize: 15, letterSpacing: 0.8, color: texte),
+    );
     final contenu = Row(
       mainAxisSize: widget.largeurPleine ? MainAxisSize.max : MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -59,13 +65,8 @@ class _BoutonKunfoxState extends State<BoutonKunfox> {
           if (widget.libelle.isNotEmpty) const SizedBox(width: 8),
         ],
         if (widget.libelle.isNotEmpty)
-          Flexible(
-          child: Text(
-            widget.libelle.toUpperCase(),
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w800, fontSize: 15, letterSpacing: 0.8, color: texte),
-          ),
-        ),
+          // Flexible seulement quand la largeur est bornée (bouton plein).
+          widget.largeurPleine ? Flexible(child: libelle) : libelle,
       ],
     );
 
@@ -86,7 +87,11 @@ class _BoutonKunfoxState extends State<BoutonKunfox> {
             : null,
         child: SizedBox(
           height: widget.hauteur + _tranche,
+          // La face du bouton n'est pas « positionnée » : c'est elle qui donne
+          // la largeur, ce qui permet aussi un bouton à la taille de son texte
+          // (largeurPleine: false) dans une ligne.
           child: Stack(
+            fit: widget.largeurPleine ? StackFit.expand : StackFit.loose,
             children: [
               Positioned.fill(
                 top: _tranche,
@@ -94,20 +99,23 @@ class _BoutonKunfoxState extends State<BoutonKunfox> {
                   decoration: BoxDecoration(color: tranche, borderRadius: BorderRadius.circular(16)),
                 ),
               ),
-              AnimatedPositioned(
+              AnimatedPadding(
                 duration: const Duration(milliseconds: 70),
                 curve: Curves.easeOut,
-                left: 0,
-                right: 0,
-                top: decalage,
-                height: widget.hauteur,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: base,
-                    borderRadius: BorderRadius.circular(16),
-                    border: widget.contour ? Border.all(color: p.bord, width: 2) : null,
+                padding: EdgeInsets.only(top: decalage, bottom: _tranche - decalage),
+                child: SizedBox(
+                  height: widget.hauteur,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: base,
+                      borderRadius: BorderRadius.circular(16),
+                      border: widget.contour ? Border.all(color: p.bord, width: 2) : null,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Center(widthFactor: 1, child: contenu),
+                    ),
                   ),
-                  child: Padding(padding: const EdgeInsets.symmetric(horizontal: 18), child: contenu),
                 ),
               ),
             ],
