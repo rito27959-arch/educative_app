@@ -3,7 +3,7 @@
 name: Vérifier Ouro Prep
 on:
   push:
-    branches: [verif-ouro]
+    branches: [verif-ouro, kunfox]
   workflow_dispatch:
 permissions:
   contents: write

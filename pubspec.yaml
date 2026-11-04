@@ -39,6 +39,8 @@ dependencies:
   llamadart_llama_cpp_flutter: ^0.0.9
   flutter_tts: ^4.2.2
   speech_to_text: ^7.0.0
+  # L'écran d'ouverture animé (fichier construit avec la Rive CLI).
+  rive: ^0.13.20
 
 dev_dependencies:
   flutter_test:
@@ -54,3 +56,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/course_content.json
+    - assets/rive/

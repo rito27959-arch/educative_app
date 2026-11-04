@@ -33,12 +33,19 @@ void main() {
       }
     }
 
+    // L'ouverture Rive, image par image.
+    await attendre(250);
+    await capture('01_ouverture_0250');
+    await attendre(500);
+    await capture('01_ouverture_0750');
+    await attendre(500);
+    await capture('01_ouverture_1250');
     await attendre(600);
-    await capture('01_splash_debut');
-    await attendre(1800);
-    await capture('02_splash_milieu');
-    await attendre(4000);
-    await capture('03_apres_splash');
+    await capture('01_ouverture_1850');
+    await attendre(500);
+    await capture('01_ouverture_2350');
+    await attendre(2500);
+    await capture('03_apres_ouverture');
 
     // Onboarding fait et connexion, pour passer les redirections.
     await StorageService.setOnboardingComplete();

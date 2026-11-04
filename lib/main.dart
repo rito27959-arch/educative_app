@@ -199,7 +199,19 @@ class OuroPrepApp extends ConsumerWidget {
                       child: Container(color: Colors.black54),
                     ),
                   ),
-                const Positioned.fill(child: OuroExpertBubble()),
+                // Le coach IA n'a rien à faire sur l'ouverture, la
+                // présentation et la connexion : il n'apparaît qu'ensuite.
+                Positioned.fill(
+                  child: ListenableBuilder(
+                    listenable: router.routerDelegate,
+                    builder: (context, _) {
+                      final chemin = router.routerDelegate.currentConfiguration.uri.path;
+                      const sansCoach = {'/splash', '/onboarding', '/auth'};
+                      if (sansCoach.contains(chemin)) return const SizedBox.shrink();
+                      return const OuroExpertBubble();
+                    },
+                  ),
+                ),
                 const _IncomingCallDetector(),
                 const ToastHost(),
               ],
