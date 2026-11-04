@@ -1,0 +1,84 @@
+---
+// Lien de duel : kunfox.dropletmesh.app/d/<CODE> (réécrit vers cette page
+// par vercel.json). On montre qui défie, sur quoi et son score, puis on
+// ouvre le duel dans l'app (kunfox://kunfox/duel/<CODE>).
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Pied from '../components/Pied.astro';
+import RiveAnim from '../components/RiveAnim.astro';
+const depot = 'https://github.com/rito27959-arch/educative_app/releases/latest/download';
+---
+<Base titre="Un ami te défie · Kunfox" description="Un ami te défie sur Kunfox : mêmes questions, même chrono. Le meilleur score gagne.">
+  <Nav />
+  <main class="duel">
+    <div class="duel-fond" aria-hidden="true"></div>
+    <section class="duel-carte apparait-page">
+      <span class="duel-badge">DUEL</span>
+      <RiveAnim src="kunfox_mascotte" machine="Kunfox" entree="humeur" valeur={0} vue={4} clic={1}
+        largeur={170} hauteur={198} label="Kunfox" />
+      <h1 id="titre">Un ami te défie !</h1>
+      <p id="detail" class="duel-detail">Mêmes questions, même chrono. Le meilleur score gagne.</p>
+      <div id="score" class="duel-score" hidden>
+        <div><strong id="s-bonnes">–</strong><span>bonnes réponses</span></div>
+        <div><strong id="s-temps">–</strong><span>secondes</span></div>
+      </div>
+      <a id="ouvrir" class="btn duel-btn" href="/">Relever le défi</a>
+      <p class="duel-aide">Pas encore Kunfox ? <a href={`${depot}/Kunfox-arm64-v8a.apk`} download>Télécharge-le pour Android</a>,
+        puis rouvre ce lien. Le code du duel : <code id="code">—</code></p>
+    </section>
+  </main>
+  <Pied />
+  <style>
+    .duel { position: relative; min-height: 80vh; display: grid; place-items: center; padding: 96px 16px 64px; overflow: hidden; }
+    .duel-fond { position: absolute; inset: -40%; background:
+      repeating-conic-gradient(from 0deg, rgba(139,92,246,.18) 0 9deg, transparent 9deg 26deg);
+      animation: tourne 60s linear infinite; mask: radial-gradient(circle, #000 0 30%, transparent 62%); }
+    @keyframes tourne { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .duel-fond { animation: none; } }
+    .duel-carte { position: relative; max-width: 440px; width: 100%; text-align: center; background: var(--surface, #fff);
+      border: 2px solid var(--bord, #e8e1d9); border-radius: 28px; padding: 28px 22px; box-shadow: 0 6px 0 var(--bord, #e8e1d9); }
+    .duel-badge { display: inline-block; background: #8B5CF6; color: #fff; font-weight: 800; letter-spacing: .18em;
+      font-size: 13px; padding: 5px 14px; border-radius: 99px; }
+    .duel-carte h1 { font-size: clamp(26px, 6vw, 34px); margin: 8px 0 6px; }
+    .duel-detail { color: var(--doux, #6b6259); font-weight: 600; margin: 0 0 16px; }
+    .duel-score { display: flex; gap: 10px; margin: 0 0 20px; }
+    .duel-score[hidden] { display: none; }
+    .duel-score > div { flex: 1; background: rgba(139,92,246,.1); border: 2px solid rgba(139,92,246,.5); border-radius: 16px; padding: 10px; }
+    .duel-score strong { display: block; font-size: 28px; color: #8B5CF6; }
+    .duel-score span { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--doux, #6b6259); }
+    .duel-btn { width: 100%; background: #8B5CF6 !important; box-shadow: 0 4px 0 #6a3fd1 !important; }
+    .duel-aide { font-size: 14px; color: var(--doux, #6b6259); margin-top: 14px; }
+  </style>
+  <script is:inline>
+    (function () {
+      var m = location.pathname.match(/\/d\/([A-Za-z0-9]{8})\/?$/) || [null, (location.hash || '').slice(1)];
+      var code = (m[1] || '').toUpperCase();
+      var bouton = document.getElementById('ouvrir');
+      if (!/^[A-HJ-NP-Z2-9]{8}$/.test(code)) {
+        bouton.style.display = 'none';
+        document.getElementById('detail').textContent = "Ce lien de duel est incomplet.";
+        return;
+      }
+      document.getElementById('code').textContent = code;
+      var lien = 'kunfox://kunfox/duel/' + code;
+      bouton.href = lien;
+      fetch('https://droplet-mailbox-production.up.railway.app/kunfox/duels/' + code)
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+        .then(function (d) {
+          var c = d.createur, n = d.questions.length;
+          document.getElementById('titre').textContent = c.nom + ' te défie !';
+          document.getElementById('detail').textContent = '« ' + d.titre + ' »' + (d.matiere ? ' · ' + d.matiere : '') + ' — ' + n + ' questions. Fais mieux que ça :';
+          document.getElementById('s-bonnes').textContent = c.bonnes + '/' + n;
+          document.getElementById('s-temps').textContent = (c.ms / 1000).toFixed(1).replace('.', ',');
+          document.getElementById('score').hidden = false;
+        })
+        .catch(function (e) {
+          if (e === 404) {
+            document.getElementById('titre').textContent = 'Ce duel est terminé';
+            document.getElementById('detail').textContent = 'Un duel dure 30 jours. Demande un nouveau lien à ton ami !';
+            bouton.style.display = 'none';
+          }
+        });
+    })();
+  </script>
+</Base>
