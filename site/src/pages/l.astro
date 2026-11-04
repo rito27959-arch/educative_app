@@ -1,0 +1,23 @@
+---
+// Lien d'invitation à une leçon : kunfox.dropletmesh.app/l#<leçon>.
+// La page ouvre la leçon dans l'app (kunfox://kunfox/lecon/<leçon>) ;
+// si Kunfox n'est pas installé, elle reste là et l'explique.
+import Page from '../layouts/Page.astro';
+---
+<Page titre="Réviser ensemble" description="Un ami t'invite à réviser une leçon sur Kunfox." chapo="Un ami t'invite à réviser une leçon avec lui.">
+  <p><a id="ouvrir" class="btn" href="/">Ouvrir la leçon dans Kunfox</a></p>
+  <p id="aide">Si rien ne s'ouvre, c'est que Kunfox n'est pas encore sur ce téléphone. <a href="/">Découvrir Kunfox</a>.</p>
+  <script is:inline>
+    (function () {
+      var id = decodeURIComponent((location.hash || '').slice(1));
+      if (!/^[a-z0-9_]{3,80}$/.test(id)) {
+        document.getElementById('ouvrir').style.display = 'none';
+        document.getElementById('aide').textContent = "Ce lien d'invitation est incomplet.";
+        return;
+      }
+      var lien = 'kunfox://kunfox/lecon/' + id;
+      document.getElementById('ouvrir').href = lien;
+      setTimeout(function () { location.href = lien; }, 300);
+    })();
+  </script>
+</Page>
