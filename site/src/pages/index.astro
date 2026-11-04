@@ -5,6 +5,9 @@ import Renard from '../components/Renard.astro';
 import Telephone from '../components/Telephone.astro';
 import Nav from '../components/Nav.astro';
 import Pied from '../components/Pied.astro';
+import RiveAnim from '../components/RiveAnim.astro';
+
+const depot = 'https://github.com/rito27959-arch/educative_app/releases/latest/download';
 
 const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique', 'Français', 'Anglais', 'Philosophie', 'Histoire-Géographie'];
 ---
@@ -35,7 +38,7 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
           </h1>
           <p class="chapo apres" style="--d:.6s">Des leçons de cinq minutes, des quiz qui t'expliquent chaque erreur, et un renard qui t'encourage tous les jours. Même sans Internet.</p>
           <div class="heros-actions apres" style="--d:.72s">
-            <a class="btn" href="#telecharger">Bientôt sur Android</a>
+            <a class="btn" href="#telecharger">Télécharger l'app</a>
             <a class="btn-2" href="#comment">Voir comment ça marche ↓</a>
           </div>
           <p class="heros-note apres" style="--d:.84s">Gratuit · Fonctionne hors ligne · Pensé pour les petits téléphones</p>
@@ -44,7 +47,10 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
           <Telephone ecran="quiz" />
           <div class="bulle b1 apres" style="--d:1.1s">🔥 12 jours de suite</div>
           <div class="bulle b2 apres" style="--d:1.25s">✓ +10 XP</div>
-          <Renard taille={120} class="renard-guet apres" />
+          <!-- Kunfox en vrai (le même fichier Rive que l'app) : il salue au
+               survol et saute de joie quand on le touche. -->
+          <RiveAnim src="kunfox_mascotte" machine="Kunfox" entree="humeur" valeur={0} survol={5} clic={1}
+            largeur={170} hauteur={198} class="renard-guet apres" label="Kunfox, le renard de l'app. Touche-le !" />
         </div>
       </div>
     </section>
@@ -62,6 +68,45 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
           <div class="chiffre apparait" style="--d:.05s"><b data-compte="290">290</b><span>leçons et plus</span></div>
           <div class="chiffre apparait" style="--d:.15s"><b data-compte="5">5</b><span>minutes par leçon</span></div>
           <div class="chiffre apparait" style="--d:.25s"><b data-compte="0">0</b><span>Mo d'Internet nécessaires</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trois promesses, trois illustrations vivantes qui démarrent en
+         arrivant à l'écran, texte et image en alternance. -->
+    <section class="promesses">
+      <div class="conteneur">
+        <div class="promesse apparait">
+          <div class="promesse-visuel">
+            <RiveAnim src="kunfox_mascotte" machine="Kunfox" entree="humeur" valeur={0} vue={3} clic={1}
+              largeur={260} hauteur={303} label="Kunfox réfléchit avec toi" />
+          </div>
+          <div>
+            <span class="pastille">Comme un jeu</span>
+            <h2>Réviser, ça se joue.</h2>
+            <p>Des questions courtes, des réponses qui claquent, un renard qui réagit à chacune. On enchaîne sans voir le temps passer.</p>
+          </div>
+        </div>
+        <div class="promesse inverse apparait">
+          <div class="promesse-visuel">
+            <RiveAnim src="kunfox_flamme" machine="Flamme" entree="allumee" valeur={0} vue={1}
+              largeur={220} hauteur={250} label="La flamme de série qui s'allume" />
+          </div>
+          <div>
+            <span class="pastille">Chaque jour</span>
+            <h2>Ta flamme, ta fierté.</h2>
+            <p>Une leçon par jour allume ta flamme. Elle grandit avec ta série, et elle te rappelle de revenir demain.</p>
+          </div>
+        </div>
+        <div class="promesse apparait">
+          <div class="promesse-visuel">
+            <RiveAnim src="kunfox_reussite" machine="Reussite" largeur={240} hauteur={240} label="Bonne réponse !" />
+          </div>
+          <div>
+            <span class="pastille">Vraiment utile</span>
+            <h2>Chaque erreur te fait grandir.</h2>
+            <p>Kunfox t'explique pourquoi, puis te repose la question à la fin de la leçon. Ce qu'on a raté une fois, on le retient pour de bon.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -143,17 +188,34 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
 
     <section class="final" id="telecharger">
       <div class="conteneur">
-        <Renard taille={132} class="renard-final apparait" />
+        <div class="final-visuel apparait">
+          <RiveAnim src="kunfox_mascotte" machine="Kunfox" entree="humeur" valeur={0} vue={4} clic={1}
+            largeur={240} hauteur={280} class="final-renard" label="Kunfox fait la fête" />
+        </div>
         <h2 class="apparait" style="--d:.08s">Prêt à monter ?</h2>
-        <p class="apparait" style="--d:.16s">Kunfox arrive bientôt sur Android.</p>
-        <span class="btn apparait" style="--d:.24s">Bientôt disponible</span>
+        <p class="apparait" style="--d:.16s">Kunfox est gratuit, pour Android.</p>
+        <div class="telechargements apparait" style="--d:.24s">
+          <a class="btn" href={`${depot}/Kunfox-arm64-v8a.apk`} download>Télécharger pour Android</a>
+          <p class="autres">
+            Téléphone ancien ou d'entrée de gamme ? <a href={`${depot}/Kunfox-armeabi-v7a.apk`} download>Version armeabi-v7a</a>
+            · Émulateur ou tablette x86 : <a href={`${depot}/Kunfox-x86_64.apk`} download>x86_64</a>
+          </p>
+          <p class="autres">Toutes les versions et leurs empreintes sont sur <a href="https://github.com/rito27959-arch/educative_app/releases" rel="noopener">GitHub</a>.</p>
+        </div>
       </div>
     </section>
+
+    <!-- Barre d'action qui apparaît une fois le haut de page dépassé. -->
+    <div class="barre-cta" id="barre-cta" aria-hidden="true">
+      <span>🦊 Révise chaque jour avec Kunfox</span>
+      <a class="btn" href="#telecharger" tabindex="-1">Télécharger</a>
+    </div>
   </main>
 
   <Pied />
 
   <script>
+    import '../scripts/rive';
     const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const heros = document.getElementById('heros')!;
     const intro = document.getElementById('intro')!;
@@ -213,5 +275,18 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
       }
     }, { rootMargin: '-45% 0px -45% 0px' });
     etapes.forEach((el) => obsEtapes.observe(el));
+
+    // ── La barre d'action : visible entre le haut de page et le bas.
+    const barre = document.getElementById('barre-cta')!;
+    const final = document.getElementById('telecharger')!;
+    let hautPasse = false, basAtteint = false;
+    const majBarre = () => {
+      const vis = hautPasse && !basAtteint;
+      barre.classList.toggle('vue', vis);
+      barre.setAttribute('aria-hidden', String(!vis));
+      barre.querySelector('a')!.tabIndex = vis ? 0 : -1;
+    };
+    new IntersectionObserver(([e]) => { hautPasse = !e.isIntersecting; majBarre(); }).observe(heros);
+    new IntersectionObserver(([e]) => { basAtteint = e.isIntersecting; majBarre(); }).observe(final);
   </script>
 </Base>

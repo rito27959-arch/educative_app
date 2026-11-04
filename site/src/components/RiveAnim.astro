@@ -1,0 +1,33 @@
+---
+// Une animation Rive de Kunfox (les mêmes fichiers que l'app), qui ne se
+// charge et ne démarre qu'en arrivant à l'écran. Voir src/scripts/rive.ts.
+interface Props {
+  src: string;          // nom du fichier dans public/rive, sans .riv
+  machine: string;      // machine à états
+  entree?: string;      // entrée nombre à régler
+  valeur?: number;      // sa valeur au départ
+  vue?: number;         // sa valeur quand l'animation arrive à l'écran
+  survol?: number;      // sa valeur au survol (puis retour à `valeur`)
+  clic?: number;        // sa valeur au clic, pendant 2,4 s
+  largeur: number;
+  hauteur: number;
+  class?: string;
+  label: string;
+}
+const { src, machine, entree, valeur, vue, survol, clic, largeur, hauteur, class: classe, label } = Astro.props;
+---
+<canvas
+  class:list={['rive', classe]}
+  role="img"
+  aria-label={label}
+  width={largeur * 2}
+  height={hauteur * 2}
+  style={`width:${largeur}px;height:${hauteur}px`}
+  data-rive={src}
+  data-machine={machine}
+  data-entree={entree}
+  data-valeur={valeur}
+  data-vue={vue}
+  data-survol={survol}
+  data-clic={clic}
+></canvas>
