@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../core/models/curriculum_models.dart';
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
@@ -574,6 +575,16 @@ class _Carte extends StatelessWidget {
             couleurTexte: noeud.couleur,
             hauteur: 46,
             surAppui: () => context.push('/k/lecon/${noeud.lecon.id}'),
+          ),
+          const SizedBox(height: 6),
+          Center(
+            child: TextButton.icon(
+              onPressed: () => Share.share(
+                'Révise « ${noeud.lecon.title} » avec moi sur Kunfox : https://kunfox.dropletmesh.app/l#${noeud.lecon.id}',
+              ),
+              icon: Icon(Icons.person_add_alt_1_rounded, color: texte.withValues(alpha: 0.9), size: 18),
+              label: Text('Inviter un ami', style: TextStyle(color: texte.withValues(alpha: 0.9), fontWeight: FontWeight.w700)),
+            ),
           ),
         ],
       ]),

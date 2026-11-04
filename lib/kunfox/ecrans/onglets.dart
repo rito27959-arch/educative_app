@@ -13,6 +13,8 @@ import '../../core/providers/settings_provider.dart';
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
 import '../composants/barre_onglets.dart';
 import '../composants/bouton.dart';
+import '../donnees/compte_droplet.dart';
+import 'package:share_plus/share_plus.dart';
 import '../composants/page_ios.dart';
 import '../composants/sons.dart';
 import '../donnees/matieres.dart';
@@ -362,10 +364,43 @@ class _Profil extends ConsumerWidget {
             ),
           ),
           Divider(height: 1, color: p.bord),
+          StatefulBuilder(
+            builder: (context, majour) => ListTile(
+              leading: Icon(Icons.water_drop_rounded, color: const Color(0xFF2F6BFF)),
+              title: Text(CompteDroplet.connecte ? 'Connecté avec Droplet' : 'Se connecter avec Droplet'),
+              subtitle: Text(
+                CompteDroplet.connecte
+                    ? 'Ta progression est sauvegardée, chiffrée. Tu la retrouves sur un autre téléphone.'
+                    : 'Pour sauvegarder ta progression et la retrouver sur un autre téléphone.',
+                style: TextStyle(color: p.doux),
+              ),
+              trailing: CompteDroplet.connecte
+                  ? Icon(Icons.check_circle_rounded, color: p.succes)
+                  : Icon(Icons.chevron_right_rounded, color: p.doux),
+              onTap: CompteDroplet.connecte
+                  ? () async {
+                      await CompteDroplet.envoyer();
+                      majour(() {});
+                    }
+                  : () => CompteDroplet.demarrer(),
+            ),
+          ),
+          Divider(height: 1, color: p.bord),
           ListTile(
             leading: Icon(Icons.groups_rounded, color: p.info),
             title: const Text('Réviser ensemble sur Droplet'),
-            subtitle: Text('Les discussions entre élèves se font sur Droplet', style: TextStyle(color: p.doux)),
+            subtitle: Text('Discute et révise avec tes amis dans Droplet', style: TextStyle(color: p.doux)),
+            trailing: Icon(Icons.open_in_new_rounded, color: p.doux, size: 20),
+            onTap: CompteDroplet.ouvrirDroplet,
+          ),
+          Divider(height: 1, color: p.bord),
+          ListTile(
+            leading: Icon(Icons.ios_share_rounded, color: p.prim),
+            title: const Text('Partager ma progression'),
+            onTap: () => Share.share(
+              '🔥 ${prog.serieActuelle} jour${prog.serieActuelle > 1 ? 's' : ''} de série et ${prog.xp} XP sur Kunfox ! '
+              'Viens réviser ton BAC avec moi : https://kunfox.dropletmesh.app',
+            ),
           ),
           Divider(height: 1, color: p.bord),
           ListTile(

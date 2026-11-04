@@ -19,11 +19,16 @@ import '../../core/repositories/user_repository.dart';
 import '../../core/services/storage_service.dart';
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
 import '../composants/bouton.dart';
+import '../donnees/compte_droplet.dart';
 import '../flame/effets_flame.dart';
 import '../theme/palette.dart';
 
 class BienvenueEcran extends ConsumerStatefulWidget {
-  const BienvenueEcran({super.key});
+  const BienvenueEcran({super.key, this.depuisDroplet = false});
+
+  /// Revenu de Droplet sans sauvegarde : le pseudo est connu, on reprend
+  /// à la série.
+  final bool depuisDroplet;
 
   @override
   ConsumerState<BienvenueEcran> createState() => _BienvenueEcranState();
@@ -45,6 +50,47 @@ class _BienvenueEcranState extends ConsumerState<BienvenueEcran> {
     (15, 'Sérieux', '15 min par jour'),
     (20, 'Intense', '20 min par jour'),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.depuisDroplet) {
+      _pas = 1;
+      _pseudo.text = CompteDroplet.pseudo ?? '';
+      _conditions = false;
+    }
+  }
+
+  Future<void> _avecDroplet() async {
+    HapticFeedback.selectionClick();
+    final ouvert = await CompteDroplet.demarrer();
+    if (!ouvert && mounted) {
+      final p = Palette.of(context);
+      await showModalBottomSheet<void>(
+        context: context,
+        backgroundColor: p.surface,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+        builder: (ctx) => SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Text('Droplet n\'est pas installé', style: Theme.of(ctx).textTheme.headlineSmall),
+              const SizedBox(height: 8),
+              Text('Installe Droplet pour sauvegarder ta progression et la retrouver sur un autre téléphone.',
+                  textAlign: TextAlign.center, style: TextStyle(color: p.doux, fontWeight: FontWeight.w600, height: 1.4)),
+              const SizedBox(height: 18),
+              BoutonKunfox(libelle: 'Obtenir Droplet', couleur: _bleuDroplet, surAppui: () {
+                Navigator.of(ctx).pop();
+                CompteDroplet.obtenirDroplet();
+              }),
+            ]),
+          ),
+        ),
+      );
+    }
+  }
+
+  static const _bleuDroplet = Color(0xFF2F6BFF);
 
   @override
   void dispose() {
@@ -175,7 +221,16 @@ class _BienvenueEcranState extends ConsumerState<BienvenueEcran> {
           const Spacer(),
           BoutonKunfox(libelle: 'C\'est parti', surAppui: _suivant),
           const SizedBox(height: 12),
-          BoutonKunfox(libelle: 'J\'ai déjà un profil', contour: true, couleur: p.prim, surAppui: () => setState(() => _pas = 3)),
+          // Avoir déjà un profil, c'est le retrouver : par Droplet.
+          BoutonKunfox(
+            libelle: 'Continuer avec Droplet',
+            icone: Icons.water_drop_rounded,
+            couleur: _bleuDroplet,
+            surAppui: _avecDroplet,
+          ),
+          const SizedBox(height: 10),
+          Text('Déjà un profil ? Continue avec Droplet pour le retrouver.',
+              textAlign: TextAlign.center, style: TextStyle(color: p.doux, fontWeight: FontWeight.w600, fontSize: 13)),
         ]),
       );
 

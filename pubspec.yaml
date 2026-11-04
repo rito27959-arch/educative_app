@@ -21,6 +21,9 @@ dependencies:
   crypto: ^3.0.6
   path_provider: ^2.1.5
   share_plus: ^10.1.4
+  # « Se connecter avec Droplet » : échange chiffré et sauvegarde.
+  cryptography: ^2.7.0
+  url_launcher: ^6.3.1
   file_picker: ^8.0.0
   universal_ble: ^0.10.0
   nsd: ^5.0.1

@@ -34,6 +34,7 @@ import '../features/curriculum/lock_unlock_screen.dart';
 import '../features/curriculum/bac_exam_screen.dart';
 import '../kunfox/donnees/progression.dart' show BilanLecon;
 import '../kunfox/ecrans/bienvenue.dart';
+import '../kunfox/ecrans/connexion_droplet.dart';
 import '../kunfox/ecrans/fin_lecon.dart';
 import '../kunfox/ecrans/onglets.dart';
 import '../kunfox/ecrans/seance.dart';
@@ -49,7 +50,15 @@ final routerProvider = Provider<GoRouter>((ref) {
     initialLocation: '/splash',
     routes: [
       GoRoute(path: '/splash', name: 'splash', builder: (_, _) => const SplashScreen()),
-      GoRoute(path: '/onboarding', name: 'onboarding', builder: (_, _) => const BienvenueEcran()),
+      GoRoute(
+        path: '/onboarding',
+        name: 'onboarding',
+        builder: (_, state) => BienvenueEcran(depuisDroplet: state.uri.queryParameters['droplet'] == '1'),
+      ),
+      // Retour de « Se connecter avec Droplet » : kunfox://kunfox/connexion?…
+      GoRoute(path: '/connexion', builder: (_, state) => ConnexionDropletEcran(parametres: state.uri.queryParameters)),
+      // Invitation à une leçon : kunfox://kunfox/lecon/<id>
+      GoRoute(path: '/lecon/:leconId', redirect: (_, state) => '/k/lecon/${state.pathParameters['leconId']}'),
       GoRoute(path: '/auth', name: 'auth', builder: (_, _) => const BienvenueEcran()),
       GoRoute(path: '/dashboard', name: 'dashboard', builder: (_, _) => const DashboardScreen()),
       // ── Kunfox : parcours, séances, fin de leçon ──
@@ -265,12 +274,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       final isLoggedIn = auth.isLoggedIn;
       final path = state.uri.path;
       final onboardingDone = StorageService.isOnboardingComplete();
-      if (path == '/splash') return null;
+      // Le retour de Droplet doit passer même avant l'inscription.
+      if (path == '/splash' || path == '/connexion') return null;
       if (!onboardingDone) {
         if (path != '/onboarding') return '/onboarding';
         return null;
       }
-      if (!isLoggedIn && path != '/auth') return '/auth';
+      if (!isLoggedIn && path != '/auth' && path != '/onboarding') return '/auth';
       if (isLoggedIn && path == '/auth') {
         return '/k';
       }

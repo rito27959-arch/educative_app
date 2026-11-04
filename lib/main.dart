@@ -17,6 +17,8 @@ import 'design_system/ouro_colors.dart';
 import 'core/services/app_lifecycle.dart';
 import 'core/models/mesh_message.dart';
 import 'core/providers/courses_provider.dart';
+import 'kunfox/donnees/compte_droplet.dart';
+import 'kunfox/donnees/progression.dart';
 import 'kunfox/theme/kunfox_theme.dart';
 import 'shared/widgets/mesh_toast.dart';
 import 'shared/widgets/ouro_expert_bubble.dart';
@@ -65,6 +67,7 @@ Future<void> _runApp() async {
 
   try {
     await StorageService.init();
+    await CompteDroplet.charger();
     await SupabaseService.instance.init();
     SyncService.instance.init();
   } catch (e, s) {
@@ -171,6 +174,13 @@ class OuroPrepApp extends ConsumerWidget {
     }
 
     Future.microtask(() => ref.read(seedingProvider));
+
+    // Ce qui accompagne la progression dans la sauvegarde Droplet.
+    ProgressionNotifier.profil = () => {
+          'pseudo': auth.user?.pseudo,
+          'serie': auth.user?.bacSeries,
+          'objectif': StorageService.getString('kunfox.objectif'),
+        };
 
     return MaterialApp.router(
       title: 'Kunfox',

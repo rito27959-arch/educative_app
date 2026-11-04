@@ -57,8 +57,20 @@
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
+    <!-- Kunfox ouvre Droplet (« Se connecter avec Droplet », « Réviser ensemble »). -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="droplet" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
     <application
-        android:label="OURO PREP"
+        android:label="Kunfox"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
@@ -78,6 +90,16 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Liens Kunfox : retour de « Se connecter avec Droplet »
+                 (kunfox://kunfox/connexion?…) et invitations à une leçon
+                 (kunfox://kunfox/lecon/<id>), reçus par go_router. -->
+            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="kunfox" android:host="kunfox" />
             </intent-filter>
         </activity>
 

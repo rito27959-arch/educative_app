@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/data/curriculum_data.dart';
 import '../../core/models/curriculum_models.dart';
 import '../../core/services/storage_service.dart';
+import 'compte_droplet.dart';
 
 const int kCoeursMax = 5;
 const Duration kRechargeCoeur = Duration(minutes: 30);
@@ -206,10 +207,21 @@ class ProgressionNotifier extends StateNotifier<Progression> {
     }
   }
 
+  /// Le profil joint à la sauvegarde (pseudo, série) : fourni par l'app.
+  static Map<String, dynamic> Function()? profil;
+
   void _ecrire(Progression p) {
     state = p;
     StorageService.setString(_cle, jsonEncode(p.versJson()));
+    // Connecté avec Droplet : la progression part, chiffrée, quelques
+    // secondes après le dernier changement.
+    CompteDroplet.planifier(contenuSauvegarde);
   }
+
+  Map<String, dynamic> contenuSauvegarde() => {'v': 1, 'progression': state.versJson(), ...?profil?.call()};
+
+  /// Remplace la progression par celle d'une sauvegarde (nouveau téléphone).
+  void remplacer(Map<String, dynamic> json) => _ecrire(Progression.depuisJson(json));
 
   /// Remet les compteurs du jour à zéro quand on change de jour.
   Progression _jour(Progression p) {
