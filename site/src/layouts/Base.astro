@@ -1,0 +1,36 @@
+---
+// Gabarit commun : thème (sombre / clair, suit le système), polices
+// hébergées par le site, métadonnées.
+import '@fontsource-variable/inter';
+import '@fontsource-variable/inter-tight';
+import '../styles/global.css';
+interface Props { titre: string; description: string }
+const { titre, description } = Astro.props;
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{titre}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={titre} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/icone.png" />
+    <meta name="theme-color" content="#FFF8F1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0E1730" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icone.png" />
+    <script is:inline>
+      // Le thème choisi (s'il y en a un) est posé AVANT l'affichage : pas
+      // d'éclair de la mauvaise couleur au chargement.
+      try {
+        const t = localStorage.getItem('kunfox-theme');
+        if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

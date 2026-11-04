@@ -1,0 +1,57 @@
+---
+// Un téléphone dessiné en CSS, qui affiche un écran de Kunfox.
+// `ecran` : 'quiz' (réponse juste, bandeau de félicitation, en boucle),
+// 'lecon', 'serie' ou 'hors-ligne'.
+import Renard from './Renard.astro';
+interface Props { ecran?: 'quiz' | 'lecon' | 'serie' | 'hors-ligne'; class?: string }
+const { ecran = 'quiz', class: classe = '' } = Astro.props;
+---
+<div class={`tel ${classe}`} data-ecran={ecran}>
+  <div class="tel-ilot"></div>
+  <div class="tel-ecran">
+    <div class="tel-barre"><span>9:41</span><span class="tel-icones">● ● ▮</span></div>
+
+    <div class="ec ec-quiz">
+      <div class="q-haut"><span class="q-x">✕</span><div class="q-prog"><i></i></div><span class="q-coeur">♥ 5</span></div>
+      <p class="q-type">Choisis la bonne réponse</p>
+      <h4 class="q-titre">Quel est le module de <b>3 + 4i</b> ?</h4>
+      <div class="q-opt">7</div>
+      <div class="q-opt q-bonne">5</div>
+      <div class="q-opt">1</div>
+      <div class="q-opt">√7</div>
+      <div class="q-feuille">
+        <div class="q-feuille-haut"><Renard taille={34} fond={false} toque={false} /><b>Bien joué !</b><span class="q-xp">+10 XP</span></div>
+        <p>|3 + 4i| = √(3² + 4²) = √25 = 5</p>
+        <span class="q-continuer">Continuer</span>
+      </div>
+    </div>
+
+    <div class="ec ec-lecon">
+      <p class="l-chap">Chapitre 1 · Nombres complexes</p>
+      <h4 class="l-titre">Forme algébrique</h4>
+      <div class="l-carte"><b>z = a + ib</b><span>a : partie réelle<br />b : partie imaginaire</span></div>
+      <p class="l-txt">Tout nombre complexe s'écrit de façon unique sous la forme a + ib, avec a et b réels.</p>
+      <div class="l-carte l-ex"><b>Exemple</b><span>z = 3 − 2i → a = 3, b = −2</span></div>
+      <div class="l-pied"><span class="l-temps">⏱ 5 min</span><span class="q-continuer">Suivant</span></div>
+    </div>
+
+    <div class="ec ec-serie">
+      <div class="s-flamme">🔥</div>
+      <p class="s-chiffre"><span data-compteur="12">12</span></p>
+      <p class="s-label">jours de suite</p>
+      <div class="s-semaine">
+        <span class="ok">L</span><span class="ok">M</span><span class="ok">M</span><span class="ok">J</span><span class="ok">V</span><span class="auj">S</span><span>D</span>
+      </div>
+      <div class="s-xp"><span>Niveau 7</span><div class="q-prog"><i></i></div><span>840 / 1000 XP</span></div>
+    </div>
+
+    <div class="ec ec-hors-ligne">
+      <div class="h-avion">✈︎</div>
+      <h4>Mode avion</h4>
+      <p>Toutes tes matières, plus de 290 leçons et tous les quiz sont déjà sur ton téléphone.</p>
+      <div class="h-liste">
+        <span>Mathématiques <i>✓</i></span><span>Physique <i>✓</i></span><span>Chimie <i>✓</i></span><span>SVT <i>✓</i></span>
+      </div>
+    </div>
+  </div>
+</div>

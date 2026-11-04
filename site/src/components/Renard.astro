@@ -1,0 +1,34 @@
+---
+// La tête du renard Kunfox (dessin original), avec ou sans fond et toque.
+// La toque est un groupe à part : l'animation d'entrée la fait tomber
+// sur l'oreille.
+interface Props { taille?: number; fond?: boolean; toque?: boolean; class?: string; id?: string }
+const { taille = 64, fond = true, toque = true, class: classe = '', id } = Astro.props;
+---
+<svg id={id} class={classe} width={taille} height={taille} viewBox="0 0 1024 1024" aria-hidden="true">
+  {fond && <rect width="1024" height="1024" rx="228" fill="#14213D" />}
+  <g transform="translate(0,30)">
+    <path d="M300 210 Q332 330 400 392 Q456 372 512 372 Q568 372 624 392 Q692 330 724 210 Q800 300 812 450 Q850 520 836 572 Q700 700 512 812 Q324 700 188 572 Q174 520 212 450 Q224 300 300 210 Z" fill="#FF6B2B" />
+    <path d="M312 268 Q340 352 384 392 Q320 420 268 452 Q270 340 312 268 Z" fill="#E04E14" />
+    <path d="M712 268 Q684 352 640 392 Q704 420 756 452 Q754 340 712 268 Z" fill="#E04E14" />
+    <path d="M188 572 Q300 530 400 590 Q456 624 512 700 Q568 624 624 590 Q724 530 836 572 Q700 700 512 812 Q324 700 188 572 Z" fill="#FFF4E8" />
+    <g class="yeux">
+      <ellipse cx="404" cy="528" rx="34" ry="40" fill="#14213D" />
+      <ellipse cx="620" cy="528" rx="34" ry="40" fill="#14213D" />
+      <circle cx="416" cy="512" r="12" fill="#fff" />
+      <circle cx="632" cy="512" r="12" fill="#fff" />
+    </g>
+    <path d="M474 664 Q512 650 550 664 Q544 702 512 718 Q480 702 474 664 Z" fill="#14213D" />
+    <path d="M482 748 Q512 770 542 748" fill="none" stroke="#14213D" stroke-width="12" stroke-linecap="round" />
+  </g>
+  {toque && (
+    <g class="toque">
+      <g transform="translate(600,150) rotate(14)">
+        <path d="M0 60 L130 0 L260 60 L130 120 Z" fill="#FFF4E8" stroke="#14213D" stroke-width="10" stroke-linejoin="round" />
+        <path d="M60 92 L60 140 Q130 172 200 140 L200 92 L130 124 Z" fill="#FFF4E8" stroke="#14213D" stroke-width="10" stroke-linejoin="round" />
+        <path d="M130 60 L232 92 L232 170" fill="none" stroke="#FFC24B" stroke-width="10" stroke-linecap="round" />
+        <circle cx="232" cy="176" r="14" fill="#FFC24B" />
+      </g>
+    </g>
+  )}
+</svg>
