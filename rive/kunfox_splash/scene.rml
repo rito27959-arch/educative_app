@@ -120,11 +120,11 @@
 
     <StateMachine name="Ouverture" id="0:104">
       <StateMachineLayer name="Couche" id="0:105">
-        <EntryState><StateTransition stateToId="0:106"/></EntryState>
-        <AnimationState animationId="0:108" name="Entree" id="0:106">
+        <AnyState x="200" y="-120"/><ExitState x="400" y="-120"/><EntryState x="0" y="0"><StateTransition stateToId="0:106"/></EntryState>
+        <AnimationState x="200" y="0" animationId="0:108" id="0:106">
           <StateTransition stateToId="0:107" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100"/>
         </AnimationState>
-        <AnimationState animationId="0:109" name="Attente" id="0:107"/>
+        <AnimationState x="400" y="0" animationId="0:109" id="0:107"/>
       </StateMachineLayer>
     </StateMachine>
 

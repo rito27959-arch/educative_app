@@ -42,8 +42,8 @@ jobs:
             rive rive/kunfox_splash --verify > /tmp/sortie/verification.txt 2>&1; echo "verif: $?" >> /tmp/sortie/verification.txt
             rive rive/kunfox_splash --once > /tmp/sortie/construction.txt 2>&1; echo "construction: $?" >> /tmp/sortie/construction.txt
             cp rive/kunfox_splash/build/*.riv /tmp/sortie/ 2>/dev/null
-            for f in 0 20 40 60 80 100 130 160; do
-              rive rive/kunfox_splash --screenshot=/tmp/sortie/capture_$f.png --frame=$f >> /tmp/sortie/captures.txt 2>&1
+            for ms in 0 150 350 550 800 1000 1300 1600 2200; do
+              rive rive/kunfox_splash --screenshot=/tmp/sortie/capture_$(printf %04d $ms).png --advance=${ms}ms >> /tmp/sortie/captures.txt 2>&1
             done
             rive rive/kunfox_splash --screenshot=/tmp/sortie/capture.png >> /tmp/sortie/captures.txt 2>&1
           fi

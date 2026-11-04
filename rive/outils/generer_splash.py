@@ -182,11 +182,11 @@ scene = f'''<Rive version="1" kind="fragment">
 
     <StateMachine name="Ouverture" id="{ID['sm']}">
       <StateMachineLayer name="Couche" id="{ID['couche']}">
-        <EntryState><StateTransition stateToId="{ID['etat_entree']}"/></EntryState>
-        <AnimationState animationId="{ID['anim_entree']}" name="Entree" id="{ID['etat_entree']}">
+        <AnyState x="200" y="-120"/><ExitState x="400" y="-120"/><EntryState x="0" y="0"><StateTransition stateToId="{ID['etat_entree']}"/></EntryState>
+        <AnimationState x="200" y="0" animationId="{ID['anim_entree']}" id="{ID['etat_entree']}">
           <StateTransition stateToId="{ID['etat_attente']}" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100"/>
         </AnimationState>
-        <AnimationState animationId="{ID['anim_attente']}" name="Attente" id="{ID['etat_attente']}"/>
+        <AnimationState x="400" y="0" animationId="{ID['anim_attente']}" id="{ID['etat_attente']}"/>
       </StateMachineLayer>
     </StateMachine>
 
