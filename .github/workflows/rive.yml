@@ -1,0 +1,49 @@
+# Construit les animations Rive (dossier rive/) avec la Rive CLI, puis publie
+# le .riv, une capture et la documentation utile sur la branche `journal-rive`.
+name: Rive
+on:
+  push:
+    branches: [rive-splash]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  rive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer la Rive CLI
+        run: |
+          curl -fsSL https://releases.rive.app/cli/install.sh | sh
+          echo "$HOME/.rive/bin" >> "$GITHUB_PATH"
+      - name: Documentation et construction
+        run: |
+          set +e
+          mkdir -p /tmp/sortie/docs
+          rive --version > /tmp/sortie/version.txt 2>&1
+          rive doctor >> /tmp/sortie/version.txt 2>&1
+          rive docs --list > /tmp/sortie/docs/liste.txt 2>&1
+          for t in $(rive docs --list 2>/dev/null | awk '{print $1}' | grep -E '^[a-z][a-z0-9_/-]*$' | head -60); do
+            rive docs "$t" > "/tmp/sortie/docs/$(echo $t | tr '/' '_').md" 2>&1
+          done
+          for ty in Artboard Shape Path PointsPath StraightVertex CubicDetachedVertex CubicMirroredVertex Ellipse Rectangle Fill Stroke SolidColor LinearGradient RadialGradient GradientStop Node LinearAnimation KeyedObject KeyedProperty KeyFrameDouble KeyFrameColor CubicEaseInterpolator StateMachine StateMachineLayer AnimationState EntryState StateTransition; do
+            rive schema "$ty" > "/tmp/sortie/docs/schema_$ty.txt" 2>&1
+          done
+          cp -r "$(rive samples --path 2>/dev/null)" /tmp/sortie/exemple 2>/dev/null
+          if [ -d rive/kunfox_splash ]; then
+            rive rive/kunfox_splash --verify > /tmp/sortie/verification.txt 2>&1; echo "verif: $?" >> /tmp/sortie/verification.txt
+            rive rive/kunfox_splash --once > /tmp/sortie/construction.txt 2>&1; echo "construction: $?" >> /tmp/sortie/construction.txt
+            cp rive/kunfox_splash/build/*.riv /tmp/sortie/ 2>/dev/null
+            for f in 0 20 40 60 80 100 130 160; do
+              rive rive/kunfox_splash --screenshot=/tmp/sortie/capture_$f.png --frame=$f >> /tmp/sortie/captures.txt 2>&1
+            done
+            rive rive/kunfox_splash --screenshot=/tmp/sortie/capture.png >> /tmp/sortie/captures.txt 2>&1
+          fi
+          true
+      - name: Publier
+        if: always()
+        run: |
+          cd /tmp/sortie && git init -q -b journal-rive
+          git config user.name ci; git config user.email ci@users.noreply.github.com
+          git add -A; git commit -qm "journal $GITHUB_SHA"
+          git push -fq "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" journal-rive
