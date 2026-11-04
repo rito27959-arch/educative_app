@@ -15,18 +15,18 @@ import { CONTACT, EDITEUR, MISE_A_JOUR } from '../site';
     <thead><tr><th>Donnée</th><th>Pourquoi</th><th>Où</th></tr></thead>
     <tbody>
       <tr><td>Progression, scores, série, réglages</td><td>Faire fonctionner l'application</td><td>Sur ton téléphone</td></tr>
-      <tr><td>Pseudo et série du Bac</td><td>Personnaliser le contenu ; compte en ligne si tu en crées un</td><td>Téléphone, et serveur si compte en ligne</td></tr>
-      <tr><td>Progression synchronisée</td><td>La retrouver sur un autre téléphone (facultatif)</td><td>Serveur, seulement avec un compte en ligne</td></tr>
+      <tr><td>Pseudo et série du Bac</td><td>Personnaliser le contenu</td><td>Sur ton téléphone ; dans la sauvegarde chiffrée si tu te connectes avec Droplet</td></tr>
+      <tr><td>Sauvegarde de la progression</td><td>La retrouver sur un autre téléphone, si tu choisis « Se connecter avec Droplet »</td><td>Serveur, <b>chiffrée sur ton téléphone</b> : nous ne pouvons ni la lire ni savoir à qui elle appartient</td></tr>
       <tr><td>Statistiques d'utilisation (écrans visités, durées)</td><td>Améliorer l'application</td><td>Serveur, sans ton nom</td></tr>
       <tr><td>Rapports de plantage</td><td>Corriger les bugs</td><td>Service de suivi d'erreurs</td></tr>
-      <tr><td>Jeton de notification</td><td>T'envoyer un rappel de révision, si tu l'acceptes</td><td>Serveur</td></tr>
+      <tr><td>Heure habituelle de révision, rappels ouverts</td><td>Envoyer les rappels au bon moment, si tu les acceptes</td><td>Sur ton téléphone uniquement : les rappels sont programmés par le téléphone lui-même</td></tr>
     </tbody>
   </table>
-  <p>Les questions posées au tuteur intelligent sont traitées <b>sur ton téléphone</b> et ne sont pas envoyées sur Internet.</p>
+  <p>« Se connecter avec Droplet » ne donne à Kunfox que ton pseudo et un identifiant propre à Kunfox : jamais tes messages, tes contacts ni ton identifiant Droplet.</p>
 
   <h2>3. Les permissions du téléphone</h2>
   <ul>
-    <li><b>Micro</b> : pour le coach vocal, seulement quand tu l'utilises.</li>
+    <li><b>Notifications</b> : pour les rappels de révision, seulement si tu les acceptes. Tu peux les couper dans ton profil.</li>
     <li><b>Bluetooth, Wi-Fi et position</b> : pour les quiz entre téléphones proches. Android exige la permission de position pour chercher les appareils à proximité ; Kunfox n'enregistre pas ta position.</li>
     <li><b>Photos et fichiers</b> : seulement si tu choisis d'importer un document.</li>
   </ul>
