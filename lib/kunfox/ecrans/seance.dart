@@ -26,6 +26,7 @@ import '../composants/bouton.dart';
 import '../composants/sons.dart';
 import '../donnees/matieres.dart';
 import '../donnees/progression.dart';
+import '../donnees/rappels.dart';
 import '../flame/effets_flame.dart';
 import '../theme/palette.dart';
 
@@ -191,6 +192,7 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
       // garde aussi à jour les écrans historiques (programme, statistiques)
       ref.read(curriculumProgressProvider.notifier).completeLesson(widget.leconId!, score: bilan.precision);
     }
+    Rappels.noterLecon();
     context.pushReplacement('/k/fin', extra: bilan);
   }
 

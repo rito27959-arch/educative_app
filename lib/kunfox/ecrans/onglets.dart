@@ -14,6 +14,7 @@ import '../../shared/widgets/kunfox/kunfox_rive.dart';
 import '../composants/barre_onglets.dart';
 import '../composants/bouton.dart';
 import '../donnees/compte_droplet.dart';
+import '../donnees/rappels.dart';
 import 'package:share_plus/share_plus.dart';
 import '../composants/page_ios.dart';
 import '../composants/sons.dart';
@@ -349,6 +350,41 @@ class _Profil extends ConsumerWidget {
             title: const Text('Nuit de renard (thème sombre)'),
             secondary: Icon(Icons.dark_mode_rounded, color: p.doux),
             activeThumbColor: p.prim,
+          ),
+          Divider(height: 1, color: p.bord),
+          StatefulBuilder(
+            builder: (context, majour) {
+              final h = Rappels.heureChoisie;
+              return Column(children: [
+                SwitchListTile(
+                  value: Rappels.actifs,
+                  onChanged: (v) async {
+                    if (v && !Rappels.demandeFaite) {
+                      await Rappels.demanderAutorisation();
+                    }
+                    await Rappels.activer(v);
+                    majour(() {});
+                  },
+                  title: const Text('Rappels de Kunfox'),
+                  subtitle: Text('Ta leçon du jour, et ta série quand elle est en danger', style: TextStyle(color: p.doux)),
+                  secondary: Icon(Icons.notifications_active_rounded, color: p.doux),
+                  activeThumbColor: p.prim,
+                ),
+                if (Rappels.actifs)
+                  ListTile(
+                    leading: const SizedBox(width: 24),
+                    title: Text(h == null ? 'Heure : Kunfox choisit pour toi' : 'Heure : ${h.split(':')[0]} h ${h.split(':')[1].padLeft(2, '0')}'),
+                    trailing: Icon(Icons.schedule_rounded, color: p.doux),
+                    onTap: () async {
+                      final t = await showTimePicker(context: context, initialTime: const TimeOfDay(hour: 18, minute: 30));
+                      if (t != null) {
+                        await Rappels.choisirHeure(t.hour, t.minute);
+                        majour(() {});
+                      }
+                    },
+                  ),
+              ]);
+            },
           ),
           Divider(height: 1, color: p.bord),
           StatefulBuilder(

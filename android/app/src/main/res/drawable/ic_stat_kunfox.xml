@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Petite icône des notifications : la tête de Kunfox, en silhouette
+     blanche (Android la teinte lui-même). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="1024" android:viewportHeight="1024">
+    <group android:translateY="60">
+        <path android:fillColor="#FFFFFFFF"
+            android:pathData="M206,488 Q214,300 300,206 Q348,318 426,404 Z" />
+        <path android:fillColor="#FFFFFFFF"
+            android:pathData="M818,488 Q810,300 724,206 Q676,318 598,404 Z" />
+        <path android:fillColor="#FFFFFFFF"
+            android:pathData="M214,452 Q300,360 404,390 Q458,370 512,370 Q566,370 620,390 Q724,360 810,452 Q852,520 838,574 Q700,704 512,814 Q324,704 186,574 Q172,520 214,452 Z" />
+        <path android:fillColor="#00000000" android:strokeColor="#00000000" android:pathData="M0,0" />
+    </group>
+</vector>

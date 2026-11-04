@@ -23,6 +23,10 @@ dependencies:
   share_plus: ^10.1.4
   # « Se connecter avec Droplet » : échange chiffré et sauvegarde.
   cryptography: ^2.7.0
+  # Rappels locaux de Kunfox (programmés sur le téléphone, sans serveur).
+  flutter_local_notifications: ^19.4.0
+  timezone: ^0.10.1
+  flutter_timezone: ^4.1.1
   url_launcher: ^6.3.1
   file_picker: ^8.0.0
   universal_ble: ^0.10.0

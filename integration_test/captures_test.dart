@@ -7,6 +7,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:ouro_prep/core/providers/auth_provider.dart';
 import 'package:ouro_prep/core/providers/settings_provider.dart';
 import 'package:ouro_prep/kunfox/donnees/progression.dart';
+import 'package:ouro_prep/kunfox/donnees/rappels.dart';
 import 'package:ouro_prep/core/router.dart';
 import 'package:ouro_prep/core/services/storage_service.dart';
 import 'package:ouro_prep/main.dart';
@@ -140,6 +141,9 @@ void main() {
     await capture('34_parcours_suite');
     await taper('Quêtes');
     await capture('35_quetes_aube');
+
+    // ── deux rappels montrés tout de suite (capturés ensuite par adb)
+    await Rappels.essai();
 
     // ── l'arrivée dans l'app (sans créer de profil)
     routeur.go('/onboarding');

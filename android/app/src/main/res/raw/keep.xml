@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Les images des rappels sont appelées par leur nom depuis Dart : le
+     rétrécisseur de ressources ne doit pas les croire inutiles. -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/ic_stat_kunfox,@drawable/kunfox_*" />

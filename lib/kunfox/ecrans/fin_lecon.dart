@@ -16,7 +16,9 @@ import 'package:go_router/go_router.dart';
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
 import '../composants/bouton.dart';
 import '../composants/sons.dart';
+import '../../core/services/storage_service.dart';
 import '../donnees/progression.dart';
+import '../donnees/rappels.dart';
 import '../flame/effets_flame.dart';
 import '../theme/palette.dart';
 
@@ -49,12 +51,57 @@ class _FinLeconEcranState extends ConsumerState<FinLeconEcran> with TickerProvid
     super.dispose();
   }
 
-  void _suite() {
+  Future<void> _suite() async {
     if (!_serie && widget.bilan.premiereDuJour) {
       setState(() => _serie = true);
       return;
     }
-    context.go('/k');
+    // Après la toute première leçon : Kunfox demande s'il peut rappeler
+    // l'élève — au moment où l'envie est là, pas au lancement de l'app.
+    if (!Rappels.demandeFaite) await _proposerRappels();
+    if (mounted) context.go('/k');
+  }
+
+  Future<void> _proposerRappels() async {
+    final p = Palette.of(context);
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: p.surface,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            const KunfoxMascotte(humeur: HumeurKunfox.salut, taille: 150),
+            Text('Je te rappelle demain ?', style: Theme.of(ctx).textTheme.headlineSmall, textAlign: TextAlign.center),
+            const SizedBox(height: 8),
+            Text(
+              'Un petit mot à l\'heure où tu révises d\'habitude, et un rappel le soir si ta série est en danger. Jamais plus.',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: p.doux, fontWeight: FontWeight.w600, height: 1.4),
+            ),
+            const SizedBox(height: 20),
+            BoutonKunfox(
+              libelle: 'Oui, rappelle-moi',
+              surAppui: () async {
+                Navigator.of(ctx).pop();
+                await Rappels.demanderAutorisation();
+              },
+            ),
+            const SizedBox(height: 6),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(ctx).pop();
+                await StorageService.setString('kunfox.rappels.demande', '1');
+                await Rappels.activer(false);
+              },
+              child: Text('PLUS TARD', style: TextStyle(color: p.doux, fontWeight: FontWeight.w800, letterSpacing: 0.8)),
+            ),
+          ]),
+        ),
+      ),
+    );
   }
 
   @override

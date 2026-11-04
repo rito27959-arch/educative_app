@@ -19,6 +19,8 @@ import 'core/models/mesh_message.dart';
 import 'core/providers/courses_provider.dart';
 import 'kunfox/donnees/compte_droplet.dart';
 import 'kunfox/donnees/progression.dart';
+import 'kunfox/donnees/rappels.dart';
+import 'kunfox/donnees/matieres.dart';
 import 'kunfox/theme/kunfox_theme.dart';
 import 'shared/widgets/mesh_toast.dart';
 import 'shared/widgets/ouro_expert_bubble.dart';
@@ -68,6 +70,11 @@ Future<void> _runApp() async {
   try {
     await StorageService.init();
     await CompteDroplet.charger();
+    try {
+      await Rappels.initialiser();
+    } catch (e) {
+      debugPrint('[Rappels] $e');
+    }
     await SupabaseService.instance.init();
     SyncService.instance.init();
   } catch (e, s) {
@@ -174,6 +181,12 @@ class OuroPrepApp extends ConsumerWidget {
     }
 
     Future.microtask(() => ref.read(seedingProvider));
+
+    // Les rappels : ce qu'il faut savoir pour les écrire, et où mène un toucher.
+    Rappels.lireProgression = () => ref.read(progressionProvider);
+    Rappels.surOuverture = (route) => router.go(route);
+    Rappels.contexte(pseudo: auth.user?.pseudo ?? '', matiere: ref.read(matiereActiveProvider)?.title);
+    Future.microtask(Rappels.programmer);
 
     // Ce qui accompagne la progression dans la sauvegarde Droplet.
     ProgressionNotifier.profil = () => {
