@@ -129,6 +129,18 @@ void main() {
     await attendre(800);
     await capture('32_lecon_aube');
 
+    // ── retour d'une leçon : la pastille fête, la suivante s'ouvre
+    routeur.go('/k');
+    await attendre(1500);
+    container.read(progressionProvider.notifier).terminer(
+        leconId: 'maths_ch1_l1', bonnes: 5, total: 5, duree: const Duration(minutes: 2), meilleurCombo: 5);
+    await attendre(1000);
+    await capture('33_parcours_fete');
+    await attendre(1400);
+    await capture('34_parcours_suite');
+    await taper('Quêtes');
+    await capture('35_quetes_aube');
+
     // ── l'arrivée dans l'app (sans créer de profil)
     routeur.go('/onboarding');
     await attendre(2000);
