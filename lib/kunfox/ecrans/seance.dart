@@ -364,10 +364,16 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 380),
                   switchInCurve: const Cubic(0.16, 1, 0.3, 1),
-                  transitionBuilder: (enfant, a) => SlideTransition(
-                    position: Tween(begin: const Offset(0.25, 0), end: Offset.zero).animate(a),
-                    child: FadeTransition(opacity: a, child: enfant),
-                  ),
+                  // L'ancien exercice part à gauche pendant que le nouveau arrive
+                  // de droite, côte à côte : rien ne se superpose.
+                  layoutBuilder: (actuel, anciens) => ClipRect(child: Stack(children: [...anciens, if (actuel != null) actuel])),
+                  transitionBuilder: (enfant, a) {
+                    final entrant = enfant.key == ValueKey(_index);
+                    return SlideTransition(
+                      position: Tween(begin: Offset(entrant ? 1 : -1, 0), end: Offset.zero).animate(a),
+                      child: enfant,
+                    );
+                  },
                   child: KeyedSubtree(
                     key: ValueKey(_index),
                     child: etape is _Notion ? _VueNotion(etape) : _VueExercice(

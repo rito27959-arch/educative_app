@@ -63,6 +63,13 @@ void main() {
     await attendre(1500);
 
     final routeur = GoRouter.of(navigatorKey.currentContext!);
+    Future<void> onglet(IconData icone) async {
+      final f = find.byIcon(icone);
+      if (f.evaluate().isEmpty) return;
+      await tester.tap(f.last, warnIfMissed: false);
+      await attendre(900);
+    }
+
     Future<void> taper(String texte) async {
       final f = find.text(texte);
       if (f.evaluate().isEmpty) {
@@ -77,13 +84,13 @@ void main() {
     routeur.go('/k');
     await attendre(3000);
     await capture('20_parcours');
-    await taper('Réviser');
+    await onglet(Icons.fitness_center_rounded);
     await capture('21_reviser');
-    await taper('Quêtes');
+    await onglet(Icons.emoji_events_rounded);
     await capture('22_quetes');
-    await taper('Profil');
+    await onglet(Icons.face_rounded);
     await capture('23_profil');
-    await taper('Parcours');
+    await onglet(Icons.home_rounded);
 
     // ── une leçon : notions, exercice, vérification
     routeur.push('/k/lecon/maths_c_ch1_l1');
@@ -140,7 +147,7 @@ void main() {
     await capture('33_parcours_fete');
     await attendre(1400);
     await capture('34_parcours_suite');
-    await taper('Quêtes');
+    await onglet(Icons.emoji_events_rounded);
     await capture('35_quetes_aube');
 
     // ── deux rappels montrés tout de suite (capturés ensuite par adb)

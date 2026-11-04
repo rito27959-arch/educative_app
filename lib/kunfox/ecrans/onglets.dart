@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/providers/auth_provider.dart';
 import '../../core/providers/settings_provider.dart';
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
-import '../composants/barre_onglets.dart';
+import '../composants/barre_carton.dart';
 import '../composants/bouton.dart';
 import '../donnees/compte_droplet.dart';
 import '../donnees/rappels.dart';
@@ -49,10 +49,10 @@ class _AccueilKunfoxState extends State<AccueilKunfox> {
   }
 
   static const _items = [
-    OngletKunfox(icon: Icons.explore_outlined, activeIcon: Icons.explore_rounded, label: 'Parcours'),
-    OngletKunfox(icon: Icons.fitness_center_outlined, activeIcon: Icons.fitness_center_rounded, label: 'Réviser'),
-    OngletKunfox(icon: Icons.flag_outlined, activeIcon: Icons.flag_rounded, label: 'Quêtes'),
-    OngletKunfox(icon: Icons.person_outline_rounded, activeIcon: Icons.person_rounded, label: 'Profil'),
+    OngletCarton(icone: Icons.home_rounded, libelle: 'Parcours', couleur: Color(0xFFFF6B2B)),
+    OngletCarton(icone: Icons.fitness_center_rounded, libelle: 'Réviser', couleur: Color(0xFF2F80ED)),
+    OngletCarton(icone: Icons.emoji_events_rounded, libelle: 'Quêtes', couleur: Color(0xFFF5A623)),
+    OngletCarton(icone: Icons.face_rounded, libelle: 'Profil', couleur: Color(0xFF8B5CF6)),
   ];
 
   @override
@@ -87,10 +87,10 @@ class _AccueilKunfoxState extends State<AccueilKunfox> {
               child: IgnorePointer(
                 ignoring: !_barreVisible,
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  BarreOnglets(
-                    items: _items,
-                    currentIndex: _onglet,
-                    onTap: (i) => setState(() {
+                  BarreCarton(
+                    onglets: _items,
+                    actif: _onglet,
+                    surChoix: (i) => setState(() {
                       _onglet = i;
                       _barreVisible = true;
                     }),
@@ -106,7 +106,7 @@ class _AccueilKunfoxState extends State<AccueilKunfox> {
 }
 
 /// Marge du bas des listes pour finir au-dessus de la barre flottante.
-double margeBas(BuildContext context) => BarreOnglets.reservedHeight(MediaQuery.paddingOf(context).bottom) + 16;
+double margeBas(BuildContext context) => BarreCarton.hauteur(MediaQuery.paddingOf(context).bottom) + 16;
 
 // ------------------------------------------------------------------ réviser
 class _Reviser extends ConsumerWidget {

@@ -48,9 +48,6 @@ dependencies:
   rive: ^0.13.20
   # Effets de jeu (ciel du parcours, confettis, étincelles).
   flame: ^1.18.0
-  # La barre d'onglets de Droplet : verre liquide et ressorts d'Apple.
-  liquid_glass_renderer: ^0.2.0-dev.4
-  motor: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -68,8 +65,6 @@ flutter:
     - assets/course_content.json
     - assets/rive/
     - assets/sons/
-  shaders:
-    - shaders/lentille_ios.frag
   # Inter et Inter Tight, les polices du site (licence OFL, assets/fonts/OFL-Inter.txt).
   fonts:
     - family: Inter

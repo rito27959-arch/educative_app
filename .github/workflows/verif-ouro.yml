@@ -56,8 +56,7 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           script: |
-            (for i in $(seq 1 200); do adb shell pm grant app.dropletmesh.kunfox android.permission.POST_NOTIFICATIONS 2>/dev/null && break; sleep 3; done) &
-            flutter drive --driver=test_driver/integration_test.dart --target=integration_test/captures_test.dart > resultats/drive.txt 2>&1 ; echo "drive=$?" >> resultats/journal.txt
+            (for i in $(seq 1 200); do adb shell pm grant app.dropletmesh.kunfox android.permission.POST_NOTIFICATIONS 2>/dev/null && break; sleep 3; done) & flutter drive --driver=test_driver/integration_test.dart --target=integration_test/captures_test.dart > resultats/drive.txt 2>&1 ; echo "drive=$?" >> resultats/journal.txt
             adb shell cmd statusbar expand-notifications ; sleep 3 ; mkdir -p resultats/captures ; adb exec-out screencap -p > resultats/captures/50_notifications.png ; adb shell cmd statusbar collapse
       - name: Publier
         if: always()

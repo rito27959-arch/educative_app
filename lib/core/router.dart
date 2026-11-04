@@ -43,11 +43,17 @@ import '../features/curriculum/bac_complete_screen.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final auth = ref.watch(authProvider);
+  // Le routeur est créé UNE fois. Avant, il était recréé à chaque changement
+  // d'état de connexion — l'app repartait alors de l'ouverture, et l'écran
+  // d'inscription s'affichait une deuxième fois pendant la création du profil.
+  final rafraichir = ValueNotifier<int>(0);
+  ref.listen(authProvider, (_, _) => rafraichir.value++);
+  ref.onDispose(rafraichir.dispose);
 
   return GoRouter(
     navigatorKey: navigatorKey,
     initialLocation: '/splash',
+    refreshListenable: rafraichir,
     routes: [
       GoRoute(path: '/splash', name: 'splash', builder: (_, _) => const SplashScreen()),
       GoRoute(
@@ -271,7 +277,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
     ],
     redirect: (context, state) {
-      final isLoggedIn = auth.isLoggedIn;
+      final isLoggedIn = ref.read(authProvider).isLoggedIn;
       final path = state.uri.path;
       final onboardingDone = StorageService.isOnboardingComplete();
       // Le retour de Droplet doit passer même avant l'inscription.

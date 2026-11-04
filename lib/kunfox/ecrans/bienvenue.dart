@@ -161,10 +161,14 @@ class _BienvenueEcranState extends ConsumerState<BienvenueEcran> {
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 380),
                 switchInCurve: const Cubic(0.16, 1, 0.3, 1),
-                transitionBuilder: (e, a) => SlideTransition(
-                  position: Tween(begin: const Offset(0.2, 0), end: Offset.zero).animate(a),
-                  child: FadeTransition(opacity: a, child: e),
-                ),
+                layoutBuilder: (actuel, anciens) => ClipRect(child: Stack(children: [...anciens, if (actuel != null) actuel])),
+                transitionBuilder: (e, a) {
+                  final entrant = e.key == ValueKey(_pas);
+                  return SlideTransition(
+                    position: Tween(begin: Offset(entrant ? 1 : -1, 0), end: Offset.zero).animate(a),
+                    child: e,
+                  );
+                },
                 child: KeyedSubtree(key: ValueKey(_pas), child: pas(p)),
               ),
             ),
