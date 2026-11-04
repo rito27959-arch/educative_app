@@ -438,13 +438,6 @@ class _Profil extends ConsumerWidget {
               'Viens réviser ton BAC avec moi : https://kunfox.dropletmesh.app',
             ),
           ),
-          Divider(height: 1, color: p.bord),
-          ListTile(
-            leading: Icon(Icons.settings_rounded, color: p.doux),
-            title: const Text('Réglages'),
-            trailing: Icon(Icons.chevron_right_rounded, color: p.doux),
-            onTap: () => context.push('/settings'),
-          ),
         ]),
       ),
     ]);

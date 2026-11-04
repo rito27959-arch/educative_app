@@ -23,7 +23,6 @@ import 'kunfox/donnees/rappels.dart';
 import 'kunfox/donnees/matieres.dart';
 import 'kunfox/theme/kunfox_theme.dart';
 import 'shared/widgets/mesh_toast.dart';
-import 'shared/widgets/ouro_expert_bubble.dart';
 
 void main() async {
   await runZonedGuarded(() async {
@@ -224,20 +223,7 @@ class OuroPrepApp extends ConsumerWidget {
                       child: Container(color: Colors.black54),
                     ),
                   ),
-                // Le coach IA n'a rien à faire sur l'ouverture, la
-                // présentation et la connexion : il n'apparaît qu'ensuite.
-                Positioned.fill(
-                  child: ListenableBuilder(
-                    listenable: router.routerDelegate,
-                    builder: (context, _) {
-                      final chemin = router.routerDelegate.currentConfiguration.uri.path;
-                      const sansCoach = {'/splash', '/onboarding', '/auth'};
-                      // ni sur le parcours Kunfox ni pendant une leçon
-                      if (sansCoach.contains(chemin) || chemin.startsWith('/k')) return const SizedBox.shrink();
-                      return const OuroExpertBubble();
-                    },
-                  ),
-                ),
+                // (Le coach IA a été retiré de Kunfox avec le tuteur sur l'appareil.)
                 const _IncomingCallDetector(),
                 const ToastHost(),
               ],

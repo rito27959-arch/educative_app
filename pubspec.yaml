@@ -42,8 +42,6 @@ dependencies:
   sentry: ^9.24.0
   record: ^6.2.1
   audioplayers: ^6.4.0
-  llamadart: ^0.8.14
-  llamadart_llama_cpp_flutter: ^0.0.9
   flutter_tts: ^4.2.2
   speech_to_text: ^7.0.0
   # L'écran d'ouverture animé (fichier construit avec la Rive CLI).
