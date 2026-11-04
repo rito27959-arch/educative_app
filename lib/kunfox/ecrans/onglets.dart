@@ -38,22 +38,31 @@ class _AccueilKunfoxState extends State<AccueilKunfox> {
   @override
   Widget build(BuildContext context) {
     // La barre de Droplet flotte au-dessus du contenu, qui défile dessous.
+    // Placée comme dans Droplet : collée en bas, par-dessus le contenu.
     return Scaffold(
-      extendBody: true,
-      body: SafeArea(
-        bottom: false,
-        child: IndexedStack(index: _onglet, children: const [
-          ParcoursEcran(),
-          _Reviser(),
-          _Quetes(),
-          _Profil(),
-        ]),
-      ),
-      bottomNavigationBar: BarreOnglets(
-        items: _items,
-        currentIndex: _onglet,
-        onTap: (i) => setState(() => _onglet = i),
-      ),
+      body: Stack(children: [
+        SafeArea(
+          bottom: false,
+          child: IndexedStack(index: _onglet, children: const [
+            ParcoursEcran(),
+            _Reviser(),
+            _Quetes(),
+            _Profil(),
+          ]),
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            BarreOnglets(
+              items: _items,
+              currentIndex: _onglet,
+              onTap: (i) => setState(() => _onglet = i),
+            ),
+          ]),
+        ),
+      ]),
     );
   }
 }
@@ -299,8 +308,10 @@ class _Profil extends ConsumerWidget {
         ]),
       ),
       const SizedBox(height: 20),
-      Container(
-        decoration: BoxDecoration(color: p.surface, borderRadius: BorderRadius.circular(18), border: Border.all(color: p.bord, width: 2)),
+      Material(
+        color: p.surface,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18), side: BorderSide(color: p.bord, width: 2)),
         child: Column(children: [
           SwitchListTile(
             value: reglages.darkMode,

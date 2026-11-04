@@ -374,7 +374,9 @@ class StorageService {
         }
       });
     }
-    _settingsCache = Map<String, dynamic>.from(settings);
+    // Fusion : les réglages ne doivent pas effacer les autres clés
+    // (fin de présentation, progression Kunfox...).
+    _settingsCache = {..._settingsCache, ...settings};
   }
 
   // -- Seen message ids -----------------------------------------------------
