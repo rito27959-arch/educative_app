@@ -32,9 +32,10 @@ import '../features/curriculum/chapter_complete_screen.dart';
 import '../features/curriculum/chapter_exam_screen.dart' as curriculum_exam;
 import '../features/curriculum/lock_unlock_screen.dart';
 import '../features/curriculum/bac_exam_screen.dart';
-import '../kunfox/donnees/progression.dart' show BilanLecon;
+import '../kunfox/donnees/progression.dart' show BilanLecon, BilanBoss;
 import '../kunfox/ecrans/bienvenue.dart';
 import '../kunfox/donnees/duels.dart' show PartieDuel, Joueur;
+import '../kunfox/ecrans/boss.dart';
 import '../kunfox/ecrans/connexion_droplet.dart';
 import '../kunfox/ecrans/duel.dart';
 import '../kunfox/ecrans/fin_lecon.dart';
@@ -94,6 +95,24 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
             ),
             child: bilan is BilanLecon ? FinLeconEcran(bilan: bilan) : const AccueilKunfox(),
+          );
+        },
+      ),
+      // ── Épreuve d'unité (le grand boss)
+      GoRoute(path: '/k/boss/:chapitre', pageBuilder: (_, state) => _monte(state, BossEntreeEcran(chapitreId: state.pathParameters['chapitre']!))),
+      GoRoute(
+        path: '/k/boss-seance/:chapitre',
+        pageBuilder: (_, state) => _monte(state, SeanceEcran(boss: state.pathParameters['chapitre'])),
+      ),
+      GoRoute(
+        path: '/k/boss-fin',
+        pageBuilder: (_, state) {
+          final b = state.extra;
+          return CustomTransitionPage(
+            key: state.pageKey,
+            transitionDuration: const Duration(milliseconds: 420),
+            transitionsBuilder: (_, a, _, enfant) => FadeTransition(opacity: a, child: enfant),
+            child: b is BilanBoss ? BossFinEcran(bilan: b) : const AccueilKunfox(),
           );
         },
       ),

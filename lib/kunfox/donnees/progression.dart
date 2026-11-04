@@ -315,6 +315,73 @@ class ProgressionNotifier extends StateNotifier<Progression> {
       chapitreFini: chapitreFini,
     );
   }
+
+  /// Enregistre une épreuve d'unité : série et XP comme une révision, plus
+  /// 40 XP et la couronne d'or si elle est remportée pour la première fois.
+  BilanBoss terminerBoss({
+    required String chapitreId,
+    required int bonnes,
+    required int total,
+    required Duration duree,
+    required int meilleurCombo,
+  }) {
+    final avant = state;
+    final dejaReussi = avant.bossReussi(chapitreId);
+    final bilan = terminer(leconId: null, bonnes: bonnes, total: total, duree: duree, meilleurCombo: meilleurCombo);
+    final precision = total == 0 ? 0 : (bonnes * 100 / total).round();
+    final reussi = precision >= kSeuilBoss;
+    final bonus = reussi && !dejaReussi ? 40 : 0;
+    final auj = jourDe(DateTime.now());
+    final p = state;
+    _ecrire(p.copyWith(
+      xp: p.xp + bonus,
+      xpParJour: {...p.xpParJour, auj: (p.xpParJour[auj] ?? 0) + bonus},
+      scores: {...p.scores, cleBoss(chapitreId): math.max(p.scores[cleBoss(chapitreId)] ?? 0, precision)},
+    ));
+    return BilanBoss(
+      chapitreId: chapitreId,
+      bonnes: bonnes,
+      total: total,
+      reussi: reussi,
+      dejaReussi: dejaReussi,
+      xp: bilan.xp + bonus,
+      duree: duree,
+      lecon: bilan,
+    );
+  }
+}
+
+/// Le bilan d'une épreuve d'unité (le « grand boss »).
+class BilanBoss {
+  const BilanBoss({
+    required this.chapitreId,
+    required this.bonnes,
+    required this.total,
+    required this.reussi,
+    required this.dejaReussi,
+    required this.xp,
+    required this.duree,
+    required this.lecon,
+  });
+  final String chapitreId;
+  final int bonnes, total;
+  final bool reussi;
+
+  /// L'épreuve était déjà réussie avant : pas de nouvelle couronne.
+  final bool dejaReussi;
+  final int xp;
+  final Duration duree;
+  final BilanLecon lecon;
+  int get precision => total == 0 ? 0 : (bonnes * 100 / total).round();
+}
+
+/// Il faut 70 % pour remporter l'épreuve d'une unité.
+const kSeuilBoss = 70;
+String cleBoss(String chapitreId) => 'boss:$chapitreId';
+
+extension EpreuvesUnite on Progression {
+  int? scoreBoss(String chapitreId) => scores[cleBoss(chapitreId)];
+  bool bossReussi(String chapitreId) => (scoreBoss(chapitreId) ?? 0) >= kSeuilBoss;
 }
 
 final progressionProvider = StateNotifierProvider<ProgressionNotifier, Progression>((ref) => ProgressionNotifier());

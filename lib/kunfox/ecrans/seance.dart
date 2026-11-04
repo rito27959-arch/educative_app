@@ -51,13 +51,16 @@ class _Exercice extends _Etape {
 }
 
 class SeanceEcran extends ConsumerStatefulWidget {
-  const SeanceEcran({super.key, this.leconId, this.duel});
+  const SeanceEcran({super.key, this.leconId, this.duel, this.boss});
 
   /// null : révision de la matière en cours.
   final String? leconId;
 
   /// Une séance de duel : les questions sont fixées, pas de cœurs perdus.
   final PartieDuel? duel;
+
+  /// L'épreuve d'une unité (le « grand boss ») : l'id du chapitre.
+  final String? boss;
 
   @override
   ConsumerState<SeanceEcran> createState() => _SeanceEcranState();
@@ -81,7 +84,9 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
   int _pertes = 0; // compte les cœurs perdus, pour rejouer l'animation
   bool _coeurSeBrise = false;
 
-  bool get _revision => widget.leconId == null && widget.duel == null;
+  bool get _revision => widget.leconId == null && widget.duel == null && widget.boss == null;
+  bool get _boss => widget.boss != null;
+  int _vies = 3; // l'épreuve : trois vies, pas les cœurs du jour
   bool get _duel => widget.duel != null;
 
   // duel : juste/faux et temps de chaque réponse
@@ -97,6 +102,13 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
   void _preparer() {
     LessonContentData.init();
     final questions = <QuizQuestion>[];
+    if (_boss) {
+      final toutes = [...QuizData.getQuestionsForChapter(widget.boss!)]..shuffle(_hasard);
+      final vues = <String>{};
+      _file.addAll(toutes.where((q) => vues.add(q.question)).take(10).map(_Exercice.new));
+      _totalInitial = math.max(1, _file.length);
+      return;
+    }
     if (_duel) {
       _file.addAll(widget.duel!.questions.map(_Exercice.new));
       _totalInitial = math.max(1, _file.length);
@@ -152,7 +164,7 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
       } else {
         _combo = 0;
         // la question reviendra en fin de séance (une seule fois)
-        if (!_duel && _deja.add(e.q.id)) _file.add(_Exercice(e.q, reprise: true));
+        if (!_duel && !_boss && _deja.add(e.q.id)) _file.add(_Exercice(e.q, reprise: true));
       }
     });
     Sons.jouer(juste ? Son.juste : Son.faux);
@@ -166,7 +178,16 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
       }
     } else {
       HapticFeedback.heavyImpact();
-      if (!_revision && !_duel) {
+      if (_boss) {
+        setState(() {
+          _vies--;
+          _pertes++;
+          _coeurSeBrise = true;
+        });
+        Future.delayed(const Duration(milliseconds: 1100), () {
+          if (mounted) setState(() => _coeurSeBrise = false);
+        });
+      } else if (!_revision && !_duel) {
         ref.read(progressionProvider.notifier).perdreCoeur();
         // un cœur se brise au-dessus du compteur, puis s'efface
         setState(() {
@@ -185,7 +206,7 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
       _plusDeCoeurs();
       return;
     }
-    if (_index + 1 >= _file.length) {
+    if (_index + 1 >= _file.length || (_boss && _vies <= 0)) {
       _terminer();
       return;
     }
@@ -198,6 +219,21 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
   }
 
   void _terminer() {
+    if (_boss) {
+      final bilan = ref.read(progressionProvider.notifier).terminerBoss(
+            chapitreId: widget.boss!,
+            bonnes: _bonnes,
+            total: math.max(_reponses, _file.length),
+            duree: DateTime.now().difference(_debut),
+            meilleurCombo: _meilleurCombo,
+          );
+      if (bilan.reussi) {
+        ref.read(curriculumProgressProvider.notifier).recordChapterExamScore(widget.boss!, bilan.precision);
+      }
+      Rappels.noterLecon();
+      context.pushReplacement('/k/boss-fin', extra: bilan);
+      return;
+    }
     if (_duel) {
       // un duel compte comme une révision : XP et série
       ref.read(progressionProvider.notifier).terminer(
@@ -344,11 +380,13 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
                             ? [BoxShadow(color: p.or.withValues(alpha: 0.55), blurRadius: 14, spreadRadius: 1)]
                             : const [],
                       ),
-                      child: BarreProgres(valeur: _avancement, couleur: _combo >= 3 ? p.or : p.succes),
+                      child: BarreProgres(valeur: _avancement, couleur: _combo >= 3 || _boss ? p.or : p.succes),
                     ),
                   ),
                   const SizedBox(width: 12),
-                  if (_duel)
+                  if (_boss)
+                    _Vies(vies: _vies, pertes: _pertes, brise: _coeurSeBrise)
+                  else if (_duel)
                     const Icon(Icons.sports_kabaddi_rounded, color: Color(0xFF8B5CF6))
                   else if (_revision)
                     Icon(Icons.fitness_center_rounded, color: p.info)
@@ -827,5 +865,42 @@ class _Bas extends StatelessWidget {
         ),
       ]),
     );
+  }
+}
+
+
+/// Les trois vies de l'épreuve : la dernière perdue se brise.
+class _Vies extends StatelessWidget {
+  const _Vies({required this.vies, required this.pertes, required this.brise});
+  final int vies, pertes;
+  final bool brise;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = Palette.of(context);
+    return Row(mainAxisSize: MainAxisSize.min, children: [
+      for (var i = 0; i < 3; i++)
+        Padding(
+          padding: const EdgeInsets.only(left: 2),
+          child: SizedBox(
+            width: 24,
+            height: 24,
+            child: Stack(clipBehavior: Clip.none, alignment: Alignment.center, children: [
+              AnimatedScale(
+                scale: i < vies ? 1 : 0.8,
+                duration: const Duration(milliseconds: 300),
+                curve: const Cubic(0.34, 1.56, 0.64, 1),
+                child: Icon(Icons.favorite_rounded, size: 24, color: i < vies ? p.erreur : p.verrou),
+              ),
+              if (brise && i == vies)
+                Positioned(
+                  left: -24,
+                  top: -24,
+                  child: IgnorePointer(child: KunfoxCoeur(key: ValueKey(pertes), perdu: true, taille: 72)),
+                ),
+            ]),
+          ),
+        ),
+    ]);
   }
 }

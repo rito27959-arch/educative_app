@@ -191,6 +191,39 @@ void main() {
     await attendre(2500);
     await capture('39_reviser_duels');
 
+    // ── l'épreuve de l'unité (le grand boss) et la fiche d'unité
+    final chap = chapitreDe('maths_c_ch1_l1')!.id;
+    routeur.go('/k');
+    await attendre(1500);
+    await onglet(Icons.menu_book_rounded);
+    await attendre(800);
+    await capture('44_fiche_unite');
+    await tester.tapAt(const Offset(20, 60));
+    await attendre(800);
+    routeur.push('/k/boss/$chap');
+    await attendre(300);
+    await capture('45_boss_chute');
+    await attendre(2200);
+    await capture('45b_boss_entree');
+    await taper("COMMENCER L'ÉPREUVE");
+    await attendre(1500);
+    await taper('1');
+    await taper('VÉRIFIER');
+    await attendre(600);
+    await capture('46_boss_seance');
+    const bl = BilanLecon(xp: 10, precision: 80, duree: Duration(minutes: 4), serieAvant: 5, serieApres: 5,
+        premiereDuJour: false, niveauAvant: 3, niveauApres: 3, chapitreFini: false);
+    routeur.go('/k/boss-fin', extra: BilanBoss(chapitreId: chap, bonnes: 9, total: 10, reussi: true, dejaReussi: false,
+        xp: 50, duree: const Duration(minutes: 4), lecon: bl));
+    await attendre(700);
+    await capture('47_boss_trophee');
+    await attendre(2600);
+    await capture('47b_boss_victoire');
+    routeur.go('/k/boss-fin', extra: BilanBoss(chapitreId: chap, bonnes: 5, total: 10, reussi: false, dejaReussi: false,
+        xp: 10, duree: const Duration(minutes: 4), lecon: bl));
+    await attendre(2600);
+    await capture('48_boss_echec');
+
     // ── deux rappels montrés tout de suite (capturés ensuite par adb)
     await Rappels.essai();
     // le script de l'émulateur guette la notification et la photographie

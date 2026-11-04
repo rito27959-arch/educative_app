@@ -19,6 +19,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 
+import 'boss.dart';
+
 import '../../core/models/curriculum_models.dart';
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
 import '../composants/barre_haut.dart';
@@ -251,9 +253,9 @@ class _Unite extends StatelessWidget {
             centre(lecons.length),
             _Trophee(
               couleur: couleur,
-              fini: fini,
+              fini: progression.bossReussi(chapitre.id),
               ouvert: accessible && (faites >= (lecons.length / 2).ceil()),
-              surAppui: () => context.push('/curriculum/subject/${matiere.id}/chapter/${chapitre.id}/boss-exam'),
+              surAppui: () => context.push('/k/boss/${chapitre.id}'),
             ),
           ),
           // Kunfox s'assoit à côté de la leçon du moment
@@ -611,11 +613,18 @@ class _Trophee extends StatelessWidget {
           width: _kNoeud + 6,
           height: _kNoeud + 6,
           decoration: BoxDecoration(
-            color: c,
+            color: fini ? const Color(0xFF2A1240) : c,
             borderRadius: BorderRadius.circular(24),
-            boxShadow: [BoxShadow(color: Palette.fonce(c, 0.25), offset: const Offset(0, 6))],
+            border: fini ? Border.all(color: p.or, width: 3) : null,
+            boxShadow: [
+              BoxShadow(color: Palette.fonce(fini ? p.or : c, 0.25), offset: const Offset(0, 6)),
+              if (fini) BoxShadow(color: p.or.withValues(alpha: 0.45), blurRadius: 18),
+            ],
           ),
-          child: Icon(Icons.emoji_events_rounded, size: 40, color: ouvert || fini ? Colors.white : p.doux),
+          alignment: Alignment.center,
+          child: fini
+              ? const TropheeBoss(taille: 48)
+              : Icon(Icons.emoji_events_rounded, size: 40, color: ouvert ? Colors.white : p.doux),
         ),
       ),
     );
@@ -686,7 +695,7 @@ class _EnTete extends SliverPersistentHeaderDelegate {
             IconButton(
               tooltip: 'Fiche du chapitre',
               onPressed: accessible
-                  ? () => context.push('/curriculum/subject/${matiere.id}/chapter/${chapitre.id}/intro')
+                  ? () => montrerFicheUnite(context, chapitre: chapitre, numero: numero)
                   : null,
               icon: Icon(Icons.menu_book_rounded, color: accessible ? Colors.white : p.doux),
             ),
