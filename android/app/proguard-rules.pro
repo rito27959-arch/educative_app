@@ -55,3 +55,11 @@
     public static int i(...);
     public static int w(...);
 }
+
+# ---- Composants différés de Flutter (Play Core) ----
+# Le moteur Flutter y fait référence sans que l'app les embarque : sans ces
+# lignes, R8 refuse la construction de publication (« Missing classes »).
+-dontwarn com.google.android.play.core.**
+-dontwarn io.flutter.embedding.engine.deferredcomponents.**
+# ---- Rive (moteur natif appelé par JNI) ----
+-keep class app.rive.** { *; }

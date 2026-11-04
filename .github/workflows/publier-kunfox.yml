@@ -73,7 +73,19 @@ jobs:
           N=$(git rev-list --count HEAD)
           echo "VERSION=$V" >> $GITHUB_ENV
           flutter pub get
-          flutter build apk --release --split-per-abi --build-name "$V" --build-number "$N"
+          # le journal de construction est publié même en cas d'échec (sans secrets)
+          set +e
+          flutter build apk --release --split-per-abi --build-name "$V" --build-number "$N" > /tmp/construction.txt 2>&1
+          code=$?
+          set -e
+          tail -80 /tmp/construction.txt
+          if [ $code -ne 0 ]; then
+            mkdir /tmp/j && cd /tmp/j && git init -q && git checkout -q -b journal-publication
+            { echo "== $GITHUB_SHA"; echo "construction: $code"; grep -vi "password\|passe" /tmp/construction.txt | tail -150; } > journal.txt
+            git add . && git -c user.name=ci -c user.email=ci@kunfox.invalid commit -qm "journal $GITHUB_SHA"
+            git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" journal-publication
+            exit 1
+          fi
           mkdir -p sortie
           for abi in arm64-v8a armeabi-v7a x86_64; do
             cp build/app/outputs/flutter-apk/app-$abi-release.apk sortie/Kunfox-$abi.apk
