@@ -12,6 +12,7 @@ import '../../core/providers/settings_provider.dart';
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
 import '../composants/barre_onglets.dart';
 import '../composants/bouton.dart';
+import '../composants/sons.dart';
 import '../donnees/matieres.dart';
 import '../donnees/progression.dart';
 import '../theme/palette.dart';
@@ -319,6 +320,19 @@ class _Profil extends ConsumerWidget {
             title: const Text('Nuit de renard (thème sombre)'),
             secondary: Icon(Icons.dark_mode_rounded, color: p.doux),
             activeThumbColor: p.prim,
+          ),
+          Divider(height: 1, color: p.bord),
+          StatefulBuilder(
+            builder: (context, majour) => SwitchListTile(
+              value: Sons.actifs,
+              onChanged: (v) async {
+                await Sons.basculer(v);
+                majour(() {});
+              },
+              title: const Text('Sons'),
+              secondary: Icon(Icons.volume_up_rounded, color: p.doux),
+              activeThumbColor: p.prim,
+            ),
           ),
           Divider(height: 1, color: p.bord),
           ListTile(

@@ -15,6 +15,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
 import '../composants/bouton.dart';
+import '../composants/sons.dart';
 import '../donnees/progression.dart';
 import '../flame/effets_flame.dart';
 import '../theme/palette.dart';
@@ -36,6 +37,7 @@ class _FinLeconEcranState extends ConsumerState<FinLeconEcran> with TickerProvid
   void initState() {
     super.initState();
     HapticFeedback.heavyImpact();
+    Sons.jouer(Son.fin);
     Future.delayed(const Duration(milliseconds: 250), () {
       if (mounted) _confettis.pluie(nombre: widget.bilan.precision == 100 ? 130 : 80);
     });
@@ -239,6 +241,7 @@ class _SerieState extends ConsumerState<_Serie> {
     Future.delayed(const Duration(milliseconds: 450), () {
       if (!mounted) return;
       HapticFeedback.mediumImpact();
+      Sons.jouer(Son.flamme);
       setState(() => _allumee = true);
     });
   }

@@ -62,6 +62,7 @@ flutter:
   assets:
     - assets/course_content.json
     - assets/rive/
+    - assets/sons/
   shaders:
     - shaders/lentille_ios.frag
   # Inter et Inter Tight, les polices du site (licence OFL, assets/fonts/OFL-Inter.txt).

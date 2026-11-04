@@ -23,6 +23,7 @@ import '../../core/models/quiz_question.dart';
 import '../../core/providers/curriculum_provider.dart';
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
 import '../composants/bouton.dart';
+import '../composants/sons.dart';
 import '../donnees/matieres.dart';
 import '../donnees/progression.dart';
 import '../flame/effets_flame.dart';
@@ -132,6 +133,7 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
         if (_deja.add(e.q.id)) _file.add(_Exercice(e.q, reprise: true));
       }
     });
+    Sons.jouer(juste ? Son.juste : Son.faux);
     if (juste) {
       HapticFeedback.mediumImpact();
       final boite = _cleBouton.currentContext?.findRenderObject() as RenderBox?;
@@ -329,6 +331,7 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
                               : HumeurKunfox.courage,
                       surChoix: (i) {
                         HapticFeedback.selectionClick();
+                        Sons.jouer(Son.clic);
                         setState(() => _choix = i);
                       },
                     ),
