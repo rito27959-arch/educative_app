@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'providers/auth_provider.dart';
 import '../features/splash/splash_screen.dart';
-import '../features/onboarding/onboarding_screen.dart';
-import '../features/auth/auth_screen.dart';
 import '../features/dashboard/dashboard_screen.dart';
 import '../features/courses/course_explorer_screen.dart';
 import '../features/reader/reader_screen.dart';
@@ -35,6 +33,7 @@ import '../features/curriculum/chapter_exam_screen.dart' as curriculum_exam;
 import '../features/curriculum/lock_unlock_screen.dart';
 import '../features/curriculum/bac_exam_screen.dart';
 import '../kunfox/donnees/progression.dart' show BilanLecon;
+import '../kunfox/ecrans/bienvenue.dart';
 import '../kunfox/ecrans/fin_lecon.dart';
 import '../kunfox/ecrans/onglets.dart';
 import '../kunfox/ecrans/seance.dart';
@@ -50,8 +49,8 @@ final routerProvider = Provider<GoRouter>((ref) {
     initialLocation: '/splash',
     routes: [
       GoRoute(path: '/splash', name: 'splash', builder: (_, _) => const SplashScreen()),
-      GoRoute(path: '/onboarding', name: 'onboarding', builder: (_, _) => const OnboardingScreen()),
-      GoRoute(path: '/auth', name: 'auth', builder: (_, _) => const AuthScreen()),
+      GoRoute(path: '/onboarding', name: 'onboarding', builder: (_, _) => const BienvenueEcran()),
+      GoRoute(path: '/auth', name: 'auth', builder: (_, _) => const BienvenueEcran()),
       GoRoute(path: '/dashboard', name: 'dashboard', builder: (_, _) => const DashboardScreen()),
       // ── Kunfox : parcours, séances, fin de leçon ──
       GoRoute(path: '/k', name: 'kunfox', builder: (_, _) => const AccueilKunfox()),

@@ -128,5 +128,18 @@ void main() {
     await taper('VÉRIFIER');
     await attendre(800);
     await capture('32_lecon_aube');
+
+    // ── l'arrivée dans l'app (sans créer de profil)
+    routeur.go('/onboarding');
+    await attendre(2000);
+    await capture('40_bienvenue');
+    await taper("C'EST PARTI");
+    await taper('BAC D');
+    await capture('41_bienvenue_serie');
+    await taper('CONTINUER');
+    await taper('Sérieux');
+    await capture('42_bienvenue_objectif');
+    await taper('CONTINUER');
+    await capture('43_bienvenue_profil');
   });
 }
