@@ -84,7 +84,7 @@ TRUFFE = 'M474 664 Q512 650 550 664 Q544 702 512 718 Q480 702 474 664 Z'
 SOURIRE = 'M482 748 Q512 770 542 748'
 
 # La toque, dessinée autour de son propre centre (posée sur l'oreille droite).
-TOQUE_X, TOQUE_Y = 700, 230
+TOQUE_X, TOQUE_Y = 712, 262
 def toque_local(d):  # coordonnées locales à la toque (avant sa rotation)
     return d
 PLATEAU = 'M-130 -60 L0 -120 L130 -60 L0 0 Z'
