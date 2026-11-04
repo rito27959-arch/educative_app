@@ -29,7 +29,7 @@ class _AccueilKunfoxState extends State<AccueilKunfox> {
   late int _onglet = widget.onglet;
 
   static const _items = [
-    (Icons.route_rounded, 'Parcours'),
+    (Icons.explore_rounded, 'Parcours'),
     (Icons.fitness_center_rounded, 'Réviser'),
     (Icons.flag_rounded, 'Quêtes'),
     (Icons.person_rounded, 'Profil'),

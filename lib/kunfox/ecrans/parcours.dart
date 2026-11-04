@@ -93,7 +93,6 @@ class _ParcoursEcranState extends ConsumerState<ParcoursEcran> {
     }
     final chapitres = [...matiere.chapters]..sort((a, b) => a.order.compareTo(b.order));
     final actuelle = leconActuelle(matiere, prog);
-    var unitePrecedenteFinie = true;
 
     return Column(children: [
       const BarreHaut(),
@@ -110,8 +109,8 @@ class _ParcoursEcranState extends ConsumerState<ParcoursEcran> {
               itemBuilder: (context, i) {
                 final c = chapitres[i];
                 final couleur = p.unites[i % p.unites.length];
-                final ouverte = unitePrecedenteFinie;
-                unitePrecedenteFinie = c.lessons.every((l) => prog.leconsFaites.contains(l.id));
+                // une unité s'ouvre quand la précédente est finie
+                final ouverte = i == 0 || chapitres[i - 1].lessons.every((l) => prog.leconsFaites.contains(l.id));
                 return _Unite(
                   numero: i + 1,
                   chapitre: c,

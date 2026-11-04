@@ -224,7 +224,15 @@ class ProgressionNotifier extends StateNotifier<Progression> {
     final p = state;
     final actuels = p.coeursActuels;
     if (actuels <= 0) return;
-    _ecrire(p.copyWith(coeurs: actuels - 1, coeurPerduA: actuels == kCoeursMax ? DateTime.now() : p.coeurPerduA ?? DateTime.now()));
+    // La recharge repart de maintenant, en gardant le temps déjà écoulé
+    // vers le prochain cœur.
+    final maintenant = DateTime.now();
+    var base = maintenant;
+    if (actuels < kCoeursMax && p.coeurPerduA != null) {
+      final reste = maintenant.difference(p.coeurPerduA!).inSeconds % kRechargeCoeur.inSeconds;
+      base = maintenant.subtract(Duration(seconds: reste));
+    }
+    _ecrire(p.copyWith(coeurs: actuels - 1, coeurPerduA: base));
   }
 
   void rechargerCoeurs() => _ecrire(state.copyWith(coeurs: kCoeursMax, effacerCoeurPerdu: true));
