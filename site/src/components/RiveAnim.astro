@@ -16,18 +16,22 @@ interface Props {
 }
 const { src, machine, entree, valeur, vue, survol, clic, largeur, hauteur, class: classe, label } = Astro.props;
 ---
-<canvas
-  class:list={['rive', classe]}
-  role="img"
-  aria-label={label}
-  width={largeur * 2}
-  height={hauteur * 2}
-  style={`width:${largeur}px;height:${hauteur}px`}
-  data-rive={src}
-  data-machine={machine}
-  data-entree={entree}
-  data-valeur={valeur}
-  data-vue={vue}
-  data-survol={survol}
-  data-clic={clic}
-></canvas>
+<!-- L'image fixe reste visible tant que Rive n'a pas dessiné (navigateur
+     sans WebAssembly, mode « économie de données », réseau lent). -->
+<span class:list={['rive-cadre', classe]} style={`width:${largeur}px;aspect-ratio:${largeur}/${hauteur}`}>
+  <img class="rive-affiche" src={`/rive/${src}.svg`} alt="" aria-hidden="true" width={largeur} height={hauteur} loading="lazy" decoding="async" />
+  <canvas
+    class="rive"
+    role="img"
+    aria-label={label}
+    width={largeur * 2}
+    height={hauteur * 2}
+    data-rive={src}
+    data-machine={machine}
+    data-entree={entree}
+    data-valeur={valeur}
+    data-vue={vue}
+    data-survol={survol}
+    data-clic={clic}
+  ></canvas>
+</span>

@@ -3,6 +3,8 @@
 // interactives : survol et clic changent l'humeur de Kunfox.
 import { Rive, Layout, Fit, Alignment, RuntimeLoader } from '@rive-app/canvas';
 
+Rive.suppressDeprecationWarnings = ['state-machines-param', 'state-machine-inputs'];
+
 // Le moteur Rive est servi par le site lui-même, pas par un CDN.
 RuntimeLoader.setWasmUrl('/rive/rive.wasm');
 
@@ -19,10 +21,13 @@ function demarrer(c: HTMLCanvasElement) {
     src: `/rive/${d.rive}.riv`,
     canvas: c,
     stateMachines: d.machine!,
+    onLoadError: () => c.closest('.rive-cadre')?.classList.remove('pret'),
     autoplay: !reduit,
     layout: new Layout({ fit: Fit.Contain, alignment: Alignment.Center }),
     onLoad: () => {
       r.resizeDrawingSurfaceToCanvas();
+      // l'animation a dessiné : l'image fixe s'efface
+      requestAnimationFrame(() => c.closest('.rive-cadre')?.classList.add('pret'));
       const entree = d.entree ? r.stateMachineInputs(d.machine!)?.find((i) => i.name === d.entree) : undefined;
       const regler = (v: number | undefined) => { if (entree && v !== undefined) entree.value = v; };
       regler(nombre(d.valeur));
