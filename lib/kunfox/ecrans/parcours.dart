@@ -104,7 +104,7 @@ class _ParcoursEcranState extends ConsumerState<ParcoursEcran> {
             onTap: () => setState(() => _ouverte = null),
             child: ListView.builder(
               controller: _defilement,
-              padding: const EdgeInsets.only(top: 16, bottom: 140),
+              padding: const EdgeInsets.only(top: 16, bottom: 160),
               itemCount: chapitres.length,
               itemBuilder: (context, i) {
                 final c = chapitres[i];
@@ -129,7 +129,7 @@ class _ParcoursEcranState extends ConsumerState<ParcoursEcran> {
           // Le bouton pour revenir à la leçon du moment quand elle est hors de l'écran.
           Positioned(
             right: 16,
-            bottom: 20,
+            bottom: 110,
             child: AnimatedScale(
               scale: _actuelleVisible || actuelle == null ? 0 : 1,
               duration: const Duration(milliseconds: 260),

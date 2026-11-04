@@ -4,13 +4,13 @@
 // ============================================================================
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/providers/auth_provider.dart';
 import '../../core/providers/settings_provider.dart';
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
+import '../composants/barre_onglets.dart';
 import '../composants/bouton.dart';
 import '../donnees/matieres.dart';
 import '../donnees/progression.dart';
@@ -29,16 +29,17 @@ class _AccueilKunfoxState extends State<AccueilKunfox> {
   late int _onglet = widget.onglet;
 
   static const _items = [
-    (Icons.explore_rounded, 'Parcours'),
-    (Icons.fitness_center_rounded, 'Réviser'),
-    (Icons.flag_rounded, 'Quêtes'),
-    (Icons.person_rounded, 'Profil'),
+    OngletKunfox(icon: Icons.explore_outlined, activeIcon: Icons.explore_rounded, label: 'Parcours'),
+    OngletKunfox(icon: Icons.fitness_center_outlined, activeIcon: Icons.fitness_center_rounded, label: 'Réviser'),
+    OngletKunfox(icon: Icons.flag_outlined, activeIcon: Icons.flag_rounded, label: 'Quêtes'),
+    OngletKunfox(icon: Icons.person_outline_rounded, activeIcon: Icons.person_rounded, label: 'Profil'),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final p = Palette.of(context);
+    // La barre de Droplet flotte au-dessus du contenu, qui défile dessous.
     return Scaffold(
+      extendBody: true,
       body: SafeArea(
         bottom: false,
         child: IndexedStack(index: _onglet, children: const [
@@ -48,57 +49,17 @@ class _AccueilKunfoxState extends State<AccueilKunfox> {
           _Profil(),
         ]),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: p.fond, border: Border(top: BorderSide(color: p.bord, width: 2))),
-        child: SafeArea(
-          top: false,
-          child: SizedBox(
-            height: 64,
-            child: Row(children: [
-              for (var i = 0; i < _items.length; i++)
-                Expanded(
-                  child: Semantics(
-                    selected: _onglet == i,
-                    button: true,
-                    label: _items[i].$2,
-                    child: InkWell(
-                      onTap: () {
-                        HapticFeedback.selectionClick();
-                        setState(() => _onglet = i);
-                      },
-                      child: Center(
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 220),
-                          curve: const Cubic(0.16, 1, 0.3, 1),
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: _onglet == i ? p.prim.withValues(alpha: 0.12) : Colors.transparent,
-                            borderRadius: BorderRadius.circular(14),
-                            border: Border.all(color: _onglet == i ? p.prim.withValues(alpha: 0.6) : Colors.transparent, width: 2),
-                          ),
-                          child: Column(mainAxisSize: MainAxisSize.min, children: [
-                            AnimatedScale(
-                              scale: _onglet == i ? 1.12 : 1,
-                              duration: const Duration(milliseconds: 260),
-                              curve: const Cubic(0.34, 1.56, 0.64, 1),
-                              child: Icon(_items[i].$1, color: _onglet == i ? p.prim : p.doux, size: 26),
-                            ),
-                            Text(_items[i].$2,
-                                style: TextStyle(
-                                    fontSize: 11, fontWeight: FontWeight.w800, color: _onglet == i ? p.prim : p.doux)),
-                          ]),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-            ]),
-          ),
-        ),
+      bottomNavigationBar: BarreOnglets(
+        items: _items,
+        currentIndex: _onglet,
+        onTap: (i) => setState(() => _onglet = i),
       ),
     );
   }
 }
+
+/// Marge du bas des listes pour finir au-dessus de la barre flottante.
+double margeBas(BuildContext context) => BarreOnglets.reservedHeight(MediaQuery.paddingOf(context).bottom) + 16;
 
 // ------------------------------------------------------------------ réviser
 class _Reviser extends ConsumerWidget {
@@ -110,7 +71,7 @@ class _Reviser extends ConsumerWidget {
     final prog = ref.watch(progressionProvider);
     final matiere = ref.watch(matiereActiveProvider);
     final faites = matiere == null ? 0 : leconsDe(matiere).where((l) => prog.leconsFaites.contains(l.id)).length;
-    return ListView(padding: const EdgeInsets.all(20), children: [
+    return ListView(padding: EdgeInsets.fromLTRB(20, 20, 20, margeBas(context)), children: [
       Text('Réviser', style: Theme.of(context).textTheme.headlineMedium),
       const SizedBox(height: 4),
       Text('Ce qu\'on revoit, on le garde.', style: TextStyle(color: p.doux, fontWeight: FontWeight.w600)),
@@ -188,7 +149,7 @@ class _Quetes extends ConsumerWidget {
     ];
     final toutes = quetes.every((q) => q.$2 >= q.$3);
 
-    return ListView(padding: const EdgeInsets.all(20), children: [
+    return ListView(padding: EdgeInsets.fromLTRB(20, 20, 20, margeBas(context)), children: [
       Text('Quêtes du jour', style: Theme.of(context).textTheme.headlineMedium),
       const SizedBox(height: 4),
       Text('Elles se renouvellent chaque matin.', style: TextStyle(color: p.doux, fontWeight: FontWeight.w600)),
@@ -272,7 +233,7 @@ class _Profil extends ConsumerWidget {
           ),
         );
 
-    return ListView(padding: const EdgeInsets.all(20), children: [
+    return ListView(padding: EdgeInsets.fromLTRB(20, 20, 20, margeBas(context)), children: [
       Row(children: [
         Container(
           width: 72,
