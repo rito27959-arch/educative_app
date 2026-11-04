@@ -56,7 +56,7 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           script: |
-            mkdir -p resultats/captures ; (for i in $(seq 1 400); do adb shell pm grant app.dropletmesh.kunfox android.permission.POST_NOTIFICATIONS 2>/dev/null; sleep 2; done) & (for i in $(seq 1 900); do if adb shell dumpsys notification --noredact 2>/dev/null | grep -q "pkg=app.dropletmesh.kunfox"; then sleep 2; adb shell cmd statusbar expand-notifications; sleep 3; adb exec-out screencap -p > resultats/captures/50_notifications.png; adb shell dumpsys notification --noredact | grep -A3 "pkg=app.dropletmesh.kunfox" > resultats/notifications.txt; adb shell cmd statusbar collapse; break; fi; sleep 2; done) & flutter drive --driver=test_driver/integration_test.dart --target=integration_test/captures_test.dart > resultats/drive.txt 2>&1 ; echo "drive=$?" >> resultats/journal.txt
+            mkdir -p resultats/captures ; (adb logcat -m 1 -e "KUNFOX-AUTORISER" >/dev/null ; adb shell pm grant app.dropletmesh.kunfox android.permission.POST_NOTIFICATIONS ; adb logcat -m 1 -e "Rappels\] essai" >/dev/null ; sleep 3 ; adb shell cmd statusbar expand-notifications ; sleep 3 ; adb exec-out screencap -p > resultats/captures/50_notifications.png ; adb shell cmd statusbar collapse) & flutter drive --driver=test_driver/integration_test.dart --target=integration_test/captures_test.dart > resultats/drive.txt 2>&1 ; echo "drive=$?" >> resultats/journal.txt
             sleep 5 ; test -s resultats/captures/50_notifications.png || echo "aucune notification Kunfox vue" >> resultats/journal.txt
       - name: Publier
         if: always()

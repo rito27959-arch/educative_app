@@ -225,6 +225,9 @@ void main() {
     await capture('48_boss_echec');
 
     // ── deux rappels montrés tout de suite (capturés ensuite par adb)
+    // le script de l'émulateur guette ce mot et accorde les notifications
+    debugPrint('KUNFOX-AUTORISER');
+    await attendre(6000);
     await Rappels.essai();
     // le script de l'émulateur guette la notification et la photographie
     await attendre(12000);
