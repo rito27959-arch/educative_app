@@ -36,17 +36,22 @@ jobs:
             rive schema "$ty" > "/tmp/sortie/docs/schema_$ty.txt" 2>&1
           done
           cp -r "$(rive samples --path 2>/dev/null)" /tmp/sortie/exemple 2>/dev/null
-          if [ -d rive/kunfox_splash ]; then
-            rive inspect rive/kunfox_splash --summary > /tmp/sortie/inspection.txt 2>&1
-            rive inspect rive/kunfox_splash --json > /tmp/sortie/inspection.json 2>&1
-            rive rive/kunfox_splash --verify > /tmp/sortie/verification.txt 2>&1; echo "verif: $?" >> /tmp/sortie/verification.txt
-            rive rive/kunfox_splash --once > /tmp/sortie/construction.txt 2>&1; echo "construction: $?" >> /tmp/sortie/construction.txt
-            cp rive/kunfox_splash/build/*.riv /tmp/sortie/ 2>/dev/null
-            for ms in 0 150 350 550 800 1000 1300 1600 2200; do
-              rive rive/kunfox_splash --screenshot=/tmp/sortie/capture_$(printf %04d $ms).png --advance=${ms}ms >> /tmp/sortie/captures.txt 2>&1
+          python3 rive/outils/generer_mascotte.py --apercus > /tmp/sortie/generation.txt 2>&1
+          python3 rive/outils/generer_effets.py --apercus >> /tmp/sortie/generation.txt 2>&1
+          rive schema TrimPath > /tmp/sortie/docs/schema_TrimPath.txt 2>&1
+          rive schema StateMachineNumber > /tmp/sortie/docs/schema_StateMachineNumber.txt 2>&1
+          for p in rive/kunfox_* rive/apercus/*; do
+            n=$(basename $p); mkdir -p /tmp/sortie/$n
+            rive inspect $p --summary > /tmp/sortie/$n/inspection.txt 2>&1
+            rive $p --verify > /tmp/sortie/$n/verification.txt 2>&1; echo "verif: $?" >> /tmp/sortie/$n/verification.txt
+            rive $p --once > /tmp/sortie/$n/construction.txt 2>&1; echo "construction: $?" >> /tmp/sortie/$n/construction.txt
+            cp $p/build/*.riv /tmp/sortie/$n/ 2>/dev/null
+            case $n in kunfox_*) continue;; esac
+            for ms in 0 120 250 400 550 700 900 1200 1600 2100 2600 3200; do
+              rive $p --screenshot=/tmp/sortie/$n/c_$(printf %05d $ms).png --advance=${ms}ms >> /tmp/sortie/$n/captures.txt 2>&1
             done
-            rive rive/kunfox_splash --screenshot=/tmp/sortie/capture.png >> /tmp/sortie/captures.txt 2>&1
-          fi
+          done
+          grep -H "" /tmp/sortie/*/verification.txt /tmp/sortie/*/construction.txt > /tmp/sortie/bilan.txt
           true
       - name: Publier
         if: always()
