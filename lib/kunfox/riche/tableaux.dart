@@ -45,11 +45,15 @@ class Formule extends StatelessWidget {
     if (dollars) t = t.replaceAll(r'$', '');
     // du texte ordinaire (mots, unités) reste du texte
     if (!dollars && !RegExp(r'[\\^_{}∞√π]').hasMatch(t)) return Text(t, style: st, textAlign: TextAlign.center);
-    return Math.tex(
-      versTex(t),
-      textStyle: st,
-      mathStyle: MathStyle.text,
-      onErrorFallback: (_) => Text(texte, style: st),
+    // FittedBox : la largeur intrinsèque d'une formule est parfois sous-estimée
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Math.tex(
+        versTex(t),
+        textStyle: st,
+        mathStyle: MathStyle.text,
+        onErrorFallback: (_) => Text(texte, style: st),
+      ),
     );
   }
 }

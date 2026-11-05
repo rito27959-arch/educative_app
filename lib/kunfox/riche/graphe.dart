@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/palette.dart';
 import 'expressions.dart';
+import 'tableaux.dart' show Formule;
 
 class _Courbe {
   _Courbe(this.nom, this.f, this.couleur, {this.pointille = false});
@@ -177,7 +178,7 @@ class _GrapheState extends State<Graphe> with SingleTickerProviderStateMixin {
                 Row(mainAxisSize: MainAxisSize.min, children: [
                   Container(width: 14, height: 4, decoration: BoxDecoration(color: c.couleur, borderRadius: BorderRadius.circular(2))),
                   const SizedBox(width: 5),
-                  Text('𝒞${c.nom}', style: TextStyle(fontWeight: FontWeight.w700, color: c.couleur)),
+                  Formule('\\mathcal{C}_{${c.nom}}', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: c.couleur)),
                 ]),
             ]),
           ),
@@ -228,7 +229,7 @@ class _Peintre extends CustomPainter {
     final grille = Paint()
       ..color = p.bord.withValues(alpha: 0.7)
       ..strokeWidth = 1;
-    final texte = TextStyle(fontSize: 10, color: p.doux, fontWeight: FontWeight.w600);
+    final texte = TextStyle(fontFamily: 'Inter', fontSize: 10, color: p.doux, fontWeight: FontWeight.w600);
 
     void ecrire(String t, Offset o, {bool droite = false}) {
       final tp = TextPainter(text: TextSpan(text: t, style: texte), textDirection: TextDirection.ltr)..layout();
@@ -334,7 +335,7 @@ class _Peintre extends CustomPainter {
         canvas.drawCircle(o, 4.5, Paint()..color = p.texte);
         if (nom.isNotEmpty) {
           final tp = TextPainter(
-            text: TextSpan(text: nom, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: p.texte)),
+            text: TextSpan(text: nom, style: TextStyle(fontFamily: 'Inter', fontSize: 12, fontWeight: FontWeight.w800, color: p.texte)),
             textDirection: TextDirection.ltr,
           )..layout();
           tp.paint(canvas, o.translate(6, -tp.height - 2));

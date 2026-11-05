@@ -34,6 +34,7 @@ import '../epreuves/sujets.dart';
 import '../flame/effets_flame.dart';
 import '../riche/contenu_riche.dart';
 import '../riche/expressions.dart';
+import '../riche/tableaux.dart' show Formule;
 import '../theme/palette.dart';
 
 const _or = Color(0xFFFFC24B);
@@ -191,7 +192,7 @@ class _ExamenEntreeEcranState extends ConsumerState<ExamenEntreeEcran> with Sing
                         style: const TextStyle(
                             fontFamily: 'InterTight', fontWeight: FontWeight.w800, fontSize: 28, height: 1.1, color: Colors.white)),
                     const SizedBox(height: 4),
-                    Text('${matiere?.title ?? ''} · ${e.session}',
+                    Text('Bac ${e.serie} · ${e.session} · ${matiere?.title ?? ''}',
                         style: const TextStyle(color: Colors.white60, fontWeight: FontWeight.w700)),
                     if (record != null) ...[
                       const SizedBox(height: 8),
@@ -852,16 +853,17 @@ class _ChampExpressionState extends State<_ChampExpression> {
   Widget build(BuildContext context) {
     final p = Palette.of(context);
     final v = widget.variable;
+    // libellés en TeX : toutes les polices n'ont pas ⁿ, ˣ ou √
     final touches = <(String, String, int)>[
       (v, v, 0),
-      ('x²', '^2', 0),
-      ('xⁿ', '^()', 1),
+      ('\\square^{2}', '^2', 0),
+      ('\\square^{n}', '^()', 1),
       ('( )', '()', 1),
-      ('a/b', '/', 0),
-      ('√', '√()', 1),
-      ('eˣ', 'e^()', 1),
-      ('ln', 'ln()', 1),
-      ('π', 'π', 0),
+      ('\\frac{a}{b}', '/', 0),
+      ('\\sqrt{\\square}', '√()', 1),
+      ('e^{\\square}', 'e^()', 1),
+      ('\\ln', 'ln()', 1),
+      ('\\pi', 'π', 0),
     ];
     final t = _ctrl.text.trim();
     final lisible = t.isEmpty ? null : Expressions.lire(t.contains('=') ? t.substring(t.lastIndexOf('=') + 1) : t, variable: v) != null;
@@ -906,7 +908,7 @@ class _ChampExpressionState extends State<_ChampExpression> {
                   border: Border.all(color: p.bord, width: 2),
                   boxShadow: [BoxShadow(color: p.bord, offset: const Offset(0, 2))],
                 ),
-                child: Text(libelle, style: TextStyle(fontWeight: FontWeight.w800, color: p.texte)),
+                child: Formule(libelle, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: p.texte)),
               ),
             );
           },
@@ -980,11 +982,11 @@ class _ExamenCorrectionEcranState extends ConsumerState<ExamenCorrectionEcran> {
       backgroundColor: p.fond,
       body: CustomScrollView(slivers: [
         CupertinoSliverNavigationBar(
-          largeTitle: const Text('Correction'),
+          largeTitle: const Text('Correction', style: TextStyle(fontFamily: 'InterTight', fontWeight: FontWeight.w800)),
           backgroundColor: p.fond.withValues(alpha: 0.92),
           border: null,
           automaticallyImplyLeading: false,
-          trailing: Text('${_note(_sur20)}/20', style: TextStyle(fontWeight: FontWeight.w800, color: p.prim, fontSize: 17)),
+          trailing: Text('${_note(_sur20)}/20', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w800, color: p.prim, fontSize: 17)),
         ),
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),

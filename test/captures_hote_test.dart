@@ -89,7 +89,7 @@ void main() {
     await tester.tap(find.textContaining('Ex. 3').first);
     await avancer(tester, 900);
     await photo(tester, 'h2b_copie_probleme');
-    await tester.drag(find.byType(Scrollable).last, const Offset(0, -700));
+    await tester.dragFrom(const Offset(195, 700), const Offset(0, -650));
     await avancer(tester, 600);
     await photo(tester, 'h2c_copie_questions');
     await finir(tester);
@@ -105,8 +105,8 @@ void main() {
     await avancer(tester, 800);
     await photo(tester, 'h3a_correction');
     for (var i = 0; i < 8; i++) {
-      await tester.drag(find.byType(Scrollable).first, const Offset(0, -760));
-      await avancer(tester, 300);
+      await tester.dragFrom(const Offset(195, 760), const Offset(0, -700));
+      await avancer(tester, 1600);
       if (i == 3 || i == 5 || i == 7) await photo(tester, 'h3b_correction_$i');
     }
     await finir(tester);
