@@ -341,7 +341,8 @@ class TableauSimple extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Table(
-          defaultColumnWidth: const IntrinsicColumnWidth(),
+          // la largeur « intrinsèque » d'une formule est sous-estimée : au moins 64 px
+          defaultColumnWidth: const MaxColumnWidth(IntrinsicColumnWidth(), FixedColumnWidth(64)),
           border: TableBorder(
             horizontalInside: BorderSide(color: p.bord, width: 1.2),
             verticalInside: BorderSide(color: p.bord, width: 1.2),

@@ -20,6 +20,9 @@ import 'package:rive/rive.dart';
 
 enum HumeurKunfox { attente, joie, courage, reflexion, fete, salut, dodo }
 
+/// Les directions du regard (même ordre que l'entrée `regard` du .riv).
+enum RegardKunfox { centre, gauche, droite, bas, haut }
+
 /// Pilote une entrée nombre d'une machine à états, et la tient à jour.
 class _RiveNombre extends StatefulWidget {
   const _RiveNombre({
@@ -29,7 +32,11 @@ class _RiveNombre extends StatefulWidget {
     required this.valeur,
     required this.taille,
     required this.semantique,
+    this.autres = const {},
   });
+
+  /// D'autres entrées nombre à tenir à jour (ex. `regard`).
+  final Map<String, double> autres;
 
   final String fichier;
   final String machine;
@@ -48,6 +55,7 @@ class _RiveNombreState extends State<_RiveNombre> {
 
   Artboard? _artboard;
   SMINumber? _entree;
+  final Map<String, SMINumber> _autres = {};
   StateMachineController? _controleur;
 
   @override
@@ -68,6 +76,10 @@ class _RiveNombreState extends State<_RiveNombre> {
           final e = c.findInput<double>(widget.entree!);
           if (e is SMINumber) _entree = e..value = widget.valeur;
         }
+        widget.autres.forEach((nom, v) {
+          final e = c.findInput<double>(nom);
+          if (e is SMINumber) _autres[nom] = e..value = v;
+        });
         if (MediaQuery.maybeOf(context)?.disableAnimations ?? false) c.isActive = false;
       }
       setState(() {
@@ -83,6 +95,9 @@ class _RiveNombreState extends State<_RiveNombre> {
   void didUpdateWidget(covariant _RiveNombre ancien) {
     super.didUpdateWidget(ancien);
     if (ancien.valeur != widget.valeur) _entree?.value = widget.valeur;
+    widget.autres.forEach((nom, v) {
+      if (ancien.autres[nom] != v) _autres[nom]?.value = v;
+    });
   }
 
   @override
@@ -107,10 +122,13 @@ class _RiveNombreState extends State<_RiveNombre> {
 
 /// Le renard Kunfox, avec son humeur du moment.
 class KunfoxMascotte extends StatelessWidget {
-  const KunfoxMascotte({super.key, this.humeur = HumeurKunfox.attente, this.taille = 180});
+  const KunfoxMascotte({super.key, this.humeur = HumeurKunfox.attente, this.taille = 180, this.regard = RegardKunfox.centre});
 
   final HumeurKunfox humeur;
   final double taille;
+
+  /// Où Kunfox pose les yeux (couche « Regard » du fichier Rive).
+  final RegardKunfox regard;
 
   static const _libelles = {
     HumeurKunfox.attente: 'Kunfox te regarde',
@@ -131,6 +149,7 @@ class KunfoxMascotte extends StatelessWidget {
         // l'artboard fait 600 × 700
         taille: Size(taille, taille * 7 / 6),
         semantique: _libelles[humeur]!,
+        autres: {'regard': regard.index.toDouble()},
       );
 }
 

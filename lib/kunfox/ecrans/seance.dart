@@ -579,7 +579,12 @@ class _VueExercice extends StatelessWidget {
         const SizedBox(height: 10),
         // Kunfox « pose » la question dans une bulle
         Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-          KunfoxMascotte(humeur: humeur, taille: 92),
+          // il lit la question (à droite), suit ton choix (en bas), puis te regarde
+          KunfoxMascotte(
+            humeur: humeur,
+            taille: 92,
+            regard: verrouille ? RegardKunfox.centre : (choix == null ? RegardKunfox.droite : RegardKunfox.bas),
+          ),
           const SizedBox(width: 6),
           Expanded(
             child: Container(
