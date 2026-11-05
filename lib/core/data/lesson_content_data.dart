@@ -404,7 +404,15 @@ class LessonContentData {
           'Exemple 2 — Tangente :\n'
           'Soit f(x) = x². Calculer l\'équation de la tangente en a = 3.\n'
           'f\'(x) = 2x, donc f\'(3) = 6 et f(3) = 9.\n'
-          'Tangente : y = 6(x - 3) + 9 = 6x - 9.',
+          'Tangente : y = 6(x - 3) + 9 = 6x - 9.\n\n'
+          '```graphe\n'
+          'f(x) = x^2 | orange\n'
+          'droite: y = 6x - 9 | bleu\n'
+          'x: -1 .. 5\n'
+          'y: -2 .. 14\n'
+          'point: (3, 9) A\n'
+          'titre: La tangente en A(3 ; 9) touche la parabole\n'
+          '```',
       takeaways: [
         'Nombre dérivé : lim_{h→0} (f(a+h)-f(a))/h',
         'Tangente : y = f\'(a)(x-a) + f(a)',
@@ -528,7 +536,14 @@ class LessonContentData {
           'ln(2x + 1) = 1 ⇔ 2x + 1 = e¹ = e\n'
           '⇔ x = (e - 1)/2 ≈ 0,859. Valide car > -0,5.\n\n'
           'Exemple 2 — Dérivée :\n'
-          'f(x) = ln(x² + 1). f\'(x) = (2x)/(x² + 1).',
+          'f(x) = ln(x² + 1). f\'(x) = (2x)/(x² + 1).\n\n'
+          '```graphe\n'
+          'ln(x) = ln(x) | violet\n'
+          'exp(x) = e^x | orange\n'
+          'droite: y = x | gris\n'
+          'x: -3 .. 5\n'
+          'y: -3 .. 5\n'
+          '```',
       takeaways: [
         'ln x défini sur ]0, +∞[, ln 1 = 0, ln e = 1',
         'ln(ab) = ln a + ln b ; ln(a/b) = ln a - ln b',

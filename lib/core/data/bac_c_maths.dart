@@ -389,7 +389,17 @@ final Map<String, LessonContent> bacCMathsContent = {
         'que toute puissance positive.\n\n'
         'Limite : lim(x→0⁺) x · ln(x) = 0. Le logarithme est « dompté » par x.\n\n'
         'Dérivée logarithmique : pour f(x) > 0, on a [ln f(x)]\' = f\'(x)/f(x). '
-        'Utile pour différencier des produits et des puissances complexes.',
+        'Utile pour différencier des produits et des puissances complexes.\n\n'
+        '```graphe\n'
+        'ln(x) = ln(x) | violet\n'
+        'exp(x) = e^x | orange\n'
+        'droite: y = x | gris\n'
+        'x: -3 .. 5\n'
+        'y: -3 .. 5\n'
+        'point: (1, 0)\n'
+        'point: (0, 1)\n'
+        'titre: ln et exp sont symétriques par rapport à y = x\n'
+        '```',
     example:
         'Calculons lim(x→+∞) ln(x) / √x.\n\n'
         'C\'est une forme indéterminée +∞/+∞. On applique L\'Hospital :\n'

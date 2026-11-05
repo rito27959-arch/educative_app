@@ -58,7 +58,7 @@ List<_Bloc> _decouper(String source) {
 
   void fermerPara() {
     if (para.isNotEmpty) {
-      blocs.add(_Paragraphe(para.join(' ').trim()));
+      blocs.add(_Paragraphe(para.join('\n').trim()));
       para.clear();
     }
   }
@@ -124,9 +124,8 @@ List<_Bloc> _decouper(String source) {
       blocs.add(_Encadre(enc.join('\n')));
       continue;
     } else {
-      // une ligne qui finit un paragraphe d'ancien cours garde son retour
+      // les retours à la ligne d'un paragraphe sont gardés
       para.add(t);
-      if (!source.contains(r'$') && !source.contains('```')) fermerPara();
     }
     i++;
   }
