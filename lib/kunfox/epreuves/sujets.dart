@@ -1,6 +1,8 @@
 // Le registre des épreuves type Bac : l'ultime boss de chaque matière.
 
 import 'modele.dart';
+import 'sujets_2_maths_phys.dart';
+import 'sujets_2_sciences.dart';
 import 'sujets_a.dart';
 import 'sujets_chimie.dart';
 import 'sujets_info.dart';
@@ -20,6 +22,16 @@ const List<Epreuve> toutesLesEpreuves = [
   epreuveChimieC,
   epreuveSvtC,
   epreuveInfoC,
+  epreuveMathsD2,
+  epreuvePhysiqueD2,
+  epreuveChimieD2,
+  epreuveSvtD2,
+  epreuveInfoD2,
+  epreuveMathsC2,
+  epreuvePhysiqueC2,
+  epreuveChimieC2,
+  epreuveSvtC2,
+  epreuveInfoC2,
   epreuveFrancaisA,
   epreuveAnglaisA,
   epreuvePhilosophieA,

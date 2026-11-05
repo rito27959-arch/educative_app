@@ -213,7 +213,7 @@ class Epreuve {
     required this.coefficient,
     required this.exercices,
     this.consignes = '',
-    this.session = 'Sujet type',
+    this.session = 'Sujet 1',
   });
   final String id;
 

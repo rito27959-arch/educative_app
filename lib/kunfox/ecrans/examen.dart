@@ -1509,7 +1509,7 @@ class CarteUltimeBoss extends ConsumerWidget {
                         style: const TextStyle(
                             fontFamily: 'InterTight', fontWeight: FontWeight.w800, fontSize: 19, height: 1.15, color: Colors.white)),
                     const SizedBox(height: 4),
-                    Text('${_duree(epreuve.dureeMinutes)} · coef. ${epreuve.coefficient} · ${epreuve.exercices.length} exercices',
+                    Text('${epreuve.session} · ${_duree(epreuve.dureeMinutes)} · coef. ${epreuve.coefficient}',
                         style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w700, fontSize: 13)),
                   ]),
                 ),
