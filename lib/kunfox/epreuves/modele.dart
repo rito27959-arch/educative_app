@@ -150,7 +150,9 @@ class QuestionEpreuve {
 
   static String _fmt(double v) {
     if (v == v.roundToDouble() && v.abs() < 1e9) return v.toInt().toString();
-    final t = v.abs() >= 0.01 && v.abs() < 1e6 ? v.toStringAsPrecision(4) : v.toStringAsExponential(3);
+    var t = v.abs() >= 0.01 && v.abs() < 1e6 ? v.toStringAsPrecision(4) : v.toStringAsExponential(3);
+    // 1,200 → 1,2 ; 3,790e-4 → 3,79e-4
+    t = t.replaceAllMapped(RegExp(r'(\.\d*?)0+(?=$|e)'), (m) => m[1]!).replaceAll(RegExp(r'\.(?=$|e)'), '');
     return t.replaceAll('.', ',');
   }
 
