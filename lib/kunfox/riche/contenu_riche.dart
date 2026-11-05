@@ -141,15 +141,26 @@ List<InlineSpan> spansRiches(String texte, TextStyle style) {
   for (final m in motif.allMatches(texte)) {
     if (m.start > debut) spans.add(TextSpan(text: texte.substring(debut, m.start)));
     if (m[1] != null) {
-      spans.add(WidgetSpan(
-        alignment: PlaceholderAlignment.middle,
-        child: Math.tex(
-          m[1]!,
-          mathStyle: MathStyle.text,
-          textStyle: style.copyWith(fontWeight: FontWeight.w500),
-          onErrorFallback: (_) => Text(m[1]!, style: style),
-        ),
-      ));
+      final formule = Math.tex(
+        m[1]!,
+        mathStyle: MathStyle.text,
+        textStyle: style.copyWith(fontWeight: FontWeight.w500),
+        onErrorFallback: (_) => Text(m[1]!, style: style),
+      );
+      // Une longue formule se coupe aux opérateurs (comme en TeX), et
+      // chaque morceau peut défiler s'il reste plus large que la ligne.
+      List<Widget> morceaux;
+      try {
+        morceaux = formule.texBreak().parts;
+      } catch (_) {
+        morceaux = [formule];
+      }
+      for (final w in morceaux) {
+        spans.add(WidgetSpan(
+          alignment: PlaceholderAlignment.middle,
+          child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: w),
+        ));
+      }
     } else if (m[2] != null) {
       spans.add(TextSpan(text: m[2], style: const TextStyle(fontWeight: FontWeight.w800)));
     } else {
