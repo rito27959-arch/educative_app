@@ -58,7 +58,7 @@ jobs:
       - name: Captures sur émulateur
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 34
+          api-level: 33
           arch: x86_64
           target: google_apis
           profile: pixel_6
@@ -66,7 +66,7 @@ jobs:
           ram-size: 3072M
           heap-size: 512M
           disable-animations: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
           script: |
             mkdir -p resultats/captures ; (for i in $(seq 1 200); do adb shell pm grant app.dropletmesh.kunfox android.permission.POST_NOTIFICATIONS 2>/dev/null && break; sleep 3; done) & flutter drive --driver=test_driver/integration_test.dart --target=integration_test/captures_test.dart > resultats/drive.txt 2>&1 ; echo "drive=$?" >> resultats/journal.txt
             sleep 5 ; test -s resultats/captures/50_notifications.png || echo "aucune notification Kunfox vue" >> resultats/journal.txt
