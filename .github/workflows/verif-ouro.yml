@@ -41,6 +41,7 @@ jobs:
           flutter test test > resultats/tests.txt 2>&1
           echo "tests: $?" >> resultats/journal.txt
           tail -3 resultats/tests.txt >> resultats/journal.txt
+          mkdir -p resultats/captures && cp build/captures_hote/*.png resultats/captures/ 2>/dev/null || true
           echo "== construction" >> resultats/journal.txt
           flutter build apk --debug > resultats/construction.txt 2>&1
           echo "construction: $?" >> resultats/journal.txt
