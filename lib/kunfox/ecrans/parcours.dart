@@ -20,6 +20,8 @@ import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'boss.dart';
+import 'examen.dart' show CarteUltimeBoss;
+import '../epreuves/sujets.dart';
 
 import '../../core/models/curriculum_models.dart';
 import '../../shared/widgets/kunfox/kunfox_rive.dart';
@@ -169,6 +171,8 @@ class _ParcoursEcranState extends ConsumerState<ParcoursEcran> {
                       ),
                     ]);
                   }),
+                // l'ultime boss : l'épreuve type Bac de la matière
+                for (final e in epreuvesDe(matiere.id)) SliverToBoxAdapter(child: CarteUltimeBoss(epreuve: e)),
                 const SliverToBoxAdapter(child: SizedBox(height: 160)),
               ],
             ),

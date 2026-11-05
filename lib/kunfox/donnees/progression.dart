@@ -349,6 +349,23 @@ class ProgressionNotifier extends StateNotifier<Progression> {
       lecon: bilan,
     );
   }
+
+  /// Une épreuve type Bac corrigée : la note (sur 20) est gardée (la
+  /// meilleure), la série avance, et elle rapporte 5 XP par point.
+  BilanLecon enregistrerExamen({required String epreuveId, required double note, required Duration duree}) {
+    final bilan = terminer(leconId: null, bonnes: note.round(), total: 20, duree: duree, meilleurCombo: 0);
+    final p = state;
+    final cle = 'examen:$epreuveId';
+    final pct = (note * 5).round().clamp(0, 100);
+    final bonus = (note * 5).round();
+    final auj = jourDe(DateTime.now());
+    _ecrire(p.copyWith(
+      xp: p.xp + bonus,
+      xpParJour: {...p.xpParJour, auj: (p.xpParJour[auj] ?? 0) + bonus},
+      scores: {...p.scores, cle: math.max(p.scores[cle] ?? 0, pct)},
+    ));
+    return bilan;
+  }
 }
 
 /// Le bilan d'une épreuve d'unité (le « grand boss »).
@@ -380,6 +397,12 @@ const kSeuilBoss = 70;
 String cleBoss(String chapitreId) => 'boss:$chapitreId';
 
 extension EpreuvesUnite on Progression {
+  /// Meilleure note (sur 20) à une épreuve type Bac.
+  double? noteExamen(String epreuveId) {
+    final v = scores['examen:$epreuveId'];
+    return v == null ? null : v / 5;
+  }
+
   int? scoreBoss(String chapitreId) => scores[cleBoss(chapitreId)];
   bool bossReussi(String chapitreId) => (scoreBoss(chapitreId) ?? 0) >= kSeuilBoss;
 }

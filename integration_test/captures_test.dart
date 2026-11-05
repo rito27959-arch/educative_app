@@ -8,6 +8,7 @@ import 'package:ouro_prep/core/providers/auth_provider.dart';
 import 'package:ouro_prep/core/providers/settings_provider.dart';
 import 'package:ouro_prep/core/data/quiz_data.dart';
 import 'package:ouro_prep/kunfox/donnees/duels.dart';
+import 'package:ouro_prep/kunfox/ecrans/examen.dart';
 import 'package:ouro_prep/kunfox/donnees/progression.dart';
 import 'package:ouro_prep/kunfox/donnees/rappels.dart';
 import 'package:ouro_prep/core/router.dart';
@@ -223,6 +224,60 @@ void main() {
         xp: 10, duree: const Duration(minutes: 4), lecon: bl));
     await attendre(2600);
     await capture('48_boss_echec');
+
+    // ── l'ultime boss : épreuve type Bac (maths C)
+    routeur.go('/k');
+    await attendre(1200);
+    routeur.push('/k/examen/bac_c_maths_1');
+    await attendre(2600);
+    await capture('49_examen_entree');
+    await taper("COMMENCER L'ÉPREUVE");
+    await attendre(1800);
+    await capture('50a_copie_ex1');
+    final ex3 = find.textContaining('Ex. 3');
+    if (ex3.evaluate().isNotEmpty) {
+      await tester.tap(ex3.first, warnIfMissed: false);
+      await attendre(1500);
+    }
+    await capture('50b_copie_probleme');
+    await tester.dragFrom(const Offset(200, 700), const Offset(0, -520));
+    await attendre(1000);
+    await capture('50c_copie_questions');
+    final copie = Copie(
+      epreuveId: 'bac_c_maths_1',
+      reponses: {'0.0': '21', '0.1': 0, '0.3': '2', '1.0': '1,414', '1.1': 2, '2.0': '-∞', '2.1': '0', '2.2': '-ln(x)/x²', '2.4': '0,37'},
+      coches: {'2.3': {0, 1, 2}},
+    );
+    routeur.go('/k/examen-correction/bac_c_maths_1', extra: copie);
+    await attendre(2000);
+    await capture('51a_correction');
+    for (var i = 0; i < 3; i++) {
+      await tester.dragFrom(const Offset(200, 760), const Offset(0, -620));
+      await attendre(700);
+    }
+    await capture('51b_correction_suite');
+    for (var i = 0; i < 4; i++) {
+      await tester.dragFrom(const Offset(200, 760), const Offset(0, -620));
+      await attendre(700);
+    }
+    await capture('51c_correction_tableau');
+    for (var i = 0; i < 3; i++) {
+      await tester.dragFrom(const Offset(200, 760), const Offset(0, -620));
+      await attendre(700);
+    }
+    await capture('51d_correction_courbe');
+    routeur.go('/k/examen-note',
+        extra: const ResultatExamen(
+          epreuveId: 'bac_c_maths_1',
+          note: 14.5,
+          parExercice: [(4, 4), (2.5, 4), (8, 12)],
+          aRevoir: ['maths_c_ch1', 'maths_c_ch6'],
+          duree: Duration(minutes: 182),
+        ));
+    await attendre(900);
+    await capture('52a_note_jauge');
+    await attendre(2800);
+    await capture('52b_note');
 
     // ── deux rappels montrés tout de suite (capturés ensuite par adb)
     // le script de l'émulateur guette ce mot et accorde les notifications

@@ -137,7 +137,7 @@ List<_Bloc> _decouper(String source) {
 /// Le texte en ligne : formules $…$ et **gras**.
 List<InlineSpan> spansRiches(String texte, TextStyle style) {
   final spans = <InlineSpan>[];
-  final motif = RegExp(r'\$([^$]+)\$|\*\*([^*]+)\*\*');
+  final motif = RegExp(r'\$([^$]+)\$|\*\*([^*]+)\*\*|`([^`]+)`');
   var debut = 0;
   for (final m in motif.allMatches(texte)) {
     if (m.start > debut) spans.add(TextSpan(text: texte.substring(debut, m.start)));
@@ -151,8 +151,18 @@ List<InlineSpan> spansRiches(String texte, TextStyle style) {
           onErrorFallback: (_) => Text(m[1]!, style: style),
         ),
       ));
-    } else {
+    } else if (m[2] != null) {
       spans.add(TextSpan(text: m[2], style: const TextStyle(fontWeight: FontWeight.w800)));
+    } else {
+      spans.add(TextSpan(
+        text: m[3],
+        style: TextStyle(
+          fontFamily: 'monospace',
+          fontSize: (style.fontSize ?? 16) * 0.92,
+          fontWeight: FontWeight.w600,
+          backgroundColor: (style.color ?? Colors.black).withValues(alpha: 0.08),
+        ),
+      ));
     }
     debut = m.end;
   }
@@ -170,7 +180,7 @@ class TexteRiche extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = Palette.of(context);
     final st = style ?? TextStyle(fontSize: 16, height: 1.5, fontWeight: FontWeight.w500, color: p.texte);
-    if (!texte.contains(r'$') && !texte.contains('**')) return Text(texte, style: st, textAlign: textAlign);
+    if (!texte.contains(r'$') && !texte.contains('**') && !texte.contains('`')) return Text(texte, style: st, textAlign: textAlign);
     return Text.rich(TextSpan(style: st, children: spansRiches(texte, st)), textAlign: textAlign);
   }
 }
@@ -240,7 +250,19 @@ class ContenuRiche extends StatelessWidget {
             'graphe' || 'courbe' => Graphe(source: source),
             'variations' || 'signes' => TableauVariations(source: source),
             'tableau' => TableauSimple(source: source),
-            _ => Text(source, style: st.copyWith(fontFamily: 'monospace', fontSize: 14)),
+            _ => Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF14213D),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text(source,
+                      style: const TextStyle(fontFamily: 'monospace', fontSize: 14, height: 1.45, color: Color(0xFFE8ECF8))),
+                ),
+              ),
           },
       });
     }

@@ -22,6 +22,8 @@ import '../donnees/matieres.dart';
 import '../donnees/progression.dart';
 import '../theme/palette.dart';
 import 'duel.dart';
+import 'examen.dart' show CarteUltimeBoss;
+import '../epreuves/sujets.dart';
 import 'parcours.dart';
 
 class AccueilKunfox extends StatefulWidget {
@@ -169,6 +171,12 @@ class _Reviser extends ConsumerWidget {
         bouton: 'Ouvrir Droplet',
         surAppui: CompteDroplet.ouvrirDroplet,
       ),
+      // l'épreuve type Bac de la matière en cours
+      if (matiere != null)
+        for (final e in epreuvesDe(matiere.id)) ...[
+        const SizedBox(height: 12),
+        CarteUltimeBoss(epreuve: e, compacte: true),
+      ],
       const MesDuels(),
       const SizedBox(height: 16),
       _Ligne(icone: Icons.check_circle_rounded, couleur: p.succes, titre: '$faites leçons faites dans cette matière'),

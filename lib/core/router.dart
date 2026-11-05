@@ -37,6 +37,7 @@ import '../kunfox/ecrans/bienvenue.dart';
 import '../kunfox/donnees/duels.dart' show PartieDuel, Joueur;
 import '../kunfox/ecrans/boss.dart';
 import '../kunfox/ecrans/connexion_droplet.dart';
+import '../kunfox/ecrans/examen.dart';
 import '../kunfox/ecrans/duel.dart';
 import '../kunfox/ecrans/fin_lecon.dart';
 import '../kunfox/ecrans/onglets.dart';
@@ -95,6 +96,35 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
             ),
             child: bilan is BilanLecon ? FinLeconEcran(bilan: bilan) : const AccueilKunfox(),
+          );
+        },
+      ),
+      // ── L'ultime boss : épreuve type Bac
+      GoRoute(path: '/k/examen/:id', pageBuilder: (_, state) => _monte(state, ExamenEntreeEcran(epreuveId: state.pathParameters['id']!))),
+      GoRoute(
+        path: '/k/examen-copie/:id',
+        pageBuilder: (_, state) => _monte(
+          state,
+          ExamenCopieEcran(epreuveId: state.pathParameters['id']!, copie: state.extra is Copie ? state.extra as Copie : null),
+        ),
+      ),
+      GoRoute(
+        path: '/k/examen-correction/:id',
+        pageBuilder: (_, state) {
+          final id = state.pathParameters['id']!;
+          final copie = state.extra is Copie ? state.extra as Copie : (Copie.charger(id) ?? Copie(epreuveId: id));
+          return _monte(state, ExamenCorrectionEcran(epreuveId: id, copie: copie));
+        },
+      ),
+      GoRoute(
+        path: '/k/examen-note',
+        pageBuilder: (_, state) {
+          final r = state.extra;
+          return CustomTransitionPage(
+            key: state.pageKey,
+            transitionDuration: const Duration(milliseconds: 420),
+            transitionsBuilder: (_, a, _, enfant) => FadeTransition(opacity: a, child: enfant),
+            child: r is ResultatExamen ? ExamenNoteEcran(resultat: r) : const AccueilKunfox(),
           );
         },
       ),
