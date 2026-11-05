@@ -14,6 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ouro_prep/core/services/storage_service.dart';
 import 'package:ouro_prep/kunfox/ecrans/examen.dart';
 import 'package:ouro_prep/kunfox/riche/contenu_riche.dart';
+import 'package:ouro_prep/kunfox/riche/illustrations.dart';
 import 'package:ouro_prep/kunfox/theme/kunfox_theme.dart';
 import 'package:ouro_prep/kunfox/theme/palette.dart';
 
@@ -129,6 +130,25 @@ void main() {
     await photo(tester, 'h4_note');
     await finir(tester);
   });
+
+  for (final id in ['physique_c_ch3_l1', 'maths_ch8_l3', 'chimie_ch1_l3', 'maths_c_ch1_l2']) {
+    testWidgets('h6 illustration $id', (tester) async {
+      await monter(
+        tester,
+        Builder(
+          builder: (context) => Scaffold(
+            backgroundColor: Palette.of(context).fond,
+            body: SafeArea(
+              child: ListView(padding: const EdgeInsets.all(16), children: [ContenuRiche(illustrationsLecons[id]!)]),
+            ),
+          ),
+        ),
+      );
+      await avancer(tester, 1800);
+      await photo(tester, 'h6_$id');
+      await finir(tester);
+    });
+  }
 
   testWidgets('h5 cours riche', (tester) async {
     await monter(

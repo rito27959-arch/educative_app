@@ -3,6 +3,7 @@ import 'package:ouro_prep/core/data/curriculum_data.dart';
 import 'package:ouro_prep/kunfox/epreuves/modele.dart';
 import 'package:ouro_prep/kunfox/epreuves/sujets.dart';
 import 'package:ouro_prep/kunfox/riche/graphe.dart';
+import 'package:ouro_prep/kunfox/riche/illustrations.dart';
 
 Iterable<String> _blocs(String texte, String genre) sync* {
   final m = RegExp('```$genre\\n(.*?)```', dotAll: true);
@@ -54,6 +55,19 @@ void main() {
       });
     });
   }
+
+  test('illustrations des leçons : leçons connues et courbes lisibles', () {
+    illustrationsLecons.forEach((id, texte) {
+      expect(CurriculumData.findLessonById(id), isNotNull, reason: id);
+      for (final src in _blocs(texte, 'graphe')) {
+        final s = SpecGraphe.lire(src);
+        expect(s.courbes, isNotEmpty, reason: '$id : $src');
+        final f = s.courbes.first.f;
+        final milieu = f((s.xMin + s.xMax) / 2 + 0.013);
+        expect(milieu.isFinite, isTrue, reason: '$id : valeur au milieu');
+      }
+    });
+  });
 
   test('virgule décimale et unités dans les nombres', () {
     final q = epreuvePremiereNombreAvecUnite();

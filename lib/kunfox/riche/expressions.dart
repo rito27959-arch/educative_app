@@ -35,7 +35,7 @@ abstract final class Expressions {
     s = s.replaceAll('exp(', 'e^(');
     // e (Euler) isolé et pi
     s = s.replaceAllMapped(RegExp(r'(?<![a-z])e(?![a-z(])'), (_) => '(${math.e})');
-    s = s.replaceAll('pi', '${math.pi}');
+    s = s.replaceAll('pi', '(${math.pi})');
     // multiplication implicite : 2x, 2(…), )(, x(, )x, 3sqrt
     final v = RegExp.escape(variable);
     s = s.replaceAllMapped(RegExp(r'(\d|\))(?=[a-z(])'), (m) => '${m[1]}*');

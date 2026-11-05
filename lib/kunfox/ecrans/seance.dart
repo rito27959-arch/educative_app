@@ -30,6 +30,7 @@ import '../donnees/rappels.dart';
 import '../flame/effets_flame.dart';
 import '../theme/palette.dart';
 import '../riche/contenu_riche.dart';
+import '../riche/illustrations.dart';
 import '../donnees/duels.dart';
 import 'duel.dart' show FantomeDuel;
 
@@ -123,11 +124,15 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
       if (contenu != null) {
         if (contenu.introText.trim().isNotEmpty) _file.add(_Notion('Découverte', contenu.introText.trim()));
         if (contenu.lessonBody.trim().isNotEmpty) _file.add(_Notion('L\'essentiel', contenu.lessonBody.trim()));
+        final image = illustrationsLecons[widget.leconId];
+        if (image != null) _file.add(_Notion('En image', image));
         if (contenu.example.trim().isNotEmpty) _file.add(_Notion('Exemple', contenu.example.trim()));
         if (contenu.takeaways.isNotEmpty) _file.add(_Notion('À retenir', '', puces: contenu.takeaways));
       } else {
         final l = CurriculumData.findLessonById(widget.leconId!);
         if (l != null && l.content.trim().isNotEmpty) _file.add(_Notion(l.title, l.content.trim()));
+        final image = illustrationsLecons[widget.leconId];
+        if (image != null) _file.add(_Notion('En image', image));
       }
       questions.addAll(QuizData.getQuestionsForLesson(widget.leconId!, count: 5));
     } else {
