@@ -48,7 +48,7 @@ jobs:
             rive inspect $p --summary > /tmp/sortie/$n/inspection.txt 2>&1
             rive $p --verify > /tmp/sortie/$n/verification.txt 2>&1; echo "verif: $?" >> /tmp/sortie/$n/verification.txt
             # la CLI récente remplace --once par --publish (qui écrit le .riv)
-            (cd $p && rive . --publish) > /tmp/sortie/$n/construction.txt 2>&1; echo "construction: $?" >> /tmp/sortie/$n/construction.txt
+            rive $p --once > /tmp/sortie/$n/construction.txt 2>&1; echo "construction: $?" >> /tmp/sortie/$n/construction.txt
             find $p -name '*.riv' -newer $p/scene.rml -exec cp {} /tmp/sortie/$n/ \; 2>/dev/null
             find . -maxdepth 2 -name '*.riv' -newer $p/scene.rml -exec cp {} /tmp/sortie/$n/ \; 2>/dev/null
             ls -la $p >> /tmp/sortie/$n/construction.txt
