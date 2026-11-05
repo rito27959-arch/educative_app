@@ -7,6 +7,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:ouro_prep/core/providers/auth_provider.dart';
 import 'package:ouro_prep/core/providers/settings_provider.dart';
 import 'package:ouro_prep/core/data/quiz_data.dart';
+import 'package:ouro_prep/kunfox/composants/sons.dart';
 import 'package:ouro_prep/kunfox/donnees/duels.dart';
 import 'package:ouro_prep/kunfox/ecrans/examen.dart';
 import 'package:ouro_prep/kunfox/donnees/progression.dart';
@@ -21,6 +22,8 @@ void main() {
   testWidgets('captures', (tester) async {
     await StorageService.init();
     await Rappels.initialiser();
+    // l'audio de l'émulateur (lancé avec -noaudio) le fait décrocher : on coupe les sons
+    await Sons.basculer(false);
     await tester.pumpWidget(const ProviderScope(child: OuroPrepApp()));
     await binding.convertFlutterSurfaceToImage();
 
