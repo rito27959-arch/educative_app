@@ -7,7 +7,9 @@ sont des pièces séparées qui pivotent chacune autour de leur articulation.
 Machine à états « Kunfox », entrée nombre `humeur` :
     0 attente   1 joie   2 courage (après une erreur)   3 réflexion
     4 fête      5 salut  6 dodo
-Une seconde couche fait cligner les yeux en permanence.
+Entrée nombre `regard` : 0 centre, 1 gauche, 2 droite, 3 bas, 4 haut.
+Couches permanentes : clignement, vie (queue qui ondule, oreilles qui
+frémissent), regard.
 
     python3 rive/outils/generer_mascotte.py                 → rive/kunfox_mascotte/scene.rml
     python3 rive/outils/generer_mascotte.py --apercus       → + rive/apercus/mascotte_<humeur>/
@@ -143,6 +145,8 @@ def construire():
     yeux_ouverts = n('yeux_ouverts', G('Reflets', (512, 528), [*reflets('g'), *reflets('d')]))
     cligne = n('cligne', G('Clignement', (512, 528), [yeux_ouverts, n('oeil_g', oeil('g')), n('oeil_d', oeil('d'))]))
     regard = n('regard', G('Regard', (512, 528), [cligne]))
+    # enveloppe du regard, pilotée par l'entrée `regard` (couche à part)
+    suivi = n('suivi', G('Suivi', (512, 528), [regard]))
     f = dict(BOUCHE)
     bouches = n('b_ouverte', G('Bouche', (512, 760), [
         n('langue', F('Langue', 'M486 786 Q512 770 538 786 Q532 806 512 808 Q492 806 486 786 Z', remplissage=LANGUE, opacity=0)),
@@ -151,7 +155,7 @@ def construire():
     tete = n('tete', G('Tete', (512, 790), [
         n('toque', toque()),
         n('sourcil_g', sourcil('g')), n('sourcil_d', sourcil('d')),
-        regard,
+        suivi,
         n('zzz', G('Zzz', (200, 330), [
             F('Z1', 'M190 340 L226 340 L190 376 L226 376', trait=NUIT, epaisseur=11),
             F('Z2', 'M140 260 L166 260 L140 286 L166 286', trait=NUIT, epaisseur=9),
@@ -162,8 +166,13 @@ def construire():
         n('joues', G('Joues', (512, 632), [
             E('Joue G', (334, 628), 76, 42, remplissage=ROSE), E('Joue D', (690, 628), 76, 42, remplissage=ROSE)], opacity=0)),
         F('Masque', MASQUE, remplissage=CREME),
+        # volume : lumière venant d'en haut à gauche
+        E('Lumiere tete', (372, 448), 150, 46, remplissage='FFB37A', opacity=0.55, rotation=-0.32),
+        E('Lumiere tete 2', (300, 470), 34, 16, remplissage='FFE0C2', opacity=0.8, rotation=-0.5),
+        F('Ombre masque', 'M214 600 Q330 568 410 620 Q470 664 512 740 Q554 664 614 620 Q694 568 810 600 Q700 716 512 818 Q324 716 214 600 Z', remplissage='F0D9C2'),
         F('Tete', TETE, remplissage=orange_tete),
-        n('oreille_g', oreille('g')), n('oreille_d', oreille('d')),
+        n('oreille_vie_g', G('Oreille vie G', (318, 440), [n('oreille_g', oreille('g'))])),
+        n('oreille_vie_d', G('Oreille vie D', (706, 440), [n('oreille_d', oreille('d'))])),
     ]))
     saut = n('saut', G('Saut', (512, 1084), [n('pirouette', G('Pirouette', (512, 660), [
         n('bras_g', bras('g')), n('bras_d', bras('d')),
@@ -171,8 +180,12 @@ def construire():
         E('Pied G', (448, 1070), 116, 52, remplissage=ORANGE_F),
         E('Pied D', (576, 1070), 116, 52, remplissage=ORANGE_F),
         F('Ventre', VENTRE, remplissage=Degrade([(0, CREME), (1, 'FFE2C6')], (512, 820), (512, 1040))),
+        # volume du corps : ombre propre en bas, lumière sur l'épaule gauche
+        E('Lumiere corps', (420, 840), 70, 34, remplissage='FFA066', opacity=0.6, rotation=-0.7),
+        E('Ombre corps', (512, 1048), 250, 44, remplissage='D24A14', opacity=0.55),
         F('Corps', CORPS, remplissage=orange_corps),
-        n('queue', G('Queue', (640, 1040), [F('Bout', QUEUE_BOUT, remplissage=CREME), F('Queue', QUEUE, remplissage=ORANGE)])),
+        n('queue_vie', G('Queue vie', (640, 1040), [
+            n('queue', G('Queue', (640, 1040), [F('Bout', QUEUE_BOUT, remplissage=CREME), F('Queue', QUEUE, remplissage=ORANGE)]))])),
     ]))]))
     # étincelles et confettis de la fête, hors du saut (ils restent dans la scène)
     etincelles = []
@@ -473,6 +486,33 @@ def clignement(o):
           (250, 1, ENTREE), (254, 0.08, FREIN), (259, 1, ENTREE), (263, 0.08, FREIN), (269, 1, 'hold'), (300, 1, None))
     return a
 
+def vie(o):
+    """Le personnage n'est jamais figé : la queue ondule (deux rythmes qui
+    ne se répètent pas), une oreille frémit de temps en temps."""
+    d = 600  # 10 s
+    a = Anim('Vie', d, True)
+    q = []
+    for f in range(0, d + 1, 6):
+        t = f / 60
+        q.append((f, 0.07 * math.sin(2 * math.pi * t / 2.5) + 0.03 * math.sin(2 * math.pi * t / 0.9 + 1.3), None))
+    a.cle(o['queue_vie'], 'rotation', *q)
+    a.cle(o['oreille_vie_g'], 'rotation', *seq([(0, 0, 'hold')], ressort(150, -0.16, 0, 50, freq=5, amorti=9), [(400, 0, 'hold')], ressort(400, -0.12, 0, 46, freq=5.5, amorti=10), [(d, 0, None)]))
+    a.cle(o['oreille_vie_d'], 'rotation', *seq([(0, 0, 'hold')], ressort(330, 0.16, 0, 50, freq=5, amorti=9), [(d, 0, None)]))
+    return a
+
+REGARDS = ['centre', 'gauche', 'droite', 'bas', 'haut']
+_DECALAGES = {'centre': (0, 0), 'gauche': (-16, 2), 'droite': (16, 2), 'bas': (0, 14), 'haut': (0, -12)}
+
+def regards(o):
+    """Une petite animation tenue par direction : le regard s'y pose."""
+    out = []
+    for nom in REGARDS:
+        dx, dy = _DECALAGES[nom]
+        a = Anim(f'Regard {nom}', 30, False)
+        a.fixe(o['suivi'], 'x', dx); a.fixe(o['suivi'], 'y', dy)
+        out.append(a)
+    return out
+
 def produire(apercu=None, fond=None):
     nid.n = 100
     racine, o = construire()
@@ -490,8 +530,16 @@ def produire(apercu=None, fond=None):
         if j != 1: calme.vers(autre, egal(humeur_in, j), duree=200)
     etats = etats + [calme]
     debut = etats[apercu] if apercu is not None else etats[0]
-    couches = [Couche('Humeur', debut, etats), Couche('Clignement', (ec := Etat(cl)), [ec])]
-    rml = scene('Kunfox', 600, 700, racine, [a for a in A.values()] + [cl], 'Kunfox', [humeur_in], couches, fond=fond)
+    v = vie(o)
+    R = regards(o)
+    regard_in = Entree('regard', 'nombre', 0)
+    er = [Etat(a) for a in R]
+    for i, e in enumerate(er):
+        for j, autre in enumerate(er):
+            if i != j: e.vers(autre, egal(regard_in, j), duree=220)
+    couches = [Couche('Humeur', debut, etats), Couche('Clignement', (ec := Etat(cl)), [ec]),
+               Couche('Vie', (ev := Etat(v)), [ev]), Couche('Regard', er[0], er)]
+    rml = scene('Kunfox', 600, 700, racine, [a for a in A.values()] + [cl, v, *R], 'Kunfox', [humeur_in, regard_in], couches, fond=fond)
     return rml, racine, o, A, cl
 
 if __name__ == '__main__':
