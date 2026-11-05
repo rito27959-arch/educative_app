@@ -57,8 +57,11 @@ jobs:
           arch: x86_64
           target: google_apis
           profile: pixel_6
+          cores: 4
+          ram-size: 4096M
+          heap-size: 512M
           disable-animations: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot
           script: |
             mkdir -p resultats/captures ; (for i in $(seq 1 200); do adb shell pm grant app.dropletmesh.kunfox android.permission.POST_NOTIFICATIONS 2>/dev/null && break; sleep 3; done) & flutter drive --driver=test_driver/integration_test.dart --target=integration_test/captures_test.dart > resultats/drive.txt 2>&1 ; echo "drive=$?" >> resultats/journal.txt
             sleep 5 ; test -s resultats/captures/50_notifications.png || echo "aucune notification Kunfox vue" >> resultats/journal.txt
