@@ -29,6 +29,7 @@ import '../donnees/progression.dart';
 import '../donnees/rappels.dart';
 import '../flame/effets_flame.dart';
 import '../theme/palette.dart';
+import '../riche/contenu_riche.dart';
 import '../donnees/duels.dart';
 import 'duel.dart' show FantomeDuel;
 
@@ -518,7 +519,7 @@ class _VueNotion extends StatelessWidget {
             border: Border.all(color: p.bord, width: 2),
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            if (n.texte.isNotEmpty) SelectableText(n.texte, style: Theme.of(context).textTheme.bodyLarge),
+            if (n.texte.isNotEmpty) ContenuRiche(n.texte, style: Theme.of(context).textTheme.bodyLarge),
             for (final puce in n.puces)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
@@ -527,7 +528,7 @@ class _VueNotion extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 3, right: 10),
                     child: Icon(Icons.check_circle_rounded, color: p.succes, size: 20),
                   ),
-                  Expanded(child: Text(puce, style: Theme.of(context).textTheme.bodyLarge)),
+                  Expanded(child: TexteRiche(puce, style: Theme.of(context).textTheme.bodyLarge)),
                 ]),
               ),
           ]),
@@ -654,7 +655,7 @@ class _Enonce extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = Palette.of(context);
     final style = Theme.of(context).textTheme.titleLarge;
-    if (!exo.aTrous) return Text(exo.q.question, style: style);
+    if (!exo.aTrous) return TexteRiche(exo.q.question, style: style);
     // la phrase à trous : le mot choisi vient se loger dans le trou
     final motif = RegExp(r'_{3,}|…|\.\.\.');
     final m = motif.firstMatch(exo.q.question)!;
@@ -775,7 +776,7 @@ class _TuileState extends State<_Tuile> {
                     const SizedBox(width: 12),
                   ],
                   Flexible(
-                    child: Text(widget.texte,
+                    child: TexteRiche(widget.texte,
                         style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, height: 1.3, color: texte)),
                   ),
                 ]),
@@ -846,7 +847,7 @@ class _Bas extends StatelessWidget {
                               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: couleur)),
                         if (exo.q.explanation.trim().isNotEmpty) ...[
                           const SizedBox(height: 4),
-                          Text(exo.q.explanation.trim(),
+                          TexteRiche(exo.q.explanation.trim(),
                               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14, height: 1.35, color: couleur.withValues(alpha: 0.9))),
                         ],
                       ]),
