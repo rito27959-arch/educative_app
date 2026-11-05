@@ -146,7 +146,7 @@ La courbe monte jusqu'à $S(-1 ; e)$ puis redescend vers l'axe des abscisses, as
             ],
             corrige: r'''$$F'(x) = -e^{-x} - (x+3)(-e^{-x}) = e^{-x}(-1 + x + 3) = (x+2)e^{-x} = f(x)$$'''),
         QuestionEpreuve.nombre('C.2', r"Calcule $\displaystyle\int_0^1 f(x)\,dx$ (valeur exacte ou à $10^{-3}$ près).",
-            valeur: 1.528482235, tolerance: 0.002, points: 1.5, chapitre: 'maths_ch6', corrige: r'''$$\int_0^1 f(x)\,dx = F(1) - F(0) = -4e^{-1} + 3 = 3 - \frac{4}{e} \approx 1{,}528$$'''),
+            valeur: 1.528482235, tolerance: 0.002, points: 2, chapitre: 'maths_ch6', corrige: r'''$$\int_0^1 f(x)\,dx = F(1) - F(0) = -4e^{-1} + 3 = 3 - \frac{4}{e} \approx 1{,}528$$'''),
         QuestionEpreuve.qcm('C.3', r"$f$ est solution de l'équation différentielle :",
             options: [r"$y' + y = e^{-x}$", r"$y' - y = e^{-x}$", r"$y' + y = 0$", r"$y'' + y = 0$"],
             bonne: 0,
