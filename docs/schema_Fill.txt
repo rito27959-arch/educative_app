@@ -1,0 +1,26 @@
+Fill  (typeKey 20)
+extends ShapePaint > ContainerComponent > Component > ArtboardProvider
+
+own properties:
+  fillRule                           uint8        key 40      = nonZero
+      accepts: nonZero (0), evenOdd (1), clockwise (2)
+
+inherited from ShapePaint:
+  isVisible                          bool         key 41      = true
+  blendModeValue                     uint8        key 747     = inherit
+      Shape paint blend mode value. 127 means inherit.
+      accepts: inherit (127), srcOver (3), additive (12), screen (14), overlay (15), darken (16), lighten (17), colorDodge (18), colorBurn (19), hardLight (20), softLight (21), difference (22), exclusion (23), multiply (24), hue (25), saturation (26), color (27), luminosity (28)
+  additiveAmount                AB   uint8        key 452     = 255
+      How much of the additive blend mode to mix in, 0-255. Only meaningful when blendModeValue is additive.
+
+inherited from Component:
+  name                               String       key 4
+      Non-unique identifier, used to give friendly names to elements in the hierarchy. Runtimes provide an API for finding components by this [name].
+  parentId                           Id           key 5
+      Identifier used to track parent ContainerComponent.
+  flags                              uint         key 130     = 0
+      Component state. Runtime export folds visibility and selectable state into drawable flags; editor-only flags stay in the editor.
+      bits (write each as its own attribute, e.g. hidden="true"): hidden locked disconnected opaque guide isolated visibleOverride unlockedOverride participatesInLayout complexDependency selectable
+
+7 properties.  A = animatable, B = bindable, D = derived (computed, not authored -- bind to it, do not set it).
+Editor-only properties are hidden; --all shows them.

@@ -1,0 +1,8 @@
+rive 1.8.0
+   ok  version    rive 1.8.0, installed at /home/runner/.rive selecting 1.8.0
+ warn  update     latest is 1.9.0; run `rive update`
+ warn  auth       Not logged in (prod); --publish and --rev need a session, and push its own
+   ok  live-link  port 9640 available for --serve
+   ok  project    no rive.yaml in /home/runner/work/educative_app/educative_app (run `rive create`, or pass a project dir)
+ warn  android    no device for --android; connect one with USB debugging on
+ warn  wamrc      no wamrc for --aot; set RIVE_WAMRC

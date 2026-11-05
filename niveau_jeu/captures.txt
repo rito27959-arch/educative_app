@@ -1,0 +1,96 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:03.510] rive  deferred replay: inline
+[09:11:03.587] rive  built rive/apercus/niveau_jeu/build/niveau_jeu.riv (7928 bytes, 76ms, 0 errors, 0 warnings)
+[09:11:03.587] rive  showing Niveau [1/1]
+[09:11:03.587] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:03.626] rive  wrote /tmp/sortie/niveau_jeu/c_00000.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:03.719] rive  deferred replay: inline
+[09:11:03.796] rive  built rive/apercus/niveau_jeu/build/niveau_jeu.riv (7928 bytes, 76ms, 0 errors, 0 warnings)
+[09:11:03.797] rive  showing Niveau [1/1]
+[09:11:03.797] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:03.842] rive  wrote /tmp/sortie/niveau_jeu/c_00120.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:03.936] rive  deferred replay: inline
+[09:11:04.013] rive  built rive/apercus/niveau_jeu/build/niveau_jeu.riv (7928 bytes, 76ms, 0 errors, 0 warnings)
+[09:11:04.014] rive  showing Niveau [1/1]
+[09:11:04.014] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:04.058] rive  wrote /tmp/sortie/niveau_jeu/c_00250.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:04.152] rive  deferred replay: inline
+[09:11:04.228] rive  built rive/apercus/niveau_jeu/build/niveau_jeu.riv (7928 bytes, 76ms, 0 errors, 0 warnings)
+[09:11:04.229] rive  showing Niveau [1/1]
+[09:11:04.229] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:04.282] rive  wrote /tmp/sortie/niveau_jeu/c_00400.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:04.376] rive  deferred replay: inline
+[09:11:04.455] rive  built rive/apercus/niveau_jeu/build/niveau_jeu.riv (7928 bytes, 78ms, 0 errors, 0 warnings)
+[09:11:04.456] rive  showing Niveau [1/1]
+[09:11:04.456] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:04.513] rive  wrote /tmp/sortie/niveau_jeu/c_00550.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:04.608] rive  deferred replay: inline
+[09:11:04.685] rive  built rive/apercus/niveau_jeu/build/niveau_jeu.riv (7928 bytes, 76ms, 0 errors, 0 warnings)
+[09:11:04.685] rive  showing Niveau [1/1]
+[09:11:04.686] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:04.743] rive  wrote /tmp/sortie/niveau_jeu/c_00700.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:04.837] rive  deferred replay: inline
+[09:11:04.914] rive  built rive/apercus/niveau_jeu/build/niveau_jeu.riv (7928 bytes, 76ms, 0 errors, 0 warnings)
+[09:11:04.914] rive  showing Niveau [1/1]
+[09:11:04.915] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:04.972] rive  wrote /tmp/sortie/niveau_jeu/c_00900.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:05.065] rive  deferred replay: inline
+[09:11:05.142] rive  built rive/apercus/niveau_jeu/build/niveau_jeu.riv (7928 bytes, 76ms, 0 errors, 0 warnings)
+[09:11:05.142] rive  showing Niveau [1/1]
+[09:11:05.143] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:05.200] rive  wrote /tmp/sortie/niveau_jeu/c_01200.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:05.294] rive  deferred replay: inline
+[09:11:05.371] rive  built rive/apercus/niveau_jeu/build/niveau_jeu.riv (7928 bytes, 76ms, 0 errors, 0 warnings)
+[09:11:05.371] rive  showing Niveau [1/1]
+[09:11:05.372] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:05.428] rive  wrote /tmp/sortie/niveau_jeu/c_01600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:05.523] rive  deferred replay: inline
+[09:11:05.600] rive  built rive/apercus/niveau_jeu/build/niveau_jeu.riv (7928 bytes, 76ms, 0 errors, 0 warnings)
+[09:11:05.601] rive  showing Niveau [1/1]
+[09:11:05.602] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:05.658] rive  wrote /tmp/sortie/niveau_jeu/c_02100.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:05.753] rive  deferred replay: inline
+[09:11:05.830] rive  built rive/apercus/niveau_jeu/build/niveau_jeu.riv (7928 bytes, 76ms, 0 errors, 0 warnings)
+[09:11:05.830] rive  showing Niveau [1/1]
+[09:11:05.832] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:05.889] rive  wrote /tmp/sortie/niveau_jeu/c_02600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:05.985] rive  deferred replay: inline
+[09:11:06.062] rive  built rive/apercus/niveau_jeu/build/niveau_jeu.riv (7928 bytes, 76ms, 0 errors, 0 warnings)
+[09:11:06.063] rive  showing Niveau [1/1]
+[09:11:06.064] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:06.121] rive  wrote /tmp/sortie/niveau_jeu/c_03200.png

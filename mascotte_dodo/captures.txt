@@ -1,0 +1,96 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:20.965] rive  deferred replay: inline
+[09:10:21.408] rive  built rive/apercus/mascotte_dodo/build/mascotte_dodo.riv (42540 bytes, 443ms, 0 errors, 0 warnings)
+[09:10:21.409] rive  showing Kunfox [1/1]
+[09:10:21.410] rive  viewport 600x700 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:21.487] rive  wrote /tmp/sortie/mascotte_dodo/c_00000.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:21.582] rive  deferred replay: inline
+[09:10:22.026] rive  built rive/apercus/mascotte_dodo/build/mascotte_dodo.riv (42540 bytes, 443ms, 0 errors, 0 warnings)
+[09:10:22.027] rive  showing Kunfox [1/1]
+[09:10:22.028] rive  viewport 600x700 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:22.109] rive  wrote /tmp/sortie/mascotte_dodo/c_00120.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:22.204] rive  deferred replay: inline
+[09:10:22.648] rive  built rive/apercus/mascotte_dodo/build/mascotte_dodo.riv (42540 bytes, 444ms, 0 errors, 0 warnings)
+[09:10:22.650] rive  showing Kunfox [1/1]
+[09:10:22.650] rive  viewport 600x700 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:22.730] rive  wrote /tmp/sortie/mascotte_dodo/c_00250.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:22.826] rive  deferred replay: inline
+[09:10:23.271] rive  built rive/apercus/mascotte_dodo/build/mascotte_dodo.riv (42540 bytes, 444ms, 0 errors, 0 warnings)
+[09:10:23.273] rive  showing Kunfox [1/1]
+[09:10:23.273] rive  viewport 600x700 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:23.351] rive  wrote /tmp/sortie/mascotte_dodo/c_00400.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:23.446] rive  deferred replay: inline
+[09:10:23.889] rive  built rive/apercus/mascotte_dodo/build/mascotte_dodo.riv (42540 bytes, 442ms, 0 errors, 0 warnings)
+[09:10:23.890] rive  showing Kunfox [1/1]
+[09:10:23.891] rive  viewport 600x700 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:23.971] rive  wrote /tmp/sortie/mascotte_dodo/c_00550.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:24.066] rive  deferred replay: inline
+[09:10:24.507] rive  built rive/apercus/mascotte_dodo/build/mascotte_dodo.riv (42540 bytes, 441ms, 0 errors, 0 warnings)
+[09:10:24.509] rive  showing Kunfox [1/1]
+[09:10:24.509] rive  viewport 600x700 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:24.588] rive  wrote /tmp/sortie/mascotte_dodo/c_00700.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:24.686] rive  deferred replay: inline
+[09:10:25.141] rive  built rive/apercus/mascotte_dodo/build/mascotte_dodo.riv (42540 bytes, 454ms, 0 errors, 0 warnings)
+[09:10:25.142] rive  showing Kunfox [1/1]
+[09:10:25.143] rive  viewport 600x700 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:25.224] rive  wrote /tmp/sortie/mascotte_dodo/c_00900.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:25.322] rive  deferred replay: inline
+[09:10:25.767] rive  built rive/apercus/mascotte_dodo/build/mascotte_dodo.riv (42540 bytes, 444ms, 0 errors, 0 warnings)
+[09:10:25.768] rive  showing Kunfox [1/1]
+[09:10:25.769] rive  viewport 600x700 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:25.850] rive  wrote /tmp/sortie/mascotte_dodo/c_01200.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:25.946] rive  deferred replay: inline
+[09:10:26.388] rive  built rive/apercus/mascotte_dodo/build/mascotte_dodo.riv (42540 bytes, 441ms, 0 errors, 0 warnings)
+[09:10:26.390] rive  showing Kunfox [1/1]
+[09:10:26.391] rive  viewport 600x700 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:26.471] rive  wrote /tmp/sortie/mascotte_dodo/c_01600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:26.567] rive  deferred replay: inline
+[09:10:27.011] rive  built rive/apercus/mascotte_dodo/build/mascotte_dodo.riv (42540 bytes, 443ms, 0 errors, 0 warnings)
+[09:10:27.012] rive  showing Kunfox [1/1]
+[09:10:27.014] rive  viewport 600x700 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:27.094] rive  wrote /tmp/sortie/mascotte_dodo/c_02100.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:27.191] rive  deferred replay: inline
+[09:10:27.637] rive  built rive/apercus/mascotte_dodo/build/mascotte_dodo.riv (42540 bytes, 446ms, 0 errors, 0 warnings)
+[09:10:27.639] rive  showing Kunfox [1/1]
+[09:10:27.641] rive  viewport 600x700 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:27.721] rive  wrote /tmp/sortie/mascotte_dodo/c_02600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:27.818] rive  deferred replay: inline
+[09:10:28.260] rive  built rive/apercus/mascotte_dodo/build/mascotte_dodo.riv (42540 bytes, 442ms, 0 errors, 0 warnings)
+[09:10:28.261] rive  showing Kunfox [1/1]
+[09:10:28.264] rive  viewport 600x700 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:28.344] rive  wrote /tmp/sortie/mascotte_dodo/c_03200.png

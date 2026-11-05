@@ -1,0 +1,8 @@
+[09:09:53.072] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 51ms, 0 errors, 0 warnings)
+construction: 0
+total 52
+drwxr-xr-x  3 runner runner  4096 Nov  5 09:09 .
+drwxr-xr-x 16 runner runner  4096 Nov  5 09:09 ..
+drwxr-xr-x  2 runner runner  4096 Nov  5 09:09 build
+-rw-r--r--  1 runner runner    21 Nov  5 09:09 rive.yaml
+-rw-r--r--  1 runner runner 35441 Nov  5 09:09 scene.rml

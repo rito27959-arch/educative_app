@@ -1,0 +1,96 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:53.166] rive  deferred replay: inline
+[09:09:53.218] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 51ms, 0 errors, 0 warnings)
+[09:09:53.218] rive  showing Coeur [1/1]
+[09:09:53.218] rive  viewport 300x300 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:53.257] rive  wrote /tmp/sortie/coeur_recharge/c_00000.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:53.351] rive  deferred replay: inline
+[09:09:53.402] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 51ms, 0 errors, 0 warnings)
+[09:09:53.403] rive  showing Coeur [1/1]
+[09:09:53.403] rive  viewport 300x300 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:53.442] rive  wrote /tmp/sortie/coeur_recharge/c_00120.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:53.536] rive  deferred replay: inline
+[09:09:53.587] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 51ms, 0 errors, 0 warnings)
+[09:09:53.588] rive  showing Coeur [1/1]
+[09:09:53.588] rive  viewport 300x300 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:53.629] rive  wrote /tmp/sortie/coeur_recharge/c_00250.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:53.723] rive  deferred replay: inline
+[09:09:53.774] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 51ms, 0 errors, 0 warnings)
+[09:09:53.775] rive  showing Coeur [1/1]
+[09:09:53.775] rive  viewport 300x300 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:53.817] rive  wrote /tmp/sortie/coeur_recharge/c_00400.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:53.911] rive  deferred replay: inline
+[09:09:53.963] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 52ms, 0 errors, 0 warnings)
+[09:09:53.964] rive  showing Coeur [1/1]
+[09:09:53.964] rive  viewport 300x300 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:54.004] rive  wrote /tmp/sortie/coeur_recharge/c_00550.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:54.098] rive  deferred replay: inline
+[09:09:54.149] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 51ms, 0 errors, 0 warnings)
+[09:09:54.150] rive  showing Coeur [1/1]
+[09:09:54.150] rive  viewport 300x300 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:54.190] rive  wrote /tmp/sortie/coeur_recharge/c_00700.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:54.284] rive  deferred replay: inline
+[09:09:54.336] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 51ms, 0 errors, 0 warnings)
+[09:09:54.336] rive  showing Coeur [1/1]
+[09:09:54.337] rive  viewport 300x300 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:54.376] rive  wrote /tmp/sortie/coeur_recharge/c_00900.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:54.470] rive  deferred replay: inline
+[09:09:54.521] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 51ms, 0 errors, 0 warnings)
+[09:09:54.522] rive  showing Coeur [1/1]
+[09:09:54.522] rive  viewport 300x300 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:54.561] rive  wrote /tmp/sortie/coeur_recharge/c_01200.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:54.655] rive  deferred replay: inline
+[09:09:54.707] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 51ms, 0 errors, 0 warnings)
+[09:09:54.707] rive  showing Coeur [1/1]
+[09:09:54.707] rive  viewport 300x300 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:54.747] rive  wrote /tmp/sortie/coeur_recharge/c_01600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:54.840] rive  deferred replay: inline
+[09:09:54.894] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 53ms, 0 errors, 0 warnings)
+[09:09:54.894] rive  showing Coeur [1/1]
+[09:09:54.895] rive  viewport 300x300 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:54.934] rive  wrote /tmp/sortie/coeur_recharge/c_02100.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:55.027] rive  deferred replay: inline
+[09:09:55.079] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 51ms, 0 errors, 0 warnings)
+[09:09:55.079] rive  showing Coeur [1/1]
+[09:09:55.080] rive  viewport 300x300 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:55.119] rive  wrote /tmp/sortie/coeur_recharge/c_02600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:55.212] rive  deferred replay: inline
+[09:09:55.264] rive  built rive/apercus/coeur_recharge/build/coeur_recharge.riv (5165 bytes, 51ms, 0 errors, 0 warnings)
+[09:09:55.264] rive  showing Coeur [1/1]
+[09:09:55.265] rive  viewport 300x300 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:55.304] rive  wrote /tmp/sortie/coeur_recharge/c_03200.png

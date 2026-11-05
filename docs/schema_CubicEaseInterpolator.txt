@@ -1,0 +1,11 @@
+CubicEaseInterpolator  (typeKey 28)
+extends CubicInterpolator > KeyFrameInterpolator
+
+inherited from CubicInterpolator:
+  x1                                 double       key 63      = 0.42
+  y1                                 double       key 64      = 0
+  x2                                 double       key 65      = 0.58
+  y2                                 double       key 66      = 1
+
+4 properties.  A = animatable, B = bindable, D = derived (computed, not authored -- bind to it, do not set it).
+Editor-only properties are hidden; --all shows them.

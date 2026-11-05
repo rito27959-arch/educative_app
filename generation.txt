@@ -1,0 +1,6 @@
+kunfox_mascotte/scene.rml : 357569 caractères
+kunfox_flamme 28394
+kunfox_coeur 35367
+kunfox_reussite 16080
+kunfox_erreur 6122
+kunfox_niveau 49535

@@ -1,0 +1,90 @@
+rive 1.9.0 is available (you have 1.8.0). Run `rive update`.
+  getting-started        Installing, signing in, making a first project
+  overview               What Rive is and what you can build
+  workflow               How to sequence a build, and what to check
+  transforms             Groups, transforms, opacity, draw order
+  assets                 Images, fonts, audio, shaders, blobs of bulk data (3D meshes, vertex arrays)
+  drawing                Shapes, paint, gradients, images
+  text                   Text and fonts
+  layout                 Responsive layout: flex, grid, stack, layout participants, scrolling
+  data                   View models, data binding, enums, custom properties
+  state-machines         Interactivity: states, transitions, conditions
+  focus                  Keyboard focus: which node gets the keys, and moving between them
+  easing                 Easing curves, blend states, joysticks
+  rigging                Constraints, bones, skinning, image meshes, Solo, tags
+  semantics              Accessibility: roles, labels, states, semantic listeners
+  cursor                 Asking the window for an OS cursor: hand, resize, I-beam
+  format                 How RML works at all
+  skeleton               A complete file to start from
+  gotchas                Things that will silently bite you
+  gpu-performance        Making scripted 3D and shaders fast: draws, `discard`, textures, bulk data
+  luau/protocols         Writing Luau that runs in a Rive file
+  animascript/protocols  Writing AnimaScript (`.as`) that runs in a Rive file
+  animascript/threading  Moving AnimaScript work off the main lane: jobs, workers, shared memory, audio processors
+  debugging              Breakpoints and stepping through scripts in VS Code
+  project/rive-yaml      Project layout, `rive.yaml`, starting from an editor file
+  project/libraries-folder What `rive pull` leaves in `.libraries`, for reading not editing
+  publishing             Building, signing and shipping a `.riv`
+  push                   Pushing the project to a Rive file
+  publish-web            Publishing the project to the web
+
+Also available:
+  README
+  animascript/api/README
+  animascript/api/artboard
+  animascript/api/audio
+  animascript/api/box
+  animascript/api/buffer
+  animascript/api/canvas
+  animascript/api/color
+  animascript/api/data
+  animascript/api/data_value
+  animascript/api/dynamic
+  animascript/api/events
+  animascript/api/file
+  animascript/api/format
+  animascript/api/gpu
+  animascript/api/gpu_enums
+  animascript/api/host
+  animascript/api/image
+  animascript/api/jobs
+  animascript/api/json
+  animascript/api/lane_codes
+  animascript/api/lanes
+  animascript/api/luau_string
+  animascript/api/mat2d
+  animascript/api/mat4
+  animascript/api/net
+  animascript/api/os
+  animascript/api/paint
+  animascript/api/path
+  animascript/api/path_effect
+  animascript/api/pattern
+  animascript/api/ports
+  animascript/api/promise
+  animascript/api/renderer
+  animascript/api/shared
+  animascript/api/test
+  animascript/api/text
+  animascript/api/vector
+  animascript/api/workers
+  luau/api/README
+  luau/api/artboards
+  luau/api/color
+  luau/api/data_value
+  luau/api/fileformat
+  luau/api/gpu
+  luau/api/gradient
+  luau/api/image
+  luau/api/interfaces
+  luau/api/mat2d
+  luau/api/mat4
+  luau/api/mesh
+  luau/api/net
+  luau/api/paint
+  luau/api/path
+  luau/api/promise
+  luau/api/renderer
+  luau/api/testing
+  luau/api/text
+  luau/api/vector

@@ -1,0 +1,96 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:00.367] rive  deferred replay: inline
+[09:10:00.410] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 42ms, 0 errors, 0 warnings)
+[09:10:00.410] rive  showing Flamme [1/1]
+[09:10:00.411] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:00.449] rive  wrote /tmp/sortie/flamme_eteinte/c_00000.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:00.544] rive  deferred replay: inline
+[09:10:00.586] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 42ms, 0 errors, 0 warnings)
+[09:10:00.587] rive  showing Flamme [1/1]
+[09:10:00.587] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:00.625] rive  wrote /tmp/sortie/flamme_eteinte/c_00120.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:00.717] rive  deferred replay: inline
+[09:10:00.760] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 42ms, 0 errors, 0 warnings)
+[09:10:00.760] rive  showing Flamme [1/1]
+[09:10:00.760] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:00.797] rive  wrote /tmp/sortie/flamme_eteinte/c_00250.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:00.891] rive  deferred replay: inline
+[09:10:00.933] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 42ms, 0 errors, 0 warnings)
+[09:10:00.934] rive  showing Flamme [1/1]
+[09:10:00.934] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:00.971] rive  wrote /tmp/sortie/flamme_eteinte/c_00400.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:01.064] rive  deferred replay: inline
+[09:10:01.106] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 41ms, 0 errors, 0 warnings)
+[09:10:01.106] rive  showing Flamme [1/1]
+[09:10:01.106] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:01.143] rive  wrote /tmp/sortie/flamme_eteinte/c_00550.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:01.235] rive  deferred replay: inline
+[09:10:01.277] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 41ms, 0 errors, 0 warnings)
+[09:10:01.278] rive  showing Flamme [1/1]
+[09:10:01.278] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:01.315] rive  wrote /tmp/sortie/flamme_eteinte/c_00700.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:01.409] rive  deferred replay: inline
+[09:10:01.451] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 42ms, 0 errors, 0 warnings)
+[09:10:01.451] rive  showing Flamme [1/1]
+[09:10:01.452] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:01.489] rive  wrote /tmp/sortie/flamme_eteinte/c_00900.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:01.584] rive  deferred replay: inline
+[09:10:01.626] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 42ms, 0 errors, 0 warnings)
+[09:10:01.626] rive  showing Flamme [1/1]
+[09:10:01.626] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:01.664] rive  wrote /tmp/sortie/flamme_eteinte/c_01200.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:01.758] rive  deferred replay: inline
+[09:10:01.799] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 41ms, 0 errors, 0 warnings)
+[09:10:01.800] rive  showing Flamme [1/1]
+[09:10:01.800] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:01.837] rive  wrote /tmp/sortie/flamme_eteinte/c_01600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:01.930] rive  deferred replay: inline
+[09:10:01.972] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 42ms, 0 errors, 0 warnings)
+[09:10:01.972] rive  showing Flamme [1/1]
+[09:10:01.972] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:02.009] rive  wrote /tmp/sortie/flamme_eteinte/c_02100.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:02.102] rive  deferred replay: inline
+[09:10:02.144] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 41ms, 0 errors, 0 warnings)
+[09:10:02.145] rive  showing Flamme [1/1]
+[09:10:02.145] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:02.182] rive  wrote /tmp/sortie/flamme_eteinte/c_02600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:10:02.276] rive  deferred replay: inline
+[09:10:02.318] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 42ms, 0 errors, 0 warnings)
+[09:10:02.318] rive  showing Flamme [1/1]
+[09:10:02.319] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:02.356] rive  wrote /tmp/sortie/flamme_eteinte/c_03200.png

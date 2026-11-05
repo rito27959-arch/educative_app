@@ -1,0 +1,8 @@
+[09:09:47.932] rive  built rive/kunfox_splash/build/kunfox_splash.riv (3703 bytes, 32ms, 0 errors, 0 warnings)
+construction: 0
+total 36
+drwxr-xr-x  3 runner runner  4096 Nov  5 09:09 .
+drwxr-xr-x 11 runner runner  4096 Nov  5 09:09 ..
+drwxr-xr-x  2 runner runner  4096 Nov  5 09:09 build
+-rw-r--r--  1 runner runner    57 Nov  5 09:09 rive.yaml
+-rw-r--r--  1 runner runner 19238 Nov  5 09:09 scene.rml

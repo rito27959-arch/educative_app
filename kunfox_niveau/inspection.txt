@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "summary": true,
+  "problems": [],
+  "artboards": [
+    {"name": "Niveau", "objects": 817, "types": {"AnimationState": 2, "AnyState": 1, "Artboard": 1, "CubicEaseInterpolator": 109, "Ellipse": 2, "EntryState": 1, "ExitState": 1, "Fill": 33, "GradientStop": 30, "KeyFrameDouble": 341, "KeyedObject": 42, "KeyedProperty": 110, "LayoutComponentStyle": 1, "LinearAnimation": 2, "LinearGradient": 3, "Node": 4, "PointsPath": 12, "RadialGradient": 12, "Rectangle": 14, "Shape": 33, "SolidColor": 18, "Star": 5, "StateMachine": 1, "StateMachineLayer": 1, "StateTransition": 2, "StraightVertex": 36}}
+  ],
+  "events": [],
+  "roots": {"objects": 1, "types": {"Backboard": 1}}
+}

@@ -1,0 +1,8 @@
+[09:10:46.931] rive  built rive/apercus/mascotte_reflexion/build/mascotte_reflexion.riv (42540 bytes, 446ms, 0 errors, 0 warnings)
+construction: 0
+total 368
+drwxr-xr-x  3 runner runner   4096 Nov  5 09:10 .
+drwxr-xr-x 16 runner runner   4096 Nov  5 09:09 ..
+drwxr-xr-x  2 runner runner   4096 Nov  5 09:10 build
+-rw-r--r--  1 runner runner     25 Nov  5 09:09 rive.yaml
+-rw-r--r--  1 runner runner 357653 Nov  5 09:09 scene.rml

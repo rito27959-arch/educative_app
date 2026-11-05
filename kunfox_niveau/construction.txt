@@ -1,0 +1,8 @@
+[09:09:47.563] rive  built rive/kunfox_niveau/build/kunfox_niveau.riv (7906 bytes, 76ms, 0 errors, 0 warnings)
+construction: 0
+total 68
+drwxr-xr-x  3 runner runner  4096 Nov  5 09:09 .
+drwxr-xr-x 11 runner runner  4096 Nov  5 09:09 ..
+drwxr-xr-x  2 runner runner  4096 Nov  5 09:09 build
+-rw-r--r--  1 runner runner    20 Nov  5 09:09 rive.yaml
+-rw-r--r--  1 runner runner 49535 Nov  5 09:09 scene.rml

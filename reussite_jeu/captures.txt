@@ -1,0 +1,96 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:06.395] rive  deferred replay: inline
+[09:11:06.422] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 26ms, 0 errors, 0 warnings)
+[09:11:06.422] rive  showing Reussite [1/1]
+[09:11:06.422] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:06.465] rive  wrote /tmp/sortie/reussite_jeu/c_00000.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:06.560] rive  deferred replay: inline
+[09:11:06.587] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 27ms, 0 errors, 0 warnings)
+[09:11:06.588] rive  showing Reussite [1/1]
+[09:11:06.588] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:06.633] rive  wrote /tmp/sortie/reussite_jeu/c_00120.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:06.728] rive  deferred replay: inline
+[09:11:06.756] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 27ms, 0 errors, 0 warnings)
+[09:11:06.756] rive  showing Reussite [1/1]
+[09:11:06.756] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:06.805] rive  wrote /tmp/sortie/reussite_jeu/c_00250.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:06.900] rive  deferred replay: inline
+[09:11:06.927] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 27ms, 0 errors, 0 warnings)
+[09:11:06.927] rive  showing Reussite [1/1]
+[09:11:06.928] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:06.976] rive  wrote /tmp/sortie/reussite_jeu/c_00400.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:07.069] rive  deferred replay: inline
+[09:11:07.096] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 26ms, 0 errors, 0 warnings)
+[09:11:07.097] rive  showing Reussite [1/1]
+[09:11:07.097] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:07.145] rive  wrote /tmp/sortie/reussite_jeu/c_00550.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:07.239] rive  deferred replay: inline
+[09:11:07.266] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 26ms, 0 errors, 0 warnings)
+[09:11:07.266] rive  showing Reussite [1/1]
+[09:11:07.266] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:07.314] rive  wrote /tmp/sortie/reussite_jeu/c_00700.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:07.409] rive  deferred replay: inline
+[09:11:07.436] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 27ms, 0 errors, 0 warnings)
+[09:11:07.436] rive  showing Reussite [1/1]
+[09:11:07.436] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:07.483] rive  wrote /tmp/sortie/reussite_jeu/c_00900.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:07.577] rive  deferred replay: inline
+[09:11:07.604] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 27ms, 0 errors, 0 warnings)
+[09:11:07.604] rive  showing Reussite [1/1]
+[09:11:07.605] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:07.651] rive  wrote /tmp/sortie/reussite_jeu/c_01200.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:07.744] rive  deferred replay: inline
+[09:11:07.771] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 26ms, 0 errors, 0 warnings)
+[09:11:07.771] rive  showing Reussite [1/1]
+[09:11:07.772] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:07.817] rive  wrote /tmp/sortie/reussite_jeu/c_01600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:07.914] rive  deferred replay: inline
+[09:11:07.941] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 27ms, 0 errors, 0 warnings)
+[09:11:07.941] rive  showing Reussite [1/1]
+[09:11:07.942] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:07.987] rive  wrote /tmp/sortie/reussite_jeu/c_02100.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:08.081] rive  deferred replay: inline
+[09:11:08.108] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 27ms, 0 errors, 0 warnings)
+[09:11:08.109] rive  showing Reussite [1/1]
+[09:11:08.109] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:08.155] rive  wrote /tmp/sortie/reussite_jeu/c_02600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:11:08.249] rive  deferred replay: inline
+[09:11:08.276] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 26ms, 0 errors, 0 warnings)
+[09:11:08.276] rive  showing Reussite [1/1]
+[09:11:08.277] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:11:08.322] rive  wrote /tmp/sortie/reussite_jeu/c_03200.png

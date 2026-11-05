@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "summary": true,
+  "problems": [],
+  "artboards": [
+    {"name": "Coeur", "objects": 570, "types": {"AnimationState": 4, "AnyState": 1, "Artboard": 1, "CubicDetachedVertex": 22, "CubicEaseInterpolator": 59, "Ellipse": 1, "EntryState": 1, "ExitState": 1, "Fill": 13, "GradientStop": 6, "KeyFrameDouble": 229, "KeyedObject": 52, "KeyedProperty": 108, "LayoutComponentStyle": 1, "LinearAnimation": 4, "LinearGradient": 3, "Node": 5, "PointsPath": 5, "Shape": 14, "SolidColor": 12, "Star": 8, "StateMachine": 1, "StateMachineLayer": 1, "StateMachineNumber": 1, "StateTransition": 5, "StraightVertex": 8, "Stroke": 2, "TransitionNumberCondition": 2}}
+  ],
+  "events": [],
+  "roots": {"objects": 1, "types": {"Backboard": 1}}
+}

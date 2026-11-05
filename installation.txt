@@ -1,0 +1,21 @@
+Fetching https://releases.rive.app/cli/v1.8.0/manifest.json
+Downloading rive 1.8.0 (linux-x64)
+Installed rive 1.8.0 to /home/runner/.rive/bin/rive
+Version cache: /home/runner/.rive/versions/1.8.0/rive
+
+Add /home/runner/.rive/bin to your PATH:
+  export PATH="/home/runner/.rive/bin:$PATH"
+
+Watch mode needs libEGL, libGLESv2, and libX11 at runtime.
+--verify / --test do not.
+
+Get started:
+  rive create myproject   scaffold a project in ./myproject
+  rive myproject          preview it in a window, rebuilding on save
+  rive docs               documentation; new to Rive, start here
+  rive samples            runnable examples to copy from
+  rive --help             every command and flag
+  rive login              only for --publish, --rev and rive push
+
+For coding agents (Claude Code, Codex, Cursor and others):
+  npx skills add rive-app/skills

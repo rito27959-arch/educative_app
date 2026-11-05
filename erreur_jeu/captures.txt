@@ -1,0 +1,96 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:55.544] rive  deferred replay: inline
+[09:09:55.556] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 12ms, 0 errors, 0 warnings)
+[09:09:55.557] rive  showing Erreur [1/1]
+[09:09:55.557] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:55.704] rive  wrote /tmp/sortie/erreur_jeu/c_00000.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:55.799] rive  deferred replay: inline
+[09:09:55.811] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 11ms, 0 errors, 0 warnings)
+[09:09:55.811] rive  showing Erreur [1/1]
+[09:09:55.811] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:55.856] rive  wrote /tmp/sortie/erreur_jeu/c_00120.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:55.950] rive  deferred replay: inline
+[09:09:55.962] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 11ms, 0 errors, 0 warnings)
+[09:09:55.962] rive  showing Erreur [1/1]
+[09:09:55.963] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:56.009] rive  wrote /tmp/sortie/erreur_jeu/c_00250.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:56.103] rive  deferred replay: inline
+[09:09:56.115] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 11ms, 0 errors, 0 warnings)
+[09:09:56.115] rive  showing Erreur [1/1]
+[09:09:56.116] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:56.364] rive  wrote /tmp/sortie/erreur_jeu/c_00400.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:56.458] rive  deferred replay: inline
+[09:09:56.470] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 11ms, 0 errors, 0 warnings)
+[09:09:56.470] rive  showing Erreur [1/1]
+[09:09:56.470] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:56.517] rive  wrote /tmp/sortie/erreur_jeu/c_00550.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:56.610] rive  deferred replay: inline
+[09:09:56.622] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 11ms, 0 errors, 0 warnings)
+[09:09:56.622] rive  showing Erreur [1/1]
+[09:09:56.623] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:56.669] rive  wrote /tmp/sortie/erreur_jeu/c_00700.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:56.763] rive  deferred replay: inline
+[09:09:56.775] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 11ms, 0 errors, 0 warnings)
+[09:09:56.775] rive  showing Erreur [1/1]
+[09:09:56.775] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:56.820] rive  wrote /tmp/sortie/erreur_jeu/c_00900.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:56.914] rive  deferred replay: inline
+[09:09:56.926] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 11ms, 0 errors, 0 warnings)
+[09:09:56.926] rive  showing Erreur [1/1]
+[09:09:56.926] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:56.971] rive  wrote /tmp/sortie/erreur_jeu/c_01200.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:57.064] rive  deferred replay: inline
+[09:09:57.076] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 11ms, 0 errors, 0 warnings)
+[09:09:57.076] rive  showing Erreur [1/1]
+[09:09:57.077] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:57.122] rive  wrote /tmp/sortie/erreur_jeu/c_01600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:57.216] rive  deferred replay: inline
+[09:09:57.228] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 11ms, 0 errors, 0 warnings)
+[09:09:57.228] rive  showing Erreur [1/1]
+[09:09:57.228] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:57.273] rive  wrote /tmp/sortie/erreur_jeu/c_02100.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:57.367] rive  deferred replay: inline
+[09:09:57.379] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 11ms, 0 errors, 0 warnings)
+[09:09:57.379] rive  showing Erreur [1/1]
+[09:09:57.379] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:57.425] rive  wrote /tmp/sortie/erreur_jeu/c_02600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:57.518] rive  deferred replay: inline
+[09:09:57.530] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 11ms, 0 errors, 0 warnings)
+[09:09:57.530] rive  showing Erreur [1/1]
+[09:09:57.530] rive  viewport 400x400 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:57.575] rive  wrote /tmp/sortie/erreur_jeu/c_03200.png

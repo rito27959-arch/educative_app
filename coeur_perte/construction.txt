@@ -1,0 +1,8 @@
+[09:09:48.170] rive  built rive/apercus/coeur_perte/build/coeur_perte.riv (5171 bytes, 51ms, 0 errors, 0 warnings)
+construction: 0
+total 52
+drwxr-xr-x  3 runner runner  4096 Nov  5 09:09 .
+drwxr-xr-x 16 runner runner  4096 Nov  5 09:09 ..
+drwxr-xr-x  2 runner runner  4096 Nov  5 09:09 build
+-rw-r--r--  1 runner runner    18 Nov  5 09:09 rive.yaml
+-rw-r--r--  1 runner runner 35451 Nov  5 09:09 scene.rml

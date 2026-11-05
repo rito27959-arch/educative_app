@@ -1,0 +1,96 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:57.884] rive  deferred replay: inline
+[09:09:57.926] rive  built rive/apercus/flamme_allumage/build/flamme_allumage.riv (4411 bytes, 41ms, 0 errors, 0 warnings)
+[09:09:57.926] rive  showing Flamme [1/1]
+[09:09:57.926] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:57.963] rive  wrote /tmp/sortie/flamme_allumage/c_00000.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:58.055] rive  deferred replay: inline
+[09:09:58.097] rive  built rive/apercus/flamme_allumage/build/flamme_allumage.riv (4411 bytes, 42ms, 0 errors, 0 warnings)
+[09:09:58.098] rive  showing Flamme [1/1]
+[09:09:58.098] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:58.135] rive  wrote /tmp/sortie/flamme_allumage/c_00120.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:58.228] rive  deferred replay: inline
+[09:09:58.270] rive  built rive/apercus/flamme_allumage/build/flamme_allumage.riv (4411 bytes, 41ms, 0 errors, 0 warnings)
+[09:09:58.270] rive  showing Flamme [1/1]
+[09:09:58.270] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:58.327] rive  wrote /tmp/sortie/flamme_allumage/c_00250.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:58.420] rive  deferred replay: inline
+[09:09:58.462] rive  built rive/apercus/flamme_allumage/build/flamme_allumage.riv (4411 bytes, 41ms, 0 errors, 0 warnings)
+[09:09:58.462] rive  showing Flamme [1/1]
+[09:09:58.463] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:58.517] rive  wrote /tmp/sortie/flamme_allumage/c_00400.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:58.611] rive  deferred replay: inline
+[09:09:58.653] rive  built rive/apercus/flamme_allumage/build/flamme_allumage.riv (4411 bytes, 42ms, 0 errors, 0 warnings)
+[09:09:58.653] rive  showing Flamme [1/1]
+[09:09:58.654] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:58.711] rive  wrote /tmp/sortie/flamme_allumage/c_00550.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:58.806] rive  deferred replay: inline
+[09:09:58.847] rive  built rive/apercus/flamme_allumage/build/flamme_allumage.riv (4411 bytes, 41ms, 0 errors, 0 warnings)
+[09:09:58.848] rive  showing Flamme [1/1]
+[09:09:58.848] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:58.907] rive  wrote /tmp/sortie/flamme_allumage/c_00700.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:59.000] rive  deferred replay: inline
+[09:09:59.042] rive  built rive/apercus/flamme_allumage/build/flamme_allumage.riv (4411 bytes, 41ms, 0 errors, 0 warnings)
+[09:09:59.042] rive  showing Flamme [1/1]
+[09:09:59.043] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:59.099] rive  wrote /tmp/sortie/flamme_allumage/c_00900.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:59.191] rive  deferred replay: inline
+[09:09:59.233] rive  built rive/apercus/flamme_allumage/build/flamme_allumage.riv (4411 bytes, 41ms, 0 errors, 0 warnings)
+[09:09:59.233] rive  showing Flamme [1/1]
+[09:09:59.234] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:59.289] rive  wrote /tmp/sortie/flamme_allumage/c_01200.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:59.381] rive  deferred replay: inline
+[09:09:59.423] rive  built rive/apercus/flamme_allumage/build/flamme_allumage.riv (4411 bytes, 41ms, 0 errors, 0 warnings)
+[09:09:59.423] rive  showing Flamme [1/1]
+[09:09:59.424] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:59.479] rive  wrote /tmp/sortie/flamme_allumage/c_01600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:59.571] rive  deferred replay: inline
+[09:09:59.613] rive  built rive/apercus/flamme_allumage/build/flamme_allumage.riv (4411 bytes, 42ms, 0 errors, 0 warnings)
+[09:09:59.613] rive  showing Flamme [1/1]
+[09:09:59.614] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:59.670] rive  wrote /tmp/sortie/flamme_allumage/c_02100.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:59.764] rive  deferred replay: inline
+[09:09:59.806] rive  built rive/apercus/flamme_allumage/build/flamme_allumage.riv (4411 bytes, 41ms, 0 errors, 0 warnings)
+[09:09:59.806] rive  showing Flamme [1/1]
+[09:09:59.807] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:09:59.862] rive  wrote /tmp/sortie/flamme_allumage/c_02600.png
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+[egl] using EGL_PLATFORM_DEVICE_EXT (1 device)
+[09:09:59.955] rive  deferred replay: inline
+[09:09:59.997] rive  built rive/apercus/flamme_allumage/build/flamme_allumage.riv (4411 bytes, 41ms, 0 errors, 0 warnings)
+[09:09:59.997] rive  showing Flamme [1/1]
+[09:09:59.998] rive  viewport 300x340 @1x
+rive: no interlock mode supports this frame, drawing it in depthStencil with 4x MSAA
+[09:10:00.054] rive  wrote /tmp/sortie/flamme_allumage/c_03200.png

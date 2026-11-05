@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "summary": true,
+  "problems": [],
+  "artboards": [
+    {"name": "Flamme", "objects": 441, "types": {"AnimationState": 3, "AnyState": 1, "Artboard": 1, "CubicDetachedVertex": 24, "CubicEaseInterpolator": 60, "Ellipse": 6, "EntryState": 1, "ExitState": 1, "Fill": 11, "GradientStop": 9, "KeyFrameDouble": 185, "KeyedObject": 30, "KeyedProperty": 61, "LayoutComponentStyle": 1, "LinearAnimation": 3, "LinearGradient": 3, "Node": 6, "PointsPath": 4, "RadialGradient": 1, "Shape": 11, "SolidColor": 8, "Star": 1, "StateMachine": 1, "StateMachineLayer": 1, "StateMachineNumber": 1, "StateTransition": 4, "Stroke": 1, "TransitionNumberCondition": 2}}
+  ],
+  "events": [],
+  "roots": {"objects": 1, "types": {"Backboard": 1}}
+}

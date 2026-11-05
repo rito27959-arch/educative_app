@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "summary": true,
+  "problems": [],
+  "artboards": [
+    {"name": "Reussite", "objects": 270, "types": {"AnimationState": 1, "AnyState": 1, "Artboard": 1, "CubicDetachedVertex": 2, "CubicEaseInterpolator": 31, "Ellipse": 12, "EntryState": 1, "ExitState": 1, "Fill": 12, "GradientStop": 2, "KeyFrameDouble": 112, "KeyedObject": 13, "KeyedProperty": 36, "LayoutComponentStyle": 1, "LinearAnimation": 1, "LinearGradient": 1, "Node": 2, "PointsPath": 2, "Shape": 14, "SolidColor": 14, "StateMachine": 1, "StateMachineLayer": 1, "StateTransition": 1, "StraightVertex": 3, "Stroke": 3, "TrimPath": 1}}
+  ],
+  "events": [],
+  "roots": {"objects": 1, "types": {"Backboard": 1}}
+}

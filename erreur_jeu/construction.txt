@@ -1,0 +1,8 @@
+[09:09:55.447] rive  built rive/apercus/erreur_jeu/build/erreur_jeu.riv (1155 bytes, 11ms, 0 errors, 0 warnings)
+construction: 0
+total 24
+drwxr-xr-x  3 runner runner 4096 Nov  5 09:09 .
+drwxr-xr-x 16 runner runner 4096 Nov  5 09:09 ..
+drwxr-xr-x  2 runner runner 4096 Nov  5 09:09 build
+-rw-r--r--  1 runner runner   17 Nov  5 09:09 rive.yaml
+-rw-r--r--  1 runner runner 6196 Nov  5 09:09 scene.rml

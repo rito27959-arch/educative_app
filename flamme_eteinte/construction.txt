@@ -1,0 +1,8 @@
+[09:10:00.270] rive  built rive/apercus/flamme_eteinte/build/flamme_eteinte.riv (4405 bytes, 44ms, 0 errors, 0 warnings)
+construction: 0
+total 44
+drwxr-xr-x  3 runner runner  4096 Nov  5 09:10 .
+drwxr-xr-x 16 runner runner  4096 Nov  5 09:09 ..
+drwxr-xr-x  2 runner runner  4096 Nov  5 09:10 build
+-rw-r--r--  1 runner runner    21 Nov  5 09:09 rive.yaml
+-rw-r--r--  1 runner runner 28468 Nov  5 09:09 scene.rml

@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "summary": true,
+  "problems": [],
+  "artboards": [
+    {"name": "Kunfox", "objects": 5608, "types": {"AnimationState": 15, "AnyState": 4, "Artboard": 1, "CubicDetachedVertex": 93, "CubicEaseInterpolator": 1264, "Ellipse": 14, "EntryState": 4, "ExitState": 4, "Fill": 54, "GradientStop": 6, "KeyFrameDouble": 2258, "KeyedObject": 393, "KeyedProperty": 1122, "LayoutComponentStyle": 1, "LinearAnimation": 15, "LinearGradient": 3, "Node": 22, "PointsPath": 29, "Rectangle": 10, "Shape": 59, "SolidColor": 56, "Star": 6, "StateMachine": 1, "StateMachineLayer": 4, "StateMachineNumber": 2, "StateTransition": 73, "StraightVertex": 22, "Stroke": 5, "TransitionNumberCondition": 68}}
+  ],
+  "events": [],
+  "roots": {"objects": 1, "types": {"Backboard": 1}}
+}

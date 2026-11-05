@@ -1,0 +1,8 @@
+[09:11:06.300] rive  built rive/apercus/reussite_jeu/build/reussite_jeu.riv (2922 bytes, 26ms, 0 errors, 0 warnings)
+construction: 0
+total 32
+drwxr-xr-x  3 runner runner  4096 Nov  5 09:11 .
+drwxr-xr-x 16 runner runner  4096 Nov  5 09:09 ..
+drwxr-xr-x  2 runner runner  4096 Nov  5 09:11 build
+-rw-r--r--  1 runner runner    19 Nov  5 09:09 rive.yaml
+-rw-r--r--  1 runner runner 16154 Nov  5 09:09 scene.rml
