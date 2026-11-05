@@ -44,8 +44,11 @@ jobs:
             n=$(basename $p); mkdir -p /tmp/sortie/$n
             rive inspect $p --summary > /tmp/sortie/$n/inspection.txt 2>&1
             rive $p --verify > /tmp/sortie/$n/verification.txt 2>&1; echo "verif: $?" >> /tmp/sortie/$n/verification.txt
-            rive $p --once > /tmp/sortie/$n/construction.txt 2>&1; echo "construction: $?" >> /tmp/sortie/$n/construction.txt
-            cp $p/build/*.riv /tmp/sortie/$n/ 2>/dev/null
+            # la CLI récente remplace --once par --publish (qui écrit le .riv)
+            (cd $p && rive . --publish) > /tmp/sortie/$n/construction.txt 2>&1; echo "construction: $?" >> /tmp/sortie/$n/construction.txt
+            find $p -name '*.riv' -newer $p/scene.rml -exec cp {} /tmp/sortie/$n/ \; 2>/dev/null
+            find . -maxdepth 2 -name '*.riv' -newer $p/scene.rml -exec cp {} /tmp/sortie/$n/ \; 2>/dev/null
+            ls -la $p >> /tmp/sortie/$n/construction.txt
             case $n in kunfox_*) continue;; esac
             for ms in 0 120 250 400 550 700 900 1200 1600 2100 2600 3200; do
               rive $p --screenshot=/tmp/sortie/$n/c_$(printf %05d $ms).png --advance=${ms}ms >> /tmp/sortie/$n/captures.txt 2>&1
