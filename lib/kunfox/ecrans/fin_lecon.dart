@@ -22,6 +22,7 @@ import '../../core/services/storage_service.dart';
 import '../donnees/progression.dart';
 import '../donnees/rappels.dart';
 import '../flame/effets_flame.dart';
+import '../pub/publicites.dart';
 import '../theme/palette.dart';
 
 class FinLeconEcran extends ConsumerStatefulWidget {
@@ -36,6 +37,7 @@ class _FinLeconEcranState extends ConsumerState<FinLeconEcran> with TickerProvid
   final _confettis = ConfettisControleur();
   late final AnimationController _entree = AnimationController(vsync: this, duration: const Duration(milliseconds: 1600))..forward();
   bool _serie = false;
+  bool _xpDouble = false;
 
   @override
   void initState() {
@@ -61,7 +63,19 @@ class _FinLeconEcranState extends ConsumerState<FinLeconEcran> with TickerProvid
     // Après la toute première leçon : Kunfox demande s'il peut rappeler
     // l'élève — au moment où l'envie est là, pas au lancement de l'app.
     if (!Rappels.demandeFaite) await _proposerRappels();
+    // Pub plein écran éventuelle, en quittant (jamais au milieu d'un effort).
+    await Publicites.apresLecon(premiereDuJour: widget.bilan.premiereDuJour);
     if (mounted) context.go('/k');
+  }
+
+  Future<void> _doublerXp() async {
+    final gagne = await Publicites.regarderPourRecompense();
+    if (!gagne || !mounted) return;
+    ref.read(progressionProvider.notifier).bonusXp(widget.bilan.xp);
+    setState(() => _xpDouble = true);
+    HapticFeedback.mediumImpact();
+    Sons.jouer(Son.juste);
+    _confettis.pluie(nombre: 60);
   }
 
   void _partager() {
@@ -187,7 +201,14 @@ class _FinLeconEcranState extends ConsumerState<FinLeconEcran> with TickerProvid
                             child: _Apparait(
                               controleur: _entree,
                               debut: 0.3,
-                              child: _Carte(titre: 'XP GAGNÉS', couleur: p.or, valeur: b.xp, format: (v) => '$v', icone: Icons.bolt_rounded),
+                              child: _Carte(
+                                key: ValueKey(_xpDouble),
+                                titre: _xpDouble ? 'XP DOUBLÉS' : 'XP GAGNÉS',
+                                couleur: p.or,
+                                valeur: _xpDouble ? b.xp * 2 : b.xp,
+                                format: (v) => '$v',
+                                icone: Icons.bolt_rounded,
+                              ),
                             ),
                           ),
                           const SizedBox(width: 10),
@@ -220,6 +241,22 @@ class _FinLeconEcranState extends ConsumerState<FinLeconEcran> with TickerProvid
                           ),
                         ]),
                         const Spacer(),
+                        if (Publicites.configurees && !_xpDouble)
+                          ValueListenableBuilder<bool>(
+                            valueListenable: Publicites.recompensePrete,
+                            builder: (_, prete, _) => !prete
+                                ? const SizedBox.shrink()
+                                : Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: BoutonKunfox(
+                                      libelle: 'Doubler mes XP (+${b.xp}) avec une pub',
+                                      icone: Icons.play_circle_fill_rounded,
+                                      couleur: p.or,
+                                      contour: true,
+                                      surAppui: _doublerXp,
+                                    ),
+                                  ),
+                          ),
                         Row(children: [
                           BoutonKunfox(
                             libelle: '',
@@ -266,7 +303,7 @@ class _Apparait extends StatelessWidget {
 
 /// Carte de chiffre : le nombre compte depuis zéro.
 class _Carte extends StatelessWidget {
-  const _Carte({required this.titre, required this.couleur, required this.valeur, required this.format, required this.icone});
+  const _Carte({super.key, required this.titre, required this.couleur, required this.valeur, required this.format, required this.icone});
   final String titre;
   final Color couleur;
   final int valeur;

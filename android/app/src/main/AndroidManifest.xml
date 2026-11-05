@@ -77,6 +77,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:usesCleartextTraffic="true">
 
+        <!-- Identifiant d'app AdMob : vient de la variable ADMOB_APP_ID à
+             la construction ; à défaut, celui de test de Google (les pubs
+             restent alors éteintes côté Dart). -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="${admobAppId}" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -32,6 +32,7 @@ import '../theme/palette.dart';
 import '../riche/contenu_riche.dart';
 import '../riche/illustrations.dart';
 import '../donnees/duels.dart';
+import '../pub/publicites.dart';
 import 'duel.dart' show FantomeDuel;
 
 sealed class _Etape {}
@@ -287,6 +288,28 @@ class _SeanceEcranState extends ConsumerState<SeanceEcran> {
             Text('Révise ce que tu as déjà vu pour regagner un cœur, ou reviens dans 30 minutes.',
                 textAlign: TextAlign.center, style: TextStyle(color: p.doux, fontWeight: FontWeight.w600, height: 1.4)),
             const SizedBox(height: 20),
+            // Comme chez Duolingo : une courte pub, au choix, rend un cœur
+            // et la leçon continue là où elle s'était arrêtée.
+            if (Publicites.configurees) ...[
+              ValueListenableBuilder<bool>(
+                valueListenable: Publicites.recompensePrete,
+                builder: (_, prete, _) => BoutonKunfox(
+                  libelle: prete ? 'Regarder une pub : +1 cœur' : 'Pub en chargement…',
+                  icone: Icons.play_circle_fill_rounded,
+                  couleur: p.or,
+                  surAppui: !prete
+                      ? null
+                      : () async {
+                          final gagne = await Publicites.regarderPourRecompense();
+                          if (!gagne || !mounted) return;
+                          ref.read(progressionProvider.notifier).gagnerCoeur();
+                          if (ctx.mounted) Navigator.of(ctx).pop();
+                          _continuer();
+                        },
+                ),
+              ),
+              const SizedBox(height: 10),
+            ],
             BoutonKunfox(
               libelle: 'Réviser pour un cœur',
               couleur: p.info,

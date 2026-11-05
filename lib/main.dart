@@ -18,6 +18,7 @@ import 'core/providers/courses_provider.dart';
 import 'kunfox/donnees/compte_droplet.dart';
 import 'kunfox/donnees/progression.dart';
 import 'kunfox/donnees/rappels.dart';
+import 'kunfox/pub/publicites.dart';
 import 'kunfox/donnees/matieres.dart';
 import 'kunfox/theme/kunfox_theme.dart';
 import 'shared/widgets/mesh_toast.dart';
@@ -98,6 +99,10 @@ Future<void> _runApp() async {
       ),
     ),
   );
+  // Les pubs se préparent en arrière-plan, après l'affichage : elles ne
+  // retardent jamais l'ouverture de l'app (et restent éteintes sans
+  // identifiants AdMob).
+  unawaited(Publicites.initialiser());
 }
 
 class ErrorBoundary extends StatefulWidget {

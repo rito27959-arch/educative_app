@@ -36,6 +36,11 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // AdMob : l'identifiant d'app réel arrive par la variable
+        // d'environnement ADMOB_APP_ID (voir publier-kunfox.yml).
+        manifestPlaceholders["admobAppId"] =
+            System.getenv("ADMOB_APP_ID")?.takeIf { it.isNotBlank() }
+                ?: "ca-app-pub-3940256099942544~3347511713"
     }
 
     signingConfigs {

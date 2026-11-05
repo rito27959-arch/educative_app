@@ -254,6 +254,14 @@ class ProgressionNotifier extends StateNotifier<Progression> {
     _ecrire(n >= kCoeursMax ? state.copyWith(coeurs: n, effacerCoeurPerdu: true) : state.copyWith(coeurs: n));
   }
 
+  /// XP en plus (par exemple « doubler mes XP » après une pub récompensée).
+  void bonusXp(int n) {
+    if (n <= 0) return;
+    final p = state;
+    final auj = jourDe(DateTime.now());
+    _ecrire(p.copyWith(xp: p.xp + n, xpParJour: {...p.xpParJour, auj: (p.xpParJour[auj] ?? 0) + n}));
+  }
+
   /// Enregistre une leçon (ou une révision si [leconId] est null).
   BilanLecon terminer({
     required String? leconId,

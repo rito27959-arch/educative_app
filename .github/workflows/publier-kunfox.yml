@@ -75,7 +75,13 @@ jobs:
           flutter pub get
           # le journal de construction est publié même en cas d'échec (sans secrets)
           set +e
-          flutter build apk --release --split-per-abi --build-name "$V" --build-number "$N" > /tmp/construction.txt 2>&1
+          # Pubs AdMob : identifiants rangés dans les « variables » du dépôt
+          # (Settings → Secrets and variables → Actions → Variables).
+          # Vides : l'app se construit sans pub.
+          export ADMOB_APP_ID="${{ vars.ADMOB_APP_ID }}"
+          flutter build apk --release --split-per-abi --build-name "$V" --build-number "$N" \
+            --dart-define=ADMOB_INTERSTITIEL="${{ vars.ADMOB_INTERSTITIEL }}" \
+            --dart-define=ADMOB_RECOMPENSE="${{ vars.ADMOB_RECOMPENSE }}" > /tmp/construction.txt 2>&1
           code=$?
           set -e
           tail -80 /tmp/construction.txt
