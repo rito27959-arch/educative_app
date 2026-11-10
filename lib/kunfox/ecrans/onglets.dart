@@ -405,6 +405,13 @@ class _Profil extends ConsumerWidget {
         chiffre(Icons.emoji_events_rounded, p.info, '${prog.meilleureSerie}', 'meilleure série'),
       ]),
       const SizedBox(height: 20),
+      // Kabi, de la couleur que l'élève préfère.
+      Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(color: p.surface, borderRadius: BorderRadius.circular(18), border: Border.all(color: p.bord, width: 2)),
+        child: ChoixCouleurKabi(couleurTexte: p.doux, couleurBord: p.bord),
+      ),
+      const SizedBox(height: 20),
       Text('Cette semaine', style: Theme.of(context).textTheme.titleLarge),
       const SizedBox(height: 10),
       Container(
@@ -445,7 +452,7 @@ class _Profil extends ConsumerWidget {
           SwitchListTile(
             value: reglages.darkMode,
             onChanged: (_) => ref.read(settingsProvider.notifier).toggleDarkMode(),
-            title: const Text('Nuit de renard (thème sombre)'),
+            title: const Text('Thème sombre'),
             secondary: Icon(Icons.dark_mode_rounded, color: p.doux),
             activeThumbColor: p.prim,
           ),

@@ -1,3 +1,4 @@
+import 'shared/widgets/kunfox/kunfox_rive.dart';
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
@@ -67,6 +68,7 @@ Future<void> _runApp() async {
 
   try {
     await StorageService.init();
+    ChoixKabi.relire();
     await CompteDroplet.charger();
     try {
       await Rappels.initialiser();

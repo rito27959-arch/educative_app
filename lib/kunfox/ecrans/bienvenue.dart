@@ -222,6 +222,11 @@ class _BienvenueEcranState extends ConsumerState<BienvenueEcran> {
           Text('Révise ton BAC, cinq minutes par jour.\nEt progresse pour de vrai.',
               textAlign: TextAlign.center,
               style: TextStyle(color: p.doux, fontWeight: FontWeight.w600, fontSize: 17, height: 1.4)),
+          const SizedBox(height: 18),
+          // Kabi, de la couleur qu'on veut : il change sous nos yeux.
+          Text('Choisis la couleur de Kabi', style: TextStyle(color: p.doux, fontWeight: FontWeight.w700, fontSize: 13)),
+          const SizedBox(height: 8),
+          ChoixCouleurKabi(couleurTexte: p.texte, couleurBord: p.bord, pastillesSeules: true),
           const Spacer(),
           BoutonKunfox(libelle: 'C\'est parti', surAppui: _suivant),
           const SizedBox(height: 12),

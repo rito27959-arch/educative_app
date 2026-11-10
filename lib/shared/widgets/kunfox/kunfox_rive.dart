@@ -4,7 +4,7 @@
 // Les fichiers .riv sont construits avec la Rive CLI depuis rive/ (dépôt,
 // branche rive-splash) par rive/outils/generer_mascotte.py et generer_effets.py.
 //
-//   KunfoxMascotte(humeur: HumeurKunfox.joie)     machine « Kunfox », nombre `humeur`
+//   KunfoxMascotte(humeur: HumeurKunfox.joie)     Kabi (kabi.riv), machine « Kabi »
 //   KunfoxFlamme(allumee: true)                   machine « Flamme », nombre `allumee`
 //   KunfoxCoeur(perdu: false)                     machine « Coeur », nombre `vide`
 //   KunfoxEffet.reussite() / .erreur() / .niveau() jouent une fois
@@ -16,7 +16,10 @@
 // ============================================================================
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
+
+import '../../../core/services/storage_service.dart';
 
 enum HumeurKunfox { attente, joie, courage, reflexion, fete, salut, dodo }
 
@@ -120,37 +123,264 @@ class _RiveNombreState extends State<_RiveNombre> {
   }
 }
 
-/// Le renard Kunfox, avec son humeur du moment.
-class KunfoxMascotte extends StatelessWidget {
-  const KunfoxMascotte({super.key, this.humeur = HumeurKunfox.attente, this.taille = 180, this.regard = RegardKunfox.centre});
+/// Les couleurs de Kabi (même ordre que l'entrée `color` de kabi.riv).
+enum CouleurKabi {
+  noir('Noir', Color(0xFF1F1F1F)),
+  bleu('Bleu', Color(0xFF2F5FD6)),
+  rouge('Rouge', Color(0xFFCF3434)),
+  rose('Rose', Color(0xFFEF77A8)),
+  vert('Vert', Color(0xFF2A9A64)),
+  violet('Violet', Color(0xFF6A4BD0)),
+  orange('Orange', Color(0xFFF07B2B)),
+  marron('Marron', Color(0xFF7A4A2A));
+
+  const CouleurKabi(this.nom, this.teinte);
+  final String nom;
+  final Color teinte;
+}
+
+/// La couleur de Kabi choisie par l'élève (Profil), gardée sur le téléphone.
+class ChoixKabi {
+  ChoixKabi._();
+
+  static const _cle = 'kunfox.kabi.couleur';
+
+  static final ValueNotifier<CouleurKabi> couleur = ValueNotifier(_lire());
+
+  static CouleurKabi _lire() {
+    final i = int.tryParse(StorageService.getString(_cle) ?? '');
+    if (i == null || i < 0 || i >= CouleurKabi.values.length) return CouleurKabi.orange;
+    return CouleurKabi.values[i];
+  }
+
+  /// À appeler une fois le stockage prêt (la valeur lue au démarrage peut
+  /// précéder son chargement).
+  static void relire() => couleur.value = _lire();
+
+  static void choisir(CouleurKabi c) {
+    couleur.value = c;
+    StorageService.setString(_cle, '${c.index}');
+  }
+}
+
+/// KABI, la mascotte de Kunfox (assets/rive/kabi.riv, machine « Kabi ») :
+/// chaque humeur devient une pose et une expression du fichier, le regard
+/// suit la question (entrées `lookX` / `lookY`, de −100 à 100), la couleur
+/// est celle que l'élève a choisie. Un toucher le fait réagir (`poke`).
+///
+/// Si le fichier ne se lit pas (vieux moteur Rive), l'ancienne mascotte
+/// s'affiche à la place : jamais de trou dans l'écran.
+class KunfoxMascotte extends StatefulWidget {
+  const KunfoxMascotte({super.key, this.humeur = HumeurKunfox.attente, this.taille = 180, this.regard = RegardKunfox.centre, this.couleur});
 
   final HumeurKunfox humeur;
   final double taille;
 
-  /// Où Kunfox pose les yeux (couche « Regard » du fichier Rive).
+  /// Où Kabi pose les yeux.
   final RegardKunfox regard;
 
+  /// Une couleur imposée (aperçu du choix) ; sinon celle de l'élève.
+  final CouleurKabi? couleur;
+
   static const _libelles = {
-    HumeurKunfox.attente: 'Kunfox te regarde',
-    HumeurKunfox.joie: 'Kunfox saute de joie',
-    HumeurKunfox.courage: 'Kunfox t\'encourage',
-    HumeurKunfox.reflexion: 'Kunfox réfléchit',
-    HumeurKunfox.fete: 'Kunfox fait la fête',
-    HumeurKunfox.salut: 'Kunfox te salue',
-    HumeurKunfox.dodo: 'Kunfox dort',
+    HumeurKunfox.attente: 'Kabi te regarde',
+    HumeurKunfox.joie: 'Kabi saute de joie',
+    HumeurKunfox.courage: 'Kabi t\'encourage',
+    HumeurKunfox.reflexion: 'Kabi réfléchit',
+    HumeurKunfox.fete: 'Kabi fait la fête',
+    HumeurKunfox.salut: 'Kabi te salue',
+    HumeurKunfox.dodo: 'Kabi dort',
+  };
+
+  /// Pose et expression de kabi.riv pour chaque humeur.
+  /// Poses : 0 repos, 1 coucou, 7 victoire, 9 dodo, 19 réflexion,
+  /// 24 applaudit, 27 poing levé. Expressions : 0 neutre, 1 joie,
+  /// 2 détermination, 6 sommeil, 7 fierté.
+  static const _poses = {
+    HumeurKunfox.attente: (0, 0),
+    HumeurKunfox.joie: (7, 1),
+    HumeurKunfox.courage: (27, 2),
+    HumeurKunfox.reflexion: (19, 0),
+    HumeurKunfox.fete: (24, 7),
+    HumeurKunfox.salut: (1, 1),
+    HumeurKunfox.dodo: (9, 6),
+  };
+
+  static const _regards = {
+    RegardKunfox.centre: (0.0, 0.0),
+    RegardKunfox.gauche: (-80.0, 0.0),
+    RegardKunfox.droite: (80.0, 0.0),
+    RegardKunfox.bas: (0.0, 80.0),
+    RegardKunfox.haut: (0.0, -80.0),
   };
 
   @override
-  Widget build(BuildContext context) => _RiveNombre(
+  State<KunfoxMascotte> createState() => _KunfoxMascotteState();
+}
+
+class _KunfoxMascotteState extends State<KunfoxMascotte> {
+  static Future<RiveFile>? _fichier;
+  static bool _illisible = false;
+
+  Artboard? _artboard;
+  StateMachineController? _controleur;
+  final Map<String, SMINumber> _nombres = {};
+  SMITrigger? _poke, _saut, _coucou;
+
+  @override
+  void initState() {
+    super.initState();
+    ChoixKabi.couleur.addListener(_appliquer);
+    if (!_illisible) _charger();
+  }
+
+  Future<void> _charger() async {
+    try {
+      final f = await (_fichier ??= RiveFile.asset('assets/rive/kabi.riv'));
+      if (!mounted) return;
+      final a = f.mainArtboard.instance();
+      final c = StateMachineController.fromArtboard(a, 'Kabi');
+      if (c == null) throw StateError('machine « Kabi » absente');
+      a.addController(c);
+      for (final n in ['pose', 'mood', 'color', 'lookX', 'lookY']) {
+        final e = c.findInput<double>(n);
+        if (e is SMINumber) _nombres[n] = e;
+      }
+      // Kabi sans lunettes de soleil : on veut voir ses yeux suivre la question.
+      final lunettes = c.findInput<bool>('glasses');
+      if (lunettes is SMIBool) lunettes.value = false;
+      final poke = c.findInput<bool>('poke');
+      final saut = c.findInput<bool>('jump');
+      final coucou = c.findInput<bool>('hi');
+      if (poke is SMITrigger) _poke = poke;
+      if (saut is SMITrigger) _saut = saut;
+      if (coucou is SMITrigger) _coucou = coucou;
+      if (MediaQuery.maybeOf(context)?.disableAnimations ?? false) c.isActive = false;
+      _controleur = c;
+      _artboard = a;
+      _appliquer();
+      setState(() {});
+    } catch (e) {
+      debugPrint('[Kunfox] kabi.riv : $e');
+      _illisible = true;
+      if (mounted) setState(() {});
+    }
+  }
+
+  void _appliquer() {
+    final (pose, mood) = KunfoxMascotte._poses[widget.humeur]!;
+    final (x, y) = KunfoxMascotte._regards[widget.regard]!;
+    _nombres['pose']?.value = pose.toDouble();
+    _nombres['mood']?.value = mood.toDouble();
+    _nombres['color']?.value = (widget.couleur ?? ChoixKabi.couleur.value).index.toDouble();
+    _nombres['lookX']?.value = x;
+    _nombres['lookY']?.value = y;
+  }
+
+  @override
+  void didUpdateWidget(covariant KunfoxMascotte ancien) {
+    super.didUpdateWidget(ancien);
+    _appliquer();
+    if (ancien.humeur != widget.humeur) {
+      if (widget.humeur == HumeurKunfox.joie || widget.humeur == HumeurKunfox.fete) _saut?.fire();
+      if (widget.humeur == HumeurKunfox.salut) _coucou?.fire();
+    }
+  }
+
+  @override
+  void dispose() {
+    ChoixKabi.couleur.removeListener(_appliquer);
+    _controleur?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_illisible) {
+      return _RiveNombre(
         fichier: 'assets/rive/kunfox_mascotte.riv',
         machine: 'Kunfox',
         entree: 'humeur',
-        valeur: humeur.index.toDouble(),
-        // l'artboard fait 600 × 700
-        taille: Size(taille, taille * 7 / 6),
-        semantique: _libelles[humeur]!,
-        autres: {'regard': regard.index.toDouble()},
+        valeur: widget.humeur.index.toDouble(),
+        taille: Size(widget.taille, widget.taille * 7 / 6),
+        semantique: KunfoxMascotte._libelles[widget.humeur]!,
+        autres: {'regard': widget.regard.index.toDouble()},
       );
+    }
+    final a = _artboard;
+    return Semantics(
+      label: KunfoxMascotte._libelles[widget.humeur]!,
+      image: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () => _poke?.fire(),
+        child: SizedBox(
+          // l'artboard de Kabi fait 1000 × 1200
+          width: widget.taille,
+          height: widget.taille * 1.2,
+          child: a == null ? null : Rive(artboard: a, fit: BoxFit.contain),
+        ),
+      ),
+    );
+  }
+}
+
+/// Le choix de la couleur de Kabi : un aperçu et huit pastilles.
+class ChoixCouleurKabi extends StatelessWidget {
+  const ChoixCouleurKabi({super.key, this.couleurTexte, this.couleurBord, this.pastillesSeules = false});
+
+  /// Seulement les pastilles, centrées (l'accueil montre déjà Kabi en grand).
+  final bool pastillesSeules;
+  final Color? couleurTexte;
+  final Color? couleurBord;
+
+  @override
+  Widget build(BuildContext context) => ValueListenableBuilder<CouleurKabi>(
+        valueListenable: ChoixKabi.couleur,
+        builder: (context, actuelle, _) => pastillesSeules
+            ? Wrap(alignment: WrapAlignment.center, spacing: 8, runSpacing: 8, children: _pastilles(actuelle))
+            : Row(children: [
+          const KunfoxMascotte(humeur: HumeurKunfox.joie, taille: 84),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('Ton Kabi', style: Theme.of(context).textTheme.titleMedium),
+              Text(actuelle.nom, style: TextStyle(color: couleurTexte, fontWeight: FontWeight.w600)),
+              const SizedBox(height: 8),
+              Wrap(spacing: 8, runSpacing: 8, children: _pastilles(actuelle)),
+            ]),
+          ),
+        ]),
+      );
+
+  List<Widget> _pastilles(CouleurKabi actuelle) => [
+                for (final c in CouleurKabi.values)
+                  Semantics(
+                    button: true,
+                    selected: c == actuelle,
+                    label: 'Kabi ${c.nom.toLowerCase()}',
+                    child: GestureDetector(
+                      onTap: () {
+                        HapticFeedback.selectionClick();
+                        ChoixKabi.choisir(c);
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 180),
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: c.teinte,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: c == actuelle ? (couleurTexte ?? Colors.black) : (couleurBord ?? Colors.transparent),
+                            width: c == actuelle ? 3 : 1.5,
+                          ),
+                        ),
+                        child: c == actuelle ? const Icon(Icons.check_rounded, size: 16, color: Colors.white) : null,
+                      ),
+                    ),
+                  ),
+              ];
 }
 
 /// La flamme de série : grise si éteinte, s'allume quand `allumee` passe à vrai.
