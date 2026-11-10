@@ -13,13 +13,17 @@ interface Props {
   hauteur: number;
   class?: string;
   label: string;
+  affiche?: string;     // image fixe (dans public/rive), sinon `${src}.svg`
+  fixes?: Record<string, number | boolean>;          // entrées réglées une fois au chargement
+  table?: Record<number, Record<string, number>>;    // une valeur → plusieurs entrées (Kabi : pose + expression)
+  kabi?: boolean;       // suit la couleur de Kabi choisie sur la page
 }
-const { src, machine, entree, valeur, vue, survol, clic, largeur, hauteur, class: classe, label } = Astro.props;
+const { src, machine, entree, valeur, vue, survol, clic, largeur, hauteur, class: classe, label, affiche, fixes, table, kabi } = Astro.props;
 ---
 <!-- L'image fixe reste visible tant que Rive n'a pas dessiné (navigateur
      sans WebAssembly, mode « économie de données », réseau lent). -->
 <span class:list={['rive-cadre', classe]} style={`width:${largeur}px;aspect-ratio:${largeur}/${hauteur}`}>
-  <img class="rive-affiche" src={`/rive/${src}.svg`} alt="" aria-hidden="true" width={largeur} height={hauteur} loading="lazy" decoding="async" />
+  <img class="rive-affiche" src={`/rive/${affiche ?? src + '.svg'}`} alt="" aria-hidden="true" width={largeur} height={hauteur} loading="lazy" decoding="async" />
   <canvas
     class="rive"
     role="img"
@@ -33,5 +37,8 @@ const { src, machine, entree, valeur, vue, survol, clic, largeur, hauteur, class
     data-vue={vue}
     data-survol={survol}
     data-clic={clic}
+    data-fixes={fixes ? JSON.stringify(fixes) : undefined}
+    data-table={table ? JSON.stringify(table) : undefined}
+    data-kabi={kabi ? '1' : undefined}
   ></canvas>
 </span>

@@ -6,6 +6,8 @@ import Telephone from '../components/Telephone.astro';
 import Nav from '../components/Nav.astro';
 import Pied from '../components/Pied.astro';
 import RiveAnim from '../components/RiveAnim.astro';
+import Kabi from '../components/Kabi.astro';
+import CouleursKabi from '../components/CouleursKabi.astro';
 
 const depot = 'https://github.com/rito27959-arch/educative_app/releases/latest/download';
 
@@ -30,27 +32,29 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
     <section class="heros" id="heros">
       <div class="conteneur heros-grille">
         <div>
-          <span class="pastille apres" style="--d:.1s">🦊 Ton coach de révision</span>
+          <span class="pastille apres" style="--d:.1s">🐂 Ton coach de révision</span>
           <h1>
             <span class="ligne"><span style="--d:.15s">Révise.</span></span>
             <span class="ligne"><span style="--d:.28s">Progresse.</span></span>
             <span class="ligne"><span class="accent" style="--d:.41s">Monte.</span></span>
           </h1>
-          <p class="chapo apres" style="--d:.6s">Des leçons de cinq minutes, des quiz qui t'expliquent chaque erreur, et un renard qui t'encourage tous les jours. Même sans Internet.</p>
+          <p class="chapo apres" style="--d:.6s">Des leçons de cinq minutes, des quiz qui t'expliquent chaque erreur, et Kabi, ta mascotte, qui t'encourage tous les jours. Même sans Internet.</p>
           <div class="heros-actions apres" style="--d:.72s">
             <a class="btn" href="#telecharger">Télécharger l'app</a>
             <a class="btn-2" href="#comment">Voir comment ça marche ↓</a>
           </div>
           <p class="heros-note apres" style="--d:.84s">Gratuit · Fonctionne hors ligne · Pensé pour les petits téléphones</p>
+          <p class="heros-couleurs-titre apres" style="--d:.9s">Choisis la couleur de Kabi :</p>
+          <CouleursKabi class="heros-couleurs apres" />
         </div>
         <div class="heros-visuel">
           <Telephone ecran="quiz" />
           <div class="bulle b1 apres" style="--d:1.1s">🔥 12 jours de suite</div>
           <div class="bulle b2 apres" style="--d:1.25s">✓ +10 XP</div>
-          <!-- Kunfox en vrai (le même fichier Rive que l'app) : il salue au
+          <!-- Kabi en vrai (le même fichier Rive que l'app) : il salue au
                survol et saute de joie quand on le touche. -->
-          <RiveAnim src="kunfox_mascotte" machine="Kunfox" entree="humeur" valeur={0} survol={5} clic={1}
-            largeur={170} hauteur={198} class="renard-guet apres" label="Kunfox, le renard de l'app. Touche-le !" />
+          <Kabi valeur={0} survol={5} clic={1}
+            largeur={170} class="renard-guet apres" label="Kabi, la mascotte de Kunfox. Touche-le !" />
         </div>
       </div>
     </section>
@@ -78,13 +82,12 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
       <div class="conteneur">
         <div class="promesse apparait">
           <div class="promesse-visuel">
-            <RiveAnim src="kunfox_mascotte" machine="Kunfox" entree="humeur" valeur={0} vue={3} clic={1}
-              largeur={260} hauteur={303} label="Kunfox réfléchit avec toi" />
+            <Kabi valeur={0} vue={3} clic={1} largeur={260} label="Kabi réfléchit avec toi" />
           </div>
           <div>
             <span class="pastille">Comme un jeu</span>
             <h2>Réviser, ça se joue.</h2>
-            <p>Des questions courtes, des réponses qui claquent, un renard qui réagit à chacune. On enchaîne sans voir le temps passer.</p>
+            <p>Des questions courtes, des réponses qui claquent, Kabi qui réagit à chacune. On enchaîne sans voir le temps passer.</p>
           </div>
         </div>
         <div class="promesse inverse apparait">
@@ -116,7 +119,7 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
         <div class="titre-section apparait">
           <span class="pastille">Comment ça marche</span>
           <h2>Apprendre devient<br />une habitude.</h2>
-          <p>Trois gestes, chaque jour. Le renard s'occupe du reste.</p>
+          <p>Trois gestes, chaque jour. Kabi s'occupe du reste.</p>
         </div>
         <div class="recit">
           <div class="recit-tel"><Telephone ecran="lecon" class="tel-recit" /></div>
@@ -152,7 +155,7 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
           <div class="carte c-petit apparait" style="--d:.08s"><span class="ico">🔥</span><h3>Séries</h3><p>Un jour, puis deux, puis cent.</p></div>
           <div class="carte c-moy c-ligues apparait"><span class="ico">🏆</span><h3>Ligues</h3><p>Grimpe le classement avec ceux qui révisent comme toi.</p><div class="podium"><i>2</i><i>1</i><i>3</i></div></div>
           <div class="carte c-moy apparait" style="--d:.08s"><span class="ico">🧠</span><h3>Cartes mentales</h3><p>Toute une leçon d'un seul coup d'œil, pour réviser la veille.</p></div>
-          <div class="carte c-petit apparait"><span class="ico">🦊</span><h3>Kunfox réagit</h3><p>Il saute de joie ou t'encourage, à chaque réponse.</p></div>
+          <div class="carte c-petit apparait"><span class="ico">🐂</span><h3>Kabi réagit</h3><p>Il saute de joie ou t'encourage, à chaque réponse.</p></div>
           <div class="carte c-large apparait" style="--d:.08s"><span class="ico">🔔</span><h3>Des rappels qui tombent juste</h3><p>Kunfox apprend l'heure à laquelle tu révises et te fait signe au bon moment, et le soir si ta série est en danger. Jamais plus.</p></div>
         </div>
       </div>
@@ -189,8 +192,7 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
     <section class="final" id="telecharger">
       <div class="conteneur">
         <div class="final-visuel apparait">
-          <RiveAnim src="kunfox_mascotte" machine="Kunfox" entree="humeur" valeur={0} vue={4} clic={1}
-            largeur={240} hauteur={280} class="final-renard" label="Kunfox fait la fête" />
+          <Kabi valeur={0} vue={4} clic={1} largeur={240} class="final-renard" label="Kabi fait la fête" />
         </div>
         <h2 class="apparait" style="--d:.08s">Prêt à monter ?</h2>
         <p class="apparait" style="--d:.16s">Kunfox est gratuit, pour Android.</p>
@@ -207,7 +209,7 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
 
     <!-- Barre d'action qui apparaît une fois le haut de page dépassé. -->
     <div class="barre-cta" id="barre-cta" aria-hidden="true">
-      <span>🦊 Révise chaque jour avec Kunfox</span>
+      <span>🐂 Révise chaque jour avec Kunfox</span>
       <a class="btn" href="#telecharger" tabindex="-1">Télécharger</a>
     </div>
   </main>

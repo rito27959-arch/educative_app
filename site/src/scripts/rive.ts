@@ -8,6 +8,21 @@ Rive.suppressDeprecationWarnings = ['state-machines-param', 'state-machine-input
 // Le moteur Rive est servi par le site lui-même, pas par un CDN.
 RuntimeLoader.setWasmUrl('/rive/rive.wasm');
 
+// La couleur de Kabi, choisie sur la page (pastilles) et gardée dans le navigateur.
+const kabis = new Set<Rive>();
+function couleurKabi(): number {
+  try { const v = Number(localStorage.getItem('kabi-couleur')); return Number.isInteger(v) && v >= 0 && v < 8 && localStorage.getItem('kabi-couleur') !== null ? v : 6; } catch { return 6; }
+}
+function choisirCouleurKabi(c: number) {
+  try { localStorage.setItem('kabi-couleur', String(c)); } catch { /* navigation privée */ }
+  kabis.forEach((r) => { const i = r.stateMachineInputs('Kabi')?.find((x) => x.name === 'color'); if (i) i.value = c; });
+  document.querySelectorAll<HTMLButtonElement>('[data-couleur-kabi]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.couleurKabi) === c)));
+}
+document.querySelectorAll<HTMLButtonElement>('[data-couleur-kabi]').forEach((b) => {
+  b.setAttribute('aria-pressed', String(Number(b.dataset.couleurKabi) === couleurKabi()));
+  b.addEventListener('click', () => choisirCouleurKabi(Number(b.dataset.couleurKabi)));
+});
+
 const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const vivantes = new Map<HTMLCanvasElement, Rive>();
 
@@ -28,8 +43,22 @@ function demarrer(c: HTMLCanvasElement) {
       r.resizeDrawingSurfaceToCanvas();
       // l'animation a dessiné : l'image fixe s'efface
       requestAnimationFrame(() => c.closest('.rive-cadre')?.classList.add('pret'));
-      const entree = d.entree ? r.stateMachineInputs(d.machine!)?.find((i) => i.name === d.entree) : undefined;
-      const regler = (v: number | undefined) => { if (entree && v !== undefined) entree.value = v; };
+      const entrees = r.stateMachineInputs(d.machine!) ?? [];
+      const trouver = (nom: string) => entrees.find((i) => i.name === nom);
+      // Entrées fixes (Kabi : sans lunettes, sa couleur…).
+      const fixes: Record<string, number | boolean> = d.fixes ? JSON.parse(d.fixes) : {};
+      if (d.kabi) fixes.color = couleurKabi();
+      for (const [nom, v] of Object.entries(fixes)) { const i = trouver(nom); if (i) i.value = v as never; }
+      if (d.kabi) kabis.add(r);
+      // Une valeur peut régler plusieurs entrées (Kabi : une humeur = une pose + une expression).
+      const table: Record<string, Record<string, number>> | undefined = d.table ? JSON.parse(d.table) : undefined;
+      const entree = d.entree ? trouver(d.entree) : undefined;
+      const regler = (v: number | undefined) => {
+        if (v === undefined) return;
+        if (table) {
+          for (const [nom, x] of Object.entries(table[String(v)] ?? {})) { const i = trouver(nom); if (i) i.value = x; }
+        } else if (entree) entree.value = v;
+      };
       regler(nombre(d.valeur));
       // l'état « à l'écran » arrive un instant après, pour qu'on voie la transition
       if (nombre(d.vue) !== undefined) setTimeout(() => regler(nombre(d.vue)), 350);

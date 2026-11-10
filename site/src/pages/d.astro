@@ -5,7 +5,7 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Pied from '../components/Pied.astro';
-import RiveAnim from '../components/RiveAnim.astro';
+import Kabi from '../components/Kabi.astro';
 const depot = 'https://github.com/rito27959-arch/educative_app/releases/latest/download';
 ---
 <Base titre="Un ami te défie · Kunfox" description="Un ami te défie sur Kunfox : mêmes questions, même chrono. Le meilleur score gagne.">
@@ -14,8 +14,7 @@ const depot = 'https://github.com/rito27959-arch/educative_app/releases/latest/d
     <div class="duel-fond" aria-hidden="true"></div>
     <section class="duel-carte apparait-page">
       <span class="duel-badge">DUEL</span>
-      <RiveAnim src="kunfox_mascotte" machine="Kunfox" entree="humeur" valeur={0} vue={4} clic={1}
-        largeur={170} hauteur={198} label="Kunfox" />
+      <Kabi valeur={0} vue={4} clic={1} largeur={170} label="Kabi" />
       <h1 id="titre">Un ami te défie !</h1>
       <p id="detail" class="duel-detail">Mêmes questions, même chrono. Le meilleur score gagne.</p>
       <div id="score" class="duel-score" hidden>

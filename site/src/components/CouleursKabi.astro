@@ -1,0 +1,15 @@
+---
+// Les huit couleurs de Kabi, comme dans l'app : un toucher, et tous les
+// Kabi de la page changent de couleur (voir src/scripts/rive.ts).
+const couleurs = [
+  ['Noir', '#1F1F1F'], ['Bleu', '#2F5FD6'], ['Rouge', '#CF3434'], ['Rose', '#EF77A8'],
+  ['Vert', '#2A9A64'], ['Violet', '#6A4BD0'], ['Orange', '#F07B2B'], ['Marron', '#7A4A2A'],
+];
+interface Props { class?: string }
+const { class: classe } = Astro.props;
+---
+<div class:list={['couleurs-kabi', classe]} role="group" aria-label="La couleur de Kabi">
+  {couleurs.map(([nom, teinte], i) => (
+    <button type="button" data-couleur-kabi={i} aria-pressed={i === 6 ? 'true' : 'false'} aria-label={`Kabi ${nom.toLowerCase()}`} title={nom} style={`--teinte:${teinte}`}></button>
+  ))}
+</div>

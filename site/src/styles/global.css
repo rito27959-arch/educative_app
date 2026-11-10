@@ -478,3 +478,12 @@ section { padding: 120px 0; }
 .barre-cta .btn { padding: 11px 18px; font-size: 15px; }
 @media (max-width: 480px) { .barre-cta span { display: none; } .barre-cta { padding: 8px; } }
 @media (prefers-reduced-motion: reduce) { .barre-cta { transition: none; } }
+
+/* Les pastilles de couleur de Kabi */
+.couleurs-kabi { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.couleurs-kabi button { width: 26px; height: 26px; border-radius: 50%; background: var(--teinte); border: 2px solid transparent; box-shadow: 0 0 0 1.5px color-mix(in srgb, currentColor 18%, transparent); cursor: pointer; padding: 0; transition: transform .15s, box-shadow .15s; }
+.couleurs-kabi button:hover { transform: scale(1.12); }
+.couleurs-kabi button[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--fond, #fff), 0 0 0 4.5px currentColor; }
+.couleurs-kabi button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.heros-couleurs { margin-top: 18px; gap: 10px; }
+.heros-couleurs-titre { font-size: 13px; font-weight: 700; opacity: .7; margin-top: 18px; }

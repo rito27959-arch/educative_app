@@ -1,0 +1,32 @@
+---
+// KABI, la mascotte de Kunfox — le même fichier Rive que l'app
+// (public/rive/kabi.riv, machine « Kabi »). Les humeurs ont les mêmes
+// numéros que dans l'app : 0 attente, 1 joie, 2 courage, 3 réflexion,
+// 4 fête, 5 salut, 6 dodo. Sa couleur suit les pastilles de la page.
+import RiveAnim from './RiveAnim.astro';
+
+interface Props {
+  valeur?: number;
+  vue?: number;
+  survol?: number;
+  clic?: number;
+  largeur: number;
+  class?: string;
+  label: string;
+}
+const { valeur = 0, vue, survol, clic, largeur, class: classe, label } = Astro.props;
+
+// humeur → pose et expression de kabi.riv
+const table = {
+  0: { pose: 0, mood: 0 },
+  1: { pose: 7, mood: 1 },
+  2: { pose: 27, mood: 2 },
+  3: { pose: 19, mood: 0 },
+  4: { pose: 24, mood: 7 },
+  5: { pose: 1, mood: 1 },
+  6: { pose: 9, mood: 6 },
+};
+---
+<RiveAnim src="kabi" machine="Kabi" affiche="kabi.png" fixes={{ glasses: false }} table={table} kabi
+  valeur={valeur} vue={vue} survol={survol} clic={clic}
+  largeur={largeur} hauteur={Math.round(largeur * 1.2)} class={classe} label={label} />
