@@ -13,8 +13,12 @@ interface Props {
   largeur: number;
   class?: string;
   label: string;
+  pose?: number;        // une pose précise de kabi.riv (sinon celle de l'humeur)
+  expression?: number;  // une expression précise
+  table?: Record<number, Record<string, number>>; // une autre table valeur → entrées
+  id?: string;
 }
-const { valeur = 0, vue, survol, clic, largeur, class: classe, label } = Astro.props;
+const { valeur = 0, vue, survol, clic, largeur, class: classe, label, pose, expression, table: autreTable, id } = Astro.props;
 
 // humeur → pose et expression de kabi.riv
 const table = {
@@ -27,6 +31,8 @@ const table = {
   6: { pose: 9, mood: 6 },
 };
 ---
-<RiveAnim src="kabi" machine="Kabi" affiche="kabi.png" fixes={{ glasses: false }} table={table} kabi
+<RiveAnim src="kabi" machine="Kabi" affiche="kabi.png" id={id}
+  fixes={{ glasses: false, ...(pose !== undefined ? { pose } : {}), ...(expression !== undefined ? { mood: expression } : {}) }}
+  table={pose !== undefined ? undefined : (autreTable ?? table)} kabi
   valeur={valeur} vue={vue} survol={survol} clic={clic}
   largeur={largeur} hauteur={Math.round(largeur * 1.2)} class={classe} label={label} />

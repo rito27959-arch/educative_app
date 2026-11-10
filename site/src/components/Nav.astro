@@ -7,6 +7,7 @@ import Renard from './Renard.astro';
     <a class="logo" href="/" id="logo"><Renard taille={34} />Kunfox</a>
     <nav class="nav-liens" aria-label="Sections">
       <a href="/#comment">Comment ça marche</a>
+      <a href="/#carte">Kabi</a>
       <a href="/#fonctions">Fonctions</a>
       <a href="/a-propos">À propos</a>
       <a href="/aide">Aide</a>
@@ -29,5 +30,5 @@ import Renard from './Renard.astro';
     try { localStorage.setItem('kunfox-theme', racine.dataset.theme); } catch (e) {}
   });
   const nav = document.getElementById('nav')!;
-  addEventListener('scroll', () => nav.classList.toggle('defile', scrollY > 10), { passive: true });
+  addEventListener('scroll', () => nav.classList.toggle('defile', scrollY > 80), { passive: true });
 </script>

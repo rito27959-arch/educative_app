@@ -62,6 +62,8 @@ function demarrer(c: HTMLCanvasElement) {
       regler(nombre(d.valeur));
       // l'état « à l'écran » arrive un instant après, pour qu'on voie la transition
       if (nombre(d.vue) !== undefined) setTimeout(() => regler(nombre(d.vue)), 350);
+      // Une valeur venue de la page (les puces des matières, par exemple).
+      c.addEventListener('kabi-valeur', (e) => regler((e as CustomEvent<number>).detail));
       const repos = nombre(d.vue) ?? nombre(d.valeur);
       let minuteur: number | undefined;
       if (nombre(d.survol) !== undefined) {

@@ -107,28 +107,56 @@ a { color: inherit; text-decoration: none; }
   padding: 6px 12px; border-radius: 99px;
 }
 
-/* ── Barre du haut ───────────────────────────────────────────────────── */
+/* ── Barre du haut : une capsule de verre qui flotte (façon iOS 26) ───── */
 .nav {
-  position: fixed; inset: 0 0 auto; z-index: 50;
-  backdrop-filter: saturate(1.6) blur(18px);
-  -webkit-backdrop-filter: saturate(1.6) blur(18px);
-  background: var(--verre);
-  border-bottom: 1px solid transparent;
-  transition: border-color .3s, background .3s;
+  position: fixed; top: 12px; left: 50%; z-index: 50;
+  width: min(1120px, 100% - 24px);
+  transform: translateX(-50%);
+  border-radius: 999px;
+  isolation: isolate;
+  background: color-mix(in srgb, var(--surface) 58%, transparent);
+  backdrop-filter: blur(22px) saturate(1.9);
+  -webkit-backdrop-filter: blur(22px) saturate(1.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .55),
+    inset 0 -1px 0 rgba(255, 255, 255, .12),
+    0 10px 30px -12px rgba(20, 33, 61, .28),
+    0 1px 2px rgba(20, 33, 61, .08);
+  transition: width .45s var(--sortie), top .45s var(--sortie), box-shadow .3s, background .3s;
 }
-.nav.defile { border-bottom-color: var(--bord); }
-.nav .conteneur { display: flex; align-items: center; height: 64px; gap: 14px; }
+/* Le liseré de lumière du verre : un dégradé sur le bord seulement. */
+.nav::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; z-index: -1; pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,.85), rgba(255,255,255,.15) 38%, rgba(255,255,255,.05) 62%, rgba(255,255,255,.5));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+:root[data-theme="sombre"] .nav::before { opacity: .35; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="clair"]) .nav::before { opacity: .35; } }
+:root[data-theme="sombre"] .nav { box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 12px 32px -12px rgba(0,0,0,.7); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="clair"]) .nav { box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 12px 32px -12px rgba(0,0,0,.7); } }
+/* En descendant, la capsule se resserre (le geste d'iOS). */
+.nav.defile { top: 8px; width: min(860px, 100% - 24px); background: color-mix(in srgb, var(--surface) 70%, transparent); }
+.nav .conteneur { width: 100%; padding: 0 8px 0 18px; display: flex; align-items: center; height: 58px; gap: 14px; transition: height .45s var(--sortie); }
+.nav.defile .conteneur { height: 52px; }
 .logo { display: flex; align-items: center; gap: 10px; font-family: 'Inter Tight Variable'; font-weight: 750; font-size: 21px; letter-spacing: -.02em; }
 .logo svg { border-radius: 10px; }
-.nav-liens { margin-left: auto; display: flex; gap: 26px; font-size: 15px; color: var(--doux); }
-.nav-liens a:hover { color: var(--texte); }
+.nav-liens { margin-left: auto; display: flex; gap: 4px; font-size: 15px; color: var(--doux); }
+.nav-liens a { padding: 8px 12px; border-radius: 999px; transition: background .2s, color .2s; }
+.nav-liens a:hover { color: var(--texte); background: color-mix(in srgb, var(--texte) 7%, transparent); }
 .theme {
-  width: 38px; height: 38px; border-radius: 12px; border: 1px solid var(--bord);
-  background: var(--surface); color: var(--texte); cursor: pointer;
-  display: grid; place-items: center; font-size: 17px;
+  width: 40px; height: 40px; border-radius: 50%; border: 0;
+  background: color-mix(in srgb, var(--texte) 7%, transparent); color: var(--texte); cursor: pointer;
+  display: grid; place-items: center; font-size: 17px; transition: background .2s;
 }
-.nav .btn { padding: 10px 16px; font-size: 14px; box-shadow: 0 3px 0 var(--prim-fonce); }
-@media (max-width: 760px) { .nav-liens { display: none; } .nav .btn { display: none; } .theme { margin-left: auto; } }
+.theme:hover { background: color-mix(in srgb, var(--texte) 12%, transparent); }
+.nav .btn { padding: 10px 18px; font-size: 14px; border-radius: 999px; box-shadow: 0 3px 0 var(--prim-fonce); }
+@media (max-width: 760px) {
+  .nav, .nav.defile { width: calc(100% - 20px); top: 10px; }
+  .nav-liens { display: none; } .nav .btn { display: none; } .theme { margin-left: auto; }
+  .nav .conteneur { padding: 0 8px 0 14px; height: 54px; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .nav { background: var(--surface); } }
 
 /* ── Héros ───────────────────────────────────────────────────────────── */
 .heros { position: relative; padding: 140px 0 80px; overflow: hidden; }
@@ -487,3 +515,33 @@ section { padding: 120px 0; }
 .couleurs-kabi button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 .heros-couleurs { margin-top: 18px; gap: 10px; }
 .heros-couleurs-titre { font-size: 13px; font-weight: 700; opacity: .7; margin-top: 18px; }
+
+/* ── La carte des leçons, avec Kabi ─────────────────────────────────── */
+.carte-sec { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.carte-sec h2 { font-size: clamp(36px, 5vw, 60px); line-height: 1.03; font-weight: 800; margin: 16px 0 18px; }
+.carte-sec > div > p { font-size: 19px; color: var(--doux); margin: 0 0 22px; }
+.types { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.types li { display: flex; gap: 12px; align-items: center; background: var(--surface); border: 1px solid var(--bord); border-radius: 16px; padding: 10px 14px; }
+.types li b { display: block; }
+.types li span { color: var(--doux); font-size: 14px; }
+.types .rond { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 18px; background: var(--c); box-shadow: 0 3px 0 color-mix(in srgb, var(--c) 70%, #000); }
+.chemin { position: relative; width: 340px; height: 650px; margin: 0 auto; }
+.chemin svg.trace { position: absolute; inset: 0; overflow: visible; }
+.noeud { position: absolute; width: 72px; height: 66px; margin: -33px 0 0 -36px; border-radius: 50%; display: grid; place-items: center; font-size: 30px; color: #fff; background: var(--c); box-shadow: 0 7px 0 color-mix(in srgb, var(--c) 70%, #000); }
+.noeud.trophee { border-radius: 22px; }
+.noeud small { position: absolute; top: 74px; white-space: nowrap; font-size: 12px; font-weight: 750; color: var(--doux); letter-spacing: .02em; text-transform: uppercase; }
+.chemin .kabi-noeud { position: absolute; }
+.matieres-kabi { margin-top: 72px; display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center; background: var(--fond-2); border: 1px solid var(--bord); border-radius: 32px; padding: 30px 40px; }
+.matieres-kabi h3 { font-size: 28px; margin: 0 0 8px; }
+.matieres-kabi p { color: var(--doux); margin: 0 0 18px; }
+.puces-matieres { display: flex; flex-wrap: wrap; gap: 8px; }
+.puces-matieres button { font: inherit; font-weight: 650; font-size: 14px; padding: 9px 14px; border-radius: 999px; border: 1px solid var(--bord); background: var(--surface); color: var(--texte); cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.puces-matieres button[aria-pressed="true"] { background: var(--prim); border-color: var(--prim); color: #fff; }
+.matieres-kabi .legende { margin-top: 14px; font-weight: 700; color: var(--prim); min-height: 1.4em; }
+@media (max-width: 900px) {
+  .carte-sec { grid-template-columns: 1fr; gap: 30px; }
+  .matieres-kabi { grid-template-columns: 1fr; text-align: center; padding: 26px 20px; }
+  .matieres-kabi .rive-cadre { margin: 0 auto; }
+  .puces-matieres { justify-content: center; }
+}
+@media (max-width: 380px) { .chemin { transform: scale(.9); transform-origin: top center; margin-bottom: -60px; } }

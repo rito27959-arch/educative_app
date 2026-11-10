@@ -17,14 +17,16 @@ interface Props {
   fixes?: Record<string, number | boolean>;          // entrées réglées une fois au chargement
   table?: Record<number, Record<string, number>>;    // une valeur → plusieurs entrées (Kabi : pose + expression)
   kabi?: boolean;       // suit la couleur de Kabi choisie sur la page
+  id?: string;
 }
-const { src, machine, entree, valeur, vue, survol, clic, largeur, hauteur, class: classe, label, affiche, fixes, table, kabi } = Astro.props;
+const { src, machine, entree, valeur, vue, survol, clic, largeur, hauteur, class: classe, label, affiche, fixes, table, kabi, id } = Astro.props;
 ---
 <!-- L'image fixe reste visible tant que Rive n'a pas dessiné (navigateur
      sans WebAssembly, mode « économie de données », réseau lent). -->
 <span class:list={['rive-cadre', classe]} style={`width:${largeur}px;aspect-ratio:${largeur}/${hauteur}`}>
   <img class="rive-affiche" src={`/rive/${affiche ?? src + '.svg'}`} alt="" aria-hidden="true" width={largeur} height={hauteur} loading="lazy" decoding="async" />
   <canvas
+    id={id}
     class="rive"
     role="img"
     aria-label={label}

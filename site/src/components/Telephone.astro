@@ -2,7 +2,6 @@
 // Un téléphone dessiné en CSS, qui affiche un écran de Kunfox.
 // `ecran` : 'quiz' (réponse juste, bandeau de félicitation, en boucle),
 // 'lecon', 'serie' ou 'hors-ligne'.
-import Renard from './Renard.astro';
 interface Props { ecran?: 'quiz' | 'lecon' | 'serie' | 'hors-ligne'; class?: string }
 const { ecran = 'quiz', class: classe = '' } = Astro.props;
 ---
@@ -20,7 +19,7 @@ const { ecran = 'quiz', class: classe = '' } = Astro.props;
       <div class="q-opt">1</div>
       <div class="q-opt">√7</div>
       <div class="q-feuille">
-        <div class="q-feuille-haut"><Renard taille={34} fond={false} toque={false} /><b>Bien joué !</b><span class="q-xp">+10 XP</span></div>
+        <div class="q-feuille-haut"><img src="/rive/kabi.png" alt="" width="30" height="36" style="object-fit:contain" /><b>Bien joué !</b><span class="q-xp">+10 XP</span></div>
         <p>|3 + 4i| = √(3² + 4²) = √25 = 5</p>
         <span class="q-continuer">Continuer</span>
       </div>

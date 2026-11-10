@@ -11,6 +11,27 @@ import CouleursKabi from '../components/CouleursKabi.astro';
 
 const depot = 'https://github.com/rito27959-arch/educative_app/releases/latest/download';
 
+// La carte des leçons : un type par pastille, et son Kabi (comme dans l'app).
+const noeuds = [
+  { nom: 'Découverte', ico: '✨', c: '#FF6B2B', dx: 0, pose: 1, mood: 1, kabi: 'droite' },
+  { nom: 'Leçon', ico: '⭐', c: '#1FA971', dx: 70, pose: 19, mood: 0, kabi: 'gauche' },
+  { nom: 'En image', ico: '📈', c: '#2F80ED', dx: 0, pose: 22, mood: 1, kabi: 'gauche' },
+  { nom: 'Entraînement', ico: '🏋️', c: '#8B5CF6', dx: -70, pose: 6, mood: 2, kabi: 'droite' },
+  { nom: 'Trophée', ico: '🏆', c: '#E5A400', dx: 0, pose: 16, mood: 2, kabi: 'droite', trophee: true },
+].map((n, i) => ({ ...n, x: 170 + n.dx, y: 60 + i * 130 }));
+const trace = noeuds.map((n, i) => (i === 0 ? `M${n.x} ${n.y}` : `Q${(noeuds[i - 1].x + n.x) / 2 + (n.dx === 0 ? noeuds[i - 1].dx : n.dx) * .6} ${(noeuds[i - 1].y + n.y) / 2} ${n.x} ${n.y}`)).join(' ');
+const parMatiere = [
+  ['Maths', 19, 0, 'Il réfléchit avec toi.'],
+  ['Physique', 11, 2, 'Il se met en garde : place aux forces !'],
+  ['Chimie', 20, 5, 'Il hausse les épaules… la réaction surprend.'],
+  ['SVT', 10, 1, 'Il s\'étire, le corps humain au programme.'],
+  ['Informatique', 18, 2, 'Il court sur place, comme un processeur.'],
+  ['Langues', 26, 1, 'Il tend l\'oreille.'],
+  ['Philosophie', 28, 0, 'Bras croisés, il pèse chaque argument.'],
+  ['Histoire-Géo', 21, 1, 'Il te montre la carte.'],
+] as const;
+const tableMatieres = Object.fromEntries(parMatiere.map(([, pose, mood], i) => [i, { pose, mood }]));
+
 const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique', 'Français', 'Anglais', 'Philosophie', 'Histoire-Géographie'];
 ---
 <Base
@@ -139,6 +160,52 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
               <h3>Une série qui grandit.</h3>
               <p>Chaque jour de révision allume ta flamme. Tu gagnes de l'expérience, tu montes de niveau, et ça se voit.</p>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="carte">
+      <div class="conteneur">
+        <div class="carte-sec">
+          <div class="apparait">
+            <span class="pastille">🐂 Avec Kabi</span>
+            <h2>Ta carte.<br />Ton chemin.</h2>
+            <p>Les leçons s'enchaînent sur une carte, unité après unité. À chaque type de leçon, Kabi t'attend dans une pose différente — et il dort devant les unités que tu n'as pas encore ouvertes.</p>
+            <ul class="types">
+              <li><span class="rond" style="--c:#FF6B2B">✨</span><div><b>Découverte</b><span>La première leçon d'une unité. Kabi te fait coucou.</span></div></li>
+              <li><span class="rond" style="--c:#1FA971">⭐</span><div><b>Leçon</b><span>Kabi prend la pose de ta matière.</span></div></li>
+              <li><span class="rond" style="--c:#2F80ED">📈</span><div><b>En image</b><span>Courbes, tableaux, formules : Kabi te les présente.</span></div></li>
+              <li><span class="rond" style="--c:#8B5CF6">🏋️</span><div><b>Entraînement</b><span>La dernière avant l'épreuve. Kabi soulève de la fonte.</span></div></li>
+              <li><span class="rond" style="--c:#E5A400">🏆</span><div><b>Trophée</b><span>L'épreuve de l'unité : Kabi boxe, puis pose fièrement.</span></div></li>
+            </ul>
+          </div>
+          <div class="chemin apparait" style="--d:.1s" aria-label="Exemple de carte des leçons">
+            <svg class="trace" width="340" height="650" viewBox="0 0 340 650" aria-hidden="true">
+              <path d={trace} fill="none" stroke="var(--bord)" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 22" />
+            </svg>
+            {noeuds.map((n) => (
+              <>
+                <span class:list={['noeud', { trophee: n.trophee }]} style={`left:${n.x}px;top:${n.y}px;--c:${n.c}`}>{n.ico}<small>{n.nom}</small></span>
+                <div class="kabi-noeud" style={`left:${n.kabi === 'droite' ? n.x + 44 : n.x - 156}px;top:${n.y - 100}px`}>
+                  <Kabi pose={n.pose} expression={n.mood} largeur={110} label={`Kabi, leçon ${n.nom}`} />
+                </div>
+              </>
+            ))}
+          </div>
+        </div>
+
+        <div class="matieres-kabi apparait">
+          <Kabi id="kabi-matiere" table={tableMatieres} valeur={0} largeur={170} label="Kabi, selon la matière" />
+          <div>
+            <h3>Et il change avec ta matière.</h3>
+            <p>Touche une matière pour voir Kabi s'y mettre.</p>
+            <div class="puces-matieres" role="group" aria-label="Matières">
+              {parMatiere.map(([nom, , , legende], i) => (
+                <button type="button" data-matiere={i} data-legende={legende} aria-pressed={i === 0 ? 'true' : 'false'}>{nom}</button>
+              ))}
+            </div>
+            <p class="legende" id="legende-matiere" aria-live="polite">{parMatiere[0][3]}</p>
           </div>
         </div>
       </div>
@@ -290,5 +357,16 @@ const matieres = ['Mathématiques', 'Physique', 'Chimie', 'SVT', 'Informatique',
     };
     new IntersectionObserver(([e]) => { hautPasse = !e.isIntersecting; majBarre(); }).observe(heros);
     new IntersectionObserver(([e]) => { basAtteint = e.isIntersecting; majBarre(); }).observe(final);
+  </script>
+  <script>
+    // Les puces des matières : Kabi prend la pose de la matière touchée.
+    const kabi = document.getElementById('kabi-matiere') as HTMLCanvasElement | null;
+    const legende = document.getElementById('legende-matiere');
+    document.querySelectorAll<HTMLButtonElement>('[data-matiere]').forEach((b) => b.addEventListener('click', () => {
+      const v = Number(b.dataset.matiere);
+      document.querySelectorAll('[data-matiere]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      if (legende) legende.textContent = b.dataset.legende ?? '';
+      if (kabi) { kabi.dataset.valeur = String(v); kabi.dispatchEvent(new CustomEvent('kabi-valeur', { detail: v })); }
+    }));
   </script>
 </Base>
