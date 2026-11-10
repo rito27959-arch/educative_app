@@ -31,6 +31,7 @@ import '../donnees/matieres.dart';
 import '../donnees/progression.dart';
 import '../flame/effets_flame.dart';
 import '../theme/palette.dart';
+import '../riche/illustrations.dart' show illustrationsLecons;
 
 const double _kNoeud = 74;
 const double _kPas = 104;
@@ -204,6 +205,54 @@ class _ParcoursEcranState extends ConsumerState<ParcoursEcran> {
   }
 }
 
+// ------------------------------------------------------------- types de leçon
+/// Ce qu'est une pastille de la carte — comme les pastilles de Duolingo
+/// (étoile, haltère, livre…), chacune a son icône et SON Kabi.
+enum TypeLecon {
+  /// La première leçon d'une unité : on découvre.
+  decouverte(Icons.auto_awesome_rounded, 'Découverte'),
+
+  /// Une leçon avec sa carte « En image » (courbe, tableau, formules).
+  image(Icons.insights_rounded, 'En image'),
+
+  /// Une leçon ordinaire.
+  lecon(Icons.star_rounded, 'Leçon'),
+
+  /// La dernière leçon avant le trophée : on s'entraîne.
+  entrainement(Icons.fitness_center_rounded, 'Entraînement');
+
+  const TypeLecon(this.icone, this.nom);
+  final IconData icone;
+  final String nom;
+
+  static TypeLecon de(Lesson l, int rang, int total) {
+    if (rang == 1) return TypeLecon.decouverte;
+    if (rang == total && total > 2) return TypeLecon.entrainement;
+    if (illustrationsLecons.containsKey(l.id)) return TypeLecon.image;
+    return TypeLecon.lecon;
+  }
+}
+
+/// Le Kabi qui attend à côté de la leçon du moment, selon son type et la
+/// matière.
+(PoseKabi, ExpressionKabi) kabiPourLecon(TypeLecon t, String matiere) => switch (t) {
+      TypeLecon.decouverte => (PoseKabi.coucou, ExpressionKabi.joie),
+      TypeLecon.image => (PoseKabi.presenteDroite, ExpressionKabi.joie),
+      TypeLecon.entrainement => (PoseKabi.halteres, ExpressionKabi.determine),
+      TypeLecon.lecon => _kabiMatiere(matiere),
+    };
+
+(PoseKabi, ExpressionKabi) _kabiMatiere(String m) {
+  if (m.startsWith('anglais') || m.startsWith('francais')) return (PoseKabi.ecoute, ExpressionKabi.joie);
+  if (m.startsWith('philosophie')) return (PoseKabi.brasCroises, ExpressionKabi.neutre);
+  if (m.startsWith('histoire')) return (PoseKabi.presenteGauche, ExpressionKabi.joie);
+  if (m.startsWith('svt')) return (PoseKabi.etirement, ExpressionKabi.joie);
+  if (m.startsWith('physique')) return (PoseKabi.pret, ExpressionKabi.determine);
+  if (m.startsWith('chimie')) return (PoseKabi.hausseEpaules, ExpressionKabi.surpris);
+  if (m.startsWith('info')) return (PoseKabi.genouxHauts, ExpressionKabi.determine);
+  return (PoseKabi.reflexion, ExpressionKabi.neutre); // maths
+}
+
 // ------------------------------------------------------------------ unité
 class _Unite extends StatelessWidget {
   const _Unite({
@@ -262,13 +311,41 @@ class _Unite extends StatelessWidget {
               surAppui: () => context.push('/k/boss/${chapitre.id}'),
             ),
           ),
-          // Kunfox s'assoit à côté de la leçon du moment
+          // Kabi attend à côté de la leçon du moment, dans la pose de son type.
           if (indexActuel >= 0)
-            Positioned(
-              left: centre(indexActuel).dx + (_kSinueux[indexActuel % _kSinueux.length] <= 0 ? 70 : -190),
-              top: centre(indexActuel).dy - 96,
-              child: const IgnorePointer(child: KunfoxMascotte(humeur: HumeurKunfox.attente, taille: 120)),
-            ),
+            Builder(builder: (context) {
+              final (pose, expression) = kabiPourLecon(TypeLecon.de(lecons[indexActuel], indexActuel + 1, lecons.length), matiere.id);
+              return Positioned(
+                left: centre(indexActuel).dx + (_kSinueux[indexActuel % _kSinueux.length] <= 0 ? 70 : -190),
+                top: centre(indexActuel).dy - 96,
+                child: IgnorePointer(child: KunfoxMascotte(pose: pose, expression: expression, taille: 120)),
+              );
+            }),
+          // À côté du trophée : Kabi boxe quand l'épreuve est ouverte, pose
+          // fièrement quand elle est réussie, dort tant que l'unité est fermée.
+          if (indexActuel < 0)
+            Builder(builder: (context) {
+              final reussi = progression.bossReussi(chapitre.id);
+              final ouvertBoss = accessible && (faites >= (lecons.length / 2).ceil());
+              final (pose, expression) = reussi
+                  ? (PoseKabi.mainsHanches, ExpressionKabi.fier)
+                  : !accessible
+                      ? (PoseKabi.dodo, ExpressionKabi.sommeil)
+                      : ouvertBoss
+                          ? (PoseKabi.boxe, ExpressionKabi.determine)
+                          : (PoseKabi.repos, ExpressionKabi.neutre);
+              final k = lecons.length;
+              return Positioned(
+                left: centre(k).dx + (_kSinueux[k % _kSinueux.length] <= 0 ? 64 : -178),
+                top: centre(k).dy - 84,
+                child: IgnorePointer(
+                  child: Opacity(
+                    opacity: accessible ? 1 : 0.55,
+                    child: KunfoxMascotte(pose: pose, expression: expression, taille: 110),
+                  ),
+                ),
+              );
+            }),
           // les pastilles ; celle dont la carte est ouverte passe devant les autres
           for (final k in [
             for (var k = 0; k < lecons.length; k++) if (lecons[k].id != ouverte) k,
@@ -408,11 +485,9 @@ class _NoeudState extends State<_Noeud> with TickerProviderStateMixin {
     final faite = widget.etat == EtatNoeud.faite;
     final actuelle = widget.etat == EtatNoeud.actuelle;
     final couleur = widget.etat == EtatNoeud.verrouillee ? p.verrou : widget.couleur;
-    final icone = faite
-        ? Icons.check_rounded
-        : actuelle
-            ? Icons.star_rounded
-            : Icons.lock_rounded;
+    final type = TypeLecon.de(widget.lecon, widget.rang, widget.total);
+    // Comme sur Duolingo : l'icône dit le type de leçon, même verrouillée.
+    final icone = faite ? Icons.check_rounded : type.icone;
 
     final pastille = GestureDetector(
       onTapDown: (_) => setState(() => _enfonce = true),
@@ -461,7 +536,7 @@ class _NoeudState extends State<_Noeud> with TickerProviderStateMixin {
 
     return Semantics(
       button: true,
-      label: '${widget.lecon.title}. Leçon ${widget.rang} sur ${widget.total}. '
+      label: '${widget.lecon.title}. ${type.nom}, leçon ${widget.rang} sur ${widget.total}. '
           '${faite ? 'Faite' : actuelle ? 'À faire maintenant' : 'Verrouillée'}',
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         Stack(clipBehavior: Clip.none, alignment: Alignment.topCenter, children: [
@@ -570,7 +645,9 @@ class _Carte extends StatelessWidget {
         Text(noeud.lecon.title, style: TextStyle(fontFamily: 'InterTight', fontWeight: FontWeight.w800, fontSize: 18, color: texte)),
         const SizedBox(height: 4),
         Text(
-          verrou ? 'Termine les leçons d\'avant pour débloquer celle-ci.' : 'Leçon ${noeud.rang} sur ${noeud.total}',
+          verrou
+              ? 'Termine les leçons d\'avant pour débloquer celle-ci.'
+              : '${TypeLecon.de(noeud.lecon, noeud.rang, noeud.total).nom} · leçon ${noeud.rang} sur ${noeud.total}',
           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: texte.withValues(alpha: 0.85)),
         ),
         if (!verrou) ...[

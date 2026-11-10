@@ -123,6 +123,16 @@ class _RiveNombreState extends State<_RiveNombre> {
   }
 }
 
+/// Toutes les poses de kabi.riv (même ordre que l'entrée `pose`).
+enum PoseKabi {
+  repos, coucou, muscles, squat, jumpingJacks, course, halteres, victoire, fatigue, dodo,
+  etirement, pret, pompes, gainage, fente, burpee, boxe, corde, genouxHauts, reflexion,
+  hausseEpaules, presenteGauche, presenteDroite, mainsHanches, applaudit, coeur, ecoute, poingLeve, brasCroises,
+}
+
+/// Les expressions de kabi.riv (même ordre que l'entrée `mood`).
+enum ExpressionKabi { neutre, joie, determine, fatigue, triste, surpris, sommeil, fier }
+
 /// Les couleurs de Kabi (même ordre que l'entrée `color` de kabi.riv).
 enum CouleurKabi {
   noir('Noir', Color(0xFF1F1F1F)),
@@ -171,7 +181,12 @@ class ChoixKabi {
 /// Si le fichier ne se lit pas (vieux moteur Rive), l'ancienne mascotte
 /// s'affiche à la place : jamais de trou dans l'écran.
 class KunfoxMascotte extends StatefulWidget {
-  const KunfoxMascotte({super.key, this.humeur = HumeurKunfox.attente, this.taille = 180, this.regard = RegardKunfox.centre, this.couleur});
+  const KunfoxMascotte({super.key, this.humeur = HumeurKunfox.attente, this.taille = 180, this.regard = RegardKunfox.centre, this.couleur, this.pose, this.expression});
+
+  /// Une pose précise de Kabi, à la place de celle de l'humeur (la carte des
+  /// leçons en donne une à chaque type de leçon).
+  final PoseKabi? pose;
+  final ExpressionKabi? expression;
 
   final HumeurKunfox humeur;
   final double taille;
@@ -268,7 +283,9 @@ class _KunfoxMascotteState extends State<KunfoxMascotte> {
   }
 
   void _appliquer() {
-    final (pose, mood) = KunfoxMascotte._poses[widget.humeur]!;
+    var (pose, mood) = KunfoxMascotte._poses[widget.humeur]!;
+    if (widget.pose != null) pose = widget.pose!.index;
+    if (widget.expression != null) mood = widget.expression!.index;
     final (x, y) = KunfoxMascotte._regards[widget.regard]!;
     _nombres['pose']?.value = pose.toDouble();
     _nombres['mood']?.value = mood.toDouble();
