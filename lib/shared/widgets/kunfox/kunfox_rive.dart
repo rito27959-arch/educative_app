@@ -229,18 +229,6 @@ class KunfoxMascotte extends StatefulWidget {
     RegardKunfox.haut: (0.0, -80.0),
   };
 
-  /// Vrai si kabi.riv n'a pas pu être lu (l'ancienne mascotte s'affiche).
-  @visibleForTesting
-  static bool get kabiIllisible => _KunfoxMascotteState._illisible;
-
-  /// Les tests sur la machine n'ont pas la bibliothèque native des textes de
-  /// Rive (que `RiveFile.asset` initialise) : ils donnent le fichier déjà lu.
-  @visibleForTesting
-  static void fichierPourTests(RiveFile f) {
-    _KunfoxMascotteState._fichier = Future.value(f);
-    _KunfoxMascotteState._illisible = false;
-  }
-
   @override
   State<KunfoxMascotte> createState() => _KunfoxMascotteState();
 }

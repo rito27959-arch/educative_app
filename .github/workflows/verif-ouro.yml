@@ -64,8 +64,8 @@ jobs:
           target: google_apis
           profile: pixel_6
           cores: 4
-          ram-size: 3072M
-          heap-size: 512M
+          ram-size: 4096M
+          heap-size: 576M
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
           script: |
