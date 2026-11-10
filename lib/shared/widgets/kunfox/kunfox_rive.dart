@@ -229,6 +229,10 @@ class KunfoxMascotte extends StatefulWidget {
     RegardKunfox.haut: (0.0, -80.0),
   };
 
+  /// Vrai si kabi.riv n'a pas pu être lu (l'ancienne mascotte s'affiche).
+  @visibleForTesting
+  static bool get kabiIllisible => _KunfoxMascotteState._illisible;
+
   @override
   State<KunfoxMascotte> createState() => _KunfoxMascotteState();
 }
