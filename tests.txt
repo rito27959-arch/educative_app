@@ -1,0 +1,418 @@
+
+::group::✅ Passing tests
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_expressions_test.dart: Expressions.nombre virgule, fractions, racines, pi
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_expressions_test.dart: Expressions.equivalentes écritures lycée
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_expressions_test.dart: Expressions.fonction trace
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService.getString / setString returns null for nonexistent key
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService.getString / setString round-trip setString then getString
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService.getString / setString overwrites existing value
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService.getString / setString stores empty string
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService.getString / setString stores various types as strings
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService.remove removes a key
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService.remove removing nonexistent key does not throw
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService.getCourses returns a List<CourseModel> (empty without DB)
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService.saveChapter completes without error when no DB
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService.saveChapter getChapters returns empty for unknown course without DB
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService.setOnboardingComplete marks onboarding as complete
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService.setOnboardingComplete isOnboardingComplete returns false initially (after cleanup)
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService settings getSettings returns null when empty
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService settings saveSettings persists key-value pairs
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService streak getStreakDays returns 0 initially
+::endgroup::
+::group::✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService streak recordStudyActivity returns 1 on first call
+[Progression] Streak mis à jour: 1 jours
+::endgroup::
+::group::✅ Passing tests
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService quiz score getQuizScore returns 0 initially
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService quiz score saveQuizScore persists score
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService outbox getOutbox returns empty initially
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService outbox saveOutbox adds entry
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService outbox clearOutbox removes all entries
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService generateId generates unique IDs
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService study sessions getStudySessions returns empty initially
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService messages getMessages returns a list
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService messages getMessageCount returns count
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService getMessagesPaginated returns empty list when offset exceeds messages
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService contribution events addContributionEvent and getContributionEvents
+✅ /home/runner/work/educative_app/educative_app/test/services/storage_service_test.dart: StorageService contribution events getContributionPoints aggregates correctly
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.email returns error for null
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.email returns error for empty string
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.email returns error for missing @
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.email returns error for missing dot
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.email returns null for valid email
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.phone returns null for null (phone is optional)
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.phone returns null for empty string
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.phone returns null for valid Cameroon format 6XXXXXXXX
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.phone returns null for valid international format
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.phone returns null for 8-digit number
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.phone returns null for 15-digit number
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.phone returns error for too short
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.phone returns error for too long (16 digits)
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.phone returns error for non-numeric
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.phone handles spaces correctly
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.pseudo returns error for null
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.pseudo returns error for empty string
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.pseudo returns error for single character
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.pseudo returns null for 2 characters (minimum)
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.pseudo returns null for 20 characters (maximum)
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.pseudo returns error for 21 characters (too long)
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.pseudo returns null for valid characters
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.pseudo returns error for special characters
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.password returns error for null
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.password returns error for empty
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.password returns error for too short
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.password returns error for missing uppercase
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.password returns error for missing digit
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.password returns null for valid password
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.required returns error for null
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.required returns error for empty
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.required returns null for valid value
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.required uses custom field name
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.url returns null for null
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.url returns null for empty
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.url returns null for valid http
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.url returns null for valid https
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.url returns error for missing protocol
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.maxLength returns null when within limit
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.maxLength returns error when over limit
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.maxLength returns null for null value
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.minLength returns null when meets minimum
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.minLength returns error when under minimum
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.minLength returns null for null value
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.numeric returns null for null
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.numeric returns null for valid number
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.numeric returns error for non-numeric
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.match returns null when values match
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: Validators.match returns error when values differ
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: FormValidation.isValid returns true when all null
+✅ /home/runner/work/educative_app/educative_app/test/services/validators_test.dart: FormValidation.isValid returns false when any has error
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatRelative returns just now for recent time
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatRelative returns minutes ago
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatRelative returns hours ago
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatRelative returns days ago
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatRelative returns weeks ago
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatRelative returns months ago
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatRelative returns years ago
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatRelative returns 59 minutes for 59 minutes ago (boundary)
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatRelative returns 1 hour for 60 minutes ago (boundary)
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatShort formats date as dd/MM/yyyy
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatShort pads single digit day and month
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatWithTime formats date with time
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatMonthYear formats month and year in French
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatDayName returns correct French day name
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatFull formats full date in French
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatDuration formats seconds
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatDuration formats minutes
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatDuration formats hours and minutes
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatDuration formats hours only
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatStudyTime formats minutes
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatStudyTime formats hours without minutes
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.formatStudyTime formats hours with minutes
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateFormats.timeAgo delegates to formatRelative
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateRangeUtils isToday returns true for today
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateRangeUtils isToday returns false for yesterday
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateRangeUtils isThisWeek returns true for today
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateRangeUtils isThisMonth returns true for today
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateRangeUtils isThisMonth returns false for different month
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateRangeUtils daysBetween calculates correctly
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateRangeUtils daysBetween is order-independent
+✅ /home/runner/work/educative_app/educative_app/test/services/date_utils_test.dart: DateRangeUtils daysBetween returns 0 for same day
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiConfig default timeout is 30 seconds
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiConfig maxRetries is 3
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiConfig default base URL is set
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiResponse isSuccess for 2xx codes
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiResponse isSuccess false for non-2xx
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiResponse isClientError for 4xx codes
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiResponse isClientError false for non-4xx
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiResponse isServerError for 5xx codes
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiResponse isServerError false for non-5xx
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiResponse fold calls onSuccess when 2xx with data
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiResponse fold calls onFailure when error
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiResponse fold calls onFailure when 2xx but no data
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: HttpMethod has all methods
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService construction constructs with defaults
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService construction constructs with custom parameters
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService construction setAuthToken stores token
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService GET returns body on 200
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService GET returns error response on 500
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService GET with fromJson parser
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: ProgressionState default state has empty sets
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: ProgressionState copyWith creates modified copy
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: ProgressionState copyWith preserves original
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: ProgressionState toJson serializes correctly
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: ProgressionState fromJson parses correctly
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: ProgressionState fromJson handles missing fields
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: ProgressionState toJson → fromJson round-trip
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService state completeSection adds to completedSections
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService state passChapterExam adds to passedChapterExams
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService state passSubjectExam adds to passedSubjectExams
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService state passSubjectExam does not affect other sets
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService progress chapterProgress returns 0.0 with no chapters (empty content)
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService progress courseProgress returns 0.0 with no chapters
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService content access getCourseData returns null for unknown course
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService content access getChapters returns empty for unknown course
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService content access getChapterData returns null for unknown
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService content access getSections returns empty for unknown
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService content access getSubjectExam returns null for unknown course
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService content access getChapterExam returns null for unknown
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService unlock logic isSectionUnlocked returns true for nonexistent content
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService unlock logic isChapterUnlocked returns true for nonexistent content
+✅ /home/runner/work/educative_app/educative_app/test/services/gamification_service_test.dart: GamificationService unlock logic isSubjectExamUnlocked returns false for nonexistent course
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Validators email returns null for valid email
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Validators password returns null for valid password
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Validators phone returns null for valid phone
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Validators required returns error for empty value
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Validators maxLength / minLength
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: DateUtils formatRelative returns today/yesterday/date
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: DateUtils timeAgo returns a string
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: DateUtils isToday / isThisWeek / isThisMonth
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: DateUtils daysBetween
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: DesignTokens grid values are defined
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: DesignTokens text sizes are defined
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: DesignTokens radius values are defined
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: DesignTokens padding values are defined
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: DesignTokens glow returns shadow list
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: OuroColors all named colors are correct
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Glass widgets GlassContainer renders child
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Glass widgets GlowContainer renders child
+::endgroup::
+::group::⏭️ Skipped tests
+⏭️ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Glass widgets FrostedSheet renders child (skipped)
+::endgroup::
+::group::✅ Passing tests
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Glass widgets GradientOverlay renders child
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Glass widgets AnimatedGradientBackground renders child
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroButton renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroButton onPressed fires
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroCard renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets StatCard renders
+::endgroup::
+::group::⏭️ Skipped tests
+⏭️ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets ProgressCard renders (skipped)
+⏭️ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets FeaturedCard renders (skipped)
+::endgroup::
+::group::✅ Passing tests
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroLinearProgress renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroCircularProgress renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroStepProgress renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroListTile renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroSettingTile renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroInfoTile renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroBadge renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroStatusDot renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroSignalBars renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroFadeIn renders child
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroScaleIn renders child
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Widgets OuroShimmerLoader renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Shared widgets AvatarWidget renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Shared widgets SectionHeader renders
+::endgroup::
+::group::⏭️ Skipped tests
+⏭️ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Shared widgets MeshConnectionCard renders (skipped)
+::endgroup::
+::group::✅ Passing tests
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Shared widgets MeshPeerTile renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Shared widgets MeshTopologyMiniMap renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Shared widgets SimpleBarChart renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Shared widgets ProgressRing renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Shared widgets StreakIndicator renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Shared widgets TimerDisplay renders
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Providers SettingsProvider returns initial state
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Providers SettingsProvider toggleNotifications
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Providers SettingsProvider all toggles
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Providers UiProvider returns initial state
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Providers UiProvider setTab
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Providers UiProvider full operations
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: Providers currentTabProvider
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: CourseModel fromJson parses correctly
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: CourseModel toJson round-trips
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: CourseModel copyWith works
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: CourseModel equality
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: GamificationService ProgressionState toJson/fromJson round-trip
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: GamificationService completeSection modifies state
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: GamificationService passSubjectExam modifies state
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: GamificationService chapterProgress returns 0 with no content
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: GamificationService courseProgress returns 0 with no content
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: StorageService getString/setString round-trip
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: StorageService getCourses returns a list
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: StorageService setOnboardingComplete marks done
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: StorageService getStreakDays returns int
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: StorageService getQuizScore returns int
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: ApiResponse isSuccess for 2xx
+✅ /home/runner/work/educative_app/educative_app/test/all_tests_test.dart: ApiResponse fold calls correct branch
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_publicites_test.dart: pas de pub pour les nouveaux élèves
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_publicites_test.dart: jamais après la première leçon du jour
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_publicites_test.dart: une leçon sur deux au plus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_publicites_test.dart: au moins 4 minutes entre deux pubs
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_publicites_test.dart: 6 par jour au maximum
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_publicites_test.dart: sans identifiants, pubs éteintes (et jamais sur ordinateur)
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: CourseModel.fromJson parses all fields correctly
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: CourseModel.fromJson handles missing optional fields with defaults
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: CourseModel.fromJson parses all availability values
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: CourseModel.toJson serializes all fields
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: CourseModel.toJson round-trip fromJson → toJson preserves data
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: CourseModel.copyWith copies with no changes
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: CourseModel.copyWith copies with specific field changes
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: CourseModel equality two models with same data have identical toJson
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: CourseModel equality two models with different data have different toJson
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: ChapterModel fromJson parses correctly
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: ChapterModel toJson round-trips correctly
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: ChapterModel copyWith works
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: NoteModel fromJson parses correctly
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: NoteModel toJson round-trips correctly
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: QuizModel fromJson parses correctly
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: QuizModel toJson round-trips correctly
+✅ /home/runner/work/educative_app/educative_app/test/models/course_model_test.dart: QuizModel copyWith works
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService retry retries on 500 up to maxRetries
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService timeout returns error response on timeout
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService post sends POST request
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService error parsing returns parsed error message from JSON body
+::endgroup::
+::group::✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService error parsing returns fallback error for 404
+[API] FormatException: Unexpected character (at character 1)
+not json
+^
+
+::endgroup::
+::group::✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService error parsing returns fallback error for 429
+[API] FormatException: Unexpected character (at character 1)
+not json
+^
+
+::endgroup::
+::group::✅ Passing tests
+✅ /home/runner/work/educative_app/educative_app/test/services/api_service_test.dart: ApiService clearCache clearCache does not throw
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_maths_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_maths_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_maths_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_maths_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_physique_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_physique_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_physique_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_physique_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_chimie_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_chimie_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_chimie_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_chimie_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_svt_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_svt_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_svt_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_svt_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_info_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_info_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_info_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_info_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_maths_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_maths_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_maths_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_maths_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_physique_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_physique_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_physique_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_physique_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_chimie_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_chimie_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_chimie_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_chimie_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_svt_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_svt_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_svt_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_svt_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_info_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_info_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_info_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_info_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_maths_2 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_maths_2 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_maths_2 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_maths_2 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_physique_2 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_physique_2 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_physique_2 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_physique_2 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_chimie_2 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_chimie_2 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_chimie_2 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_chimie_2 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_svt_2 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_svt_2 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_svt_2 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_svt_2 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_info_2 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_info_2 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_info_2 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_d_info_2 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_maths_2 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_maths_2 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_maths_2 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_maths_2 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_physique_2 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_physique_2 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_physique_2 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_physique_2 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_chimie_2 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_chimie_2 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_chimie_2 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_chimie_2 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_svt_2 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_svt_2 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_svt_2 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_svt_2 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_info_2 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_info_2 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_info_2 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_c_info_2 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_francais_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_francais_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_francais_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_francais_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_anglais_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_anglais_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_anglais_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_anglais_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_philosophie_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_philosophie_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_philosophie_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_philosophie_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_histgeo_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_histgeo_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_histgeo_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_histgeo_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_maths_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_maths_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_maths_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_a_maths_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_info_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_info_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_info_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_info_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_maths_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_maths_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_maths_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_maths_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_physique_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_physique_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_physique_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_physique_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_anglais_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_anglais_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_anglais_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_anglais_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_francais_1 noté sur 20
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_francais_1 matière et chapitres connus
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_francais_1 chaque réponse attendue est acceptée par le correcteur
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: bac_ti_francais_1 les courbes se lisent
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: illustrations des leçons : leçons connues et courbes lisibles
+✅ /home/runner/work/educative_app/educative_app/test/kunfox_epreuves_test.dart: virgule décimale et unités dans les nombres
+✅ /home/runner/work/educative_app/educative_app/test/captures_hote_test.dart: h1 entrée de l'épreuve
+✅ /home/runner/work/educative_app/educative_app/test/captures_hote_test.dart: h2 copie
+✅ /home/runner/work/educative_app/educative_app/test/captures_hote_test.dart: h3 correction
+✅ /home/runner/work/educative_app/educative_app/test/captures_hote_test.dart: h4 note
+✅ /home/runner/work/educative_app/educative_app/test/captures_hote_test.dart: h6 illustration physique_c_ch3_l1
+✅ /home/runner/work/educative_app/educative_app/test/captures_hote_test.dart: h6 illustration maths_ch8_l3
+✅ /home/runner/work/educative_app/educative_app/test/captures_hote_test.dart: h6 illustration chimie_ch1_l3
+✅ /home/runner/work/educative_app/educative_app/test/captures_hote_test.dart: h6 illustration maths_c_ch1_l2
+✅ /home/runner/work/educative_app/educative_app/test/captures_hote_test.dart: h5 cours riche
+::endgroup::
+
+🎉 381 tests passed, 4 skipped.

@@ -1,0 +1,97 @@
+Analyzing lib...                                                
+
+warning • The stack trace variable '_' isn't used and can be removed. Try removing the stack trace variable, or using it • lib/core/database/app_database.dart:331:17 • unused_catch_stack
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion. Try replacing the use of the deprecated member with the replacement • lib/core/models/mind_map.dart:29:20 • deprecated_member_use
+warning • The value of the field '_rand' isn't used. Try removing the field, or using it • lib/core/providers/curriculum_provider.dart:45:9 • unused_field
+   info • The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/foundation.dart'. Try removing the import directive • lib/core/providers/mesh_provider.dart:5:8 • unnecessary_import
+   info • Use a function declaration rather than a variable assignment to bind a function to a name. Try rewriting the closure assignment as a function declaration • lib/core/providers/mesh_provider.dart:30:9 • prefer_function_declarations_over_variables
+   info • Use 'isNotEmpty' instead of 'length' to test whether the collection is empty. Try rewriting the expression to use 'isNotEmpty' • lib/core/providers/mesh_provider.dart:64:17 • prefer_is_empty
+   info • The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/foundation.dart'. Try removing the import directive • lib/core/repositories/mesh_repository.dart:3:8 • unnecessary_import
+warning • The stack trace variable '_' isn't used and can be removed. Try removing the stack trace variable, or using it • lib/core/services/analytics_service.dart:142:17 • unused_catch_stack
+   info • The null check operator shouldn't be used on a variable whose type is a potentially nullable type parameter. Try explicitly testing for 'null' • lib/core/services/api_service.dart:33:57 • null_check_on_nullable_type_parameter
+warning • Returning a 'Future' without 'await' inside a try block. Try adding an 'await' • lib/core/services/api_service.dart:128:11 • unawaited_return_in_try_block
+warning • Returning a 'Future' without 'await' inside a try block. Try adding an 'await' • lib/core/services/api_service.dart:150:9 • unawaited_return_in_try_block
+warning • Returning a 'Future' without 'await' inside a try block. Try adding an 'await' • lib/core/services/auth_service.dart:115:7 • unawaited_return_in_try_block
+warning • Returning a 'Future' without 'await' inside a try block. Try adding an 'await' • lib/core/services/auth_service.dart:153:7 • unawaited_return_in_try_block
+   info • The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/foundation.dart'. Try removing the import directive • lib/core/services/ble_mesh_transport.dart:4:8 • unnecessary_import
+   info • The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/foundation.dart'. Try removing the import directive • lib/core/services/call_signaling_service.dart:3:8 • unnecessary_import
+   info • The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/foundation.dart'. Try removing the import directive • lib/core/services/content_propagation_service.dart:3:8 • unnecessary_import
+   info • The private field _events could be 'final'. Try making the field 'final' • lib/core/services/content_propagation_service.dart:52:45 • prefer_final_fields
+warning • The value of the field '_kXpLogKey' isn't used. Try removing the field, or using it • lib/core/services/gamification_engine.dart:10:16 • unused_field
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/core/services/llm/device_capability_service.dart:70:24 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/core/services/llm/device_capability_service.dart:71:29 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/core/services/llm/device_capability_service.dart:75:25 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/core/services/llm/device_capability_service.dart:76:30 • curly_braces_in_flow_control_structures
+   info • Unnecessary braces in a string interpolation. Try removing the braces • lib/core/services/mobile_money_api.dart:175:35 • unnecessary_brace_in_string_interps
+   info • The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/foundation.dart'. Try removing the import directive • lib/core/services/native_p2p_transport.dart:4:8 • unnecessary_import
+warning • The value of the field '_myPseudo' isn't used. Try removing the field, or using it • lib/core/services/native_p2p_transport.dart:36:11 • unused_field
+warning • The value of the field '_pendingPhone' isn't used. Try removing the field, or using it • lib/core/services/payment_service.dart:25:11 • unused_field
+warning • The stack trace variable '_' isn't used and can be removed. Try removing the stack trace variable, or using it • lib/core/services/push_service.dart:115:17 • unused_catch_stack
+warning • The stack trace variable '_' isn't used and can be removed. Try removing the stack trace variable, or using it • lib/core/services/push_service.dart:127:17 • unused_catch_stack
+   info • The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:drift/drift.dart'. Try removing the import directive • lib/core/services/storage_service.dart:3:8 • unnecessary_import
+   info • 'anonKey' is deprecated and shouldn't be used. Use publishableKey instead. anonKey will be removed in a future major version. Try replacing the use of the deprecated member with the replacement • lib/core/services/supabase_service.dart:64:9 • deprecated_member_use
+   info • The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/foundation.dart'. Try removing the import directive • lib/core/services/swarm_download_manager.dart:3:8 • unnecessary_import
+   info • The private field _localRenderer could be 'final'. Try making the field 'final' • lib/core/services/webrtc_call_service.dart:66:20 • prefer_final_fields
+   info • The private field _remoteRenderer could be 'final'. Try making the field 'final' • lib/core/services/webrtc_call_service.dart:67:20 • prefer_final_fields
+   info • The constant name 'call_incoming' isn't a lowerCamelCase identifier. Try changing the name to follow the lowerCamelCase style • lib/core/services/websocket_service.dart:9:22 • constant_identifier_names
+   info • The constant name 'sync_request' isn't a lowerCamelCase identifier. Try changing the name to follow the lowerCamelCase style • lib/core/services/websocket_service.dart:9:37 • constant_identifier_names
+   info • The constant name 'sync_response' isn't a lowerCamelCase identifier. Try changing the name to follow the lowerCamelCase style • lib/core/services/websocket_service.dart:10:3 • constant_identifier_names
+   info • The constant name 'file_transfer' isn't a lowerCamelCase identifier. Try changing the name to follow the lowerCamelCase style • lib/core/services/websocket_service.dart:10:18 • constant_identifier_names
+   info • Library names are not necessary. Remove the library name • lib/design_system/ouro_design_system.dart:3:9 • unnecessary_library_name
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/design_system/widgets/ouro_avatar.dart:79:41 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/design_system/widgets/ouro_avatar.dart:79:45 • unnecessary_underscores
+   info • The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart'. Try removing the import directive • lib/design_system/widgets/ouro_cards.dart:1:8 • unnecessary_import
+   info • 'scale' is deprecated and shouldn't be used. Use scaleByVector3, scaleByVector4, or scaleByDouble instead. Try replacing the use of the deprecated member with the replacement • lib/design_system/widgets/ouro_cards.dart:96:15 • deprecated_member_use
+   info • Use the null-aware marker '?' rather than a null check via an 'if'. Try using '?' • lib/design_system/widgets/ouro_cards.dart:401:19 • use_null_aware_elements
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/design_system/widgets/ouro_carousel.dart:166:31 • unnecessary_underscores
+   info • The import of 'package:flutter/services.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart'. Try removing the import directive • lib/design_system/widgets/ouro_inputs.dart:2:8 • unnecessary_import
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/design_system/widgets/ouro_inputs.dart:62:32 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/design_system/widgets/ouro_inputs.dart:63:12 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/design_system/widgets/ouro_inputs.dart:219:28 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/design_system/widgets/ouro_inputs.dart:220:12 • curly_braces_in_flow_control_structures
+   info • Use the null-aware marker '?' rather than a null check via an 'if'. Try using '?' • lib/design_system/widgets/ouro_lists.dart:59:15 • use_null_aware_elements
+   info • Use the null-aware marker '?' rather than a null check via an 'if'. Try using '?' • lib/design_system/widgets/ouro_lists.dart:118:15 • use_null_aware_elements
+   info • The import of 'package:flutter/foundation.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart'. Try removing the import directive • lib/design_system/widgets/ouro_transitions.dart:2:8 • unnecessary_import
+   info • 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre. Try replacing the use of the deprecated member with the replacement • lib/features/auth/auth_screen.dart:214:15 • deprecated_member_use
+   info • The private field _recentLatencies could be 'final'. Try making the field 'final' • lib/features/calls/voice_call_screen.dart:33:16 • prefer_final_fields
+   info • The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/services.dart'. Try removing the import directive • lib/features/forum/forum_screen.dart:4:8 • unnecessary_import
+   info • Statements in a for should be enclosed in a block. Try wrapping the statement in a block • lib/features/forum/forum_screen.dart:93:43 • curly_braces_in_flow_control_structures
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/features/forum/forum_screen.dart:802:29 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/features/forum/forum_screen.dart:802:33 • unnecessary_underscores
+   info • Unnecessary braces in a string interpolation. Try removing the braces • lib/features/mindmap/mind_map_screen.dart:112:57 • unnecessary_brace_in_string_interps
+warning • Unused import: '../../design_system/design_tokens.dart'. Try removing the import directive • lib/features/voice_coach/live_voice_coach_screen.dart:7:8 • unused_import
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/features/voice_coach/live_voice_coach_screen.dart:106:20 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/features/voice_coach/live_voice_coach_screen.dart:164:32 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/features/voice_coach/live_voice_coach_screen.dart:313:20 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/features/voice_coach/live_voice_coach_screen.dart:345:20 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/features/voice_coach/live_voice_coach_screen.dart:368:20 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/features/voice_coach/live_voice_coach_screen.dart:402:20 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/features/voice_coach/live_voice_coach_screen.dart:417:20 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/features/voice_coach/live_voice_coach_screen.dart:443:20 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/features/voice_coach/live_voice_coach_screen.dart:532:20 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/features/voice_coach/live_voice_coach_screen.dart:560:22 • unnecessary_underscores
+   info • The import of 'package:flutter/material.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/cupertino.dart'. Try removing the import directive • lib/kunfox/composants/page_ios.dart:6:8 • unnecessary_import
+   info • The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/foundation.dart'. Try removing the import directive • lib/kunfox/donnees/compte_droplet.dart:20:8 • unnecessary_import
+   info • Use the null-aware marker '?' rather than a null check via an 'if'. Try using '?' • lib/kunfox/donnees/duels.dart:191:7 • use_null_aware_elements
+   info • Use the null-aware marker '?' rather than a null check via an 'if'. Try using '?' • lib/kunfox/ecrans/bienvenue.dart:164:98 • use_null_aware_elements
+   info • Don't use 'BuildContext's across async gaps. Try rewriting the code to not use the 'BuildContext', or guard the use with a 'mounted' check • lib/kunfox/ecrans/duel.dart:727:64 • use_build_context_synchronously
+   info • The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/cupertino.dart'. Try removing the import directive • lib/kunfox/ecrans/examen.dart:17:8 • unnecessary_import
+warning • The value of the local variable 'fini' isn't used. Try removing the variable or using it • lib/kunfox/ecrans/parcours.dart:289:11 • unused_local_variable
+   info • Use the null-aware marker '?' rather than a null check via an 'if'. Try using '?' • lib/kunfox/ecrans/seance.dart:476:100 • use_null_aware_elements
+   info • Invalid use of a private type in a public API. Try making the private type public, or making the API that uses the private type also be private • lib/kunfox/riche/graphe.dart:43:14 • library_private_types_in_public_api
+   info • Use the null-aware marker '?' rather than a null check via an 'if'. Try using '?' • lib/main.dart:217:17 • use_null_aware_elements
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/shared/widgets/gamification/celebration_overlay.dart:84:28 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/shared/widgets/gamification/daily_challenge_card.dart:71:32 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/shared/widgets/gamification/daily_challenge_card.dart:120:34 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/shared/widgets/gamification/daily_challenge_card.dart:138:28 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/shared/widgets/gamification/level_badge.dart:76:32 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/shared/widgets/gamification/level_badge.dart:96:32 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/shared/widgets/gamification/level_badge.dart:111:32 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/shared/widgets/gamification/level_badge.dart:174:32 • unnecessary_underscores
+   info • Unnecessary use of string interpolation. Try replacing the string literal with the variable name • lib/shared/widgets/mesh_status.dart:176:52 • unnecessary_string_interpolations
+   info • Statements in a for should be enclosed in a block. Try wrapping the statement in a block • lib/shared/widgets/ouro_bottom_nav.dart:53:32 • curly_braces_in_flow_control_structures
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/shared/widgets/ouro_expert_bubble.dart:344:31 • unnecessary_underscores
+   info • Unnecessary use of multiple underscores. Try using '_' • lib/shared/widgets/search_widgets.dart:207:29 • unnecessary_underscores
+   info • Library names are not necessary. Remove the library name • lib/shared/widgets/shared_widgets.dart:2:9 • unnecessary_library_name
+
+93 issues found. (ran in 19.9s)
