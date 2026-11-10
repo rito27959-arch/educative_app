@@ -7,12 +7,24 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ouro_prep/shared/widgets/kunfox/kunfox_rive.dart';
+import 'package:rive/rive.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   final dossier = Directory('build/captures_hote')..createSync(recursive: true);
   final cle = GlobalKey();
+
+  setUpAll(() async {
+    // kabi.riv lu par le moteur Rive de l'app (RiveFile.import : sans la
+    // bibliothèque native des textes, absente du lanceur de tests).
+    final f = RiveFile.import(await rootBundle.load('assets/rive/kabi.riv'));
+    expect(f.mainArtboard.name, 'Kabi');
+    expect(f.mainArtboard.stateMachines.map((m) => m.name), contains('Kabi'));
+    KunfoxMascotte.fichierPourTests(f);
+  });
 
   Future<void> photo(WidgetTester tester, String nom) async {
     await tester.pump();
