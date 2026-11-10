@@ -1,10 +1,9 @@
 // ============================================================================
 // L'ÉCRAN D'OUVERTURE DE KUNFOX.
 // ----------------------------------------------------------------------------
-// Le renard est une animation Rive (`assets/rive/kunfox_splash.riv`, construite
-// avec la Rive CLI depuis `rive/kunfox_splash/scene.rml`) : il surgit avec un
-// rebond, sa toque tombe sur son oreille, il cligne des yeux, des étincelles
-// s'allument, puis il respire doucement tant que l'app se prépare.
+// KABI, la mascotte (assets/rive/kabi.riv), de la couleur choisie par
+// l'élève : il surgit d'en bas avec un rebond en sautant de joie, puis fait
+// coucou tant que l'app se prépare. Un halo doux l'éclaire sur le bleu nuit.
 //
 // Sous lui, le nom « Kunfox » arrive lettre par lettre, puis la devise.
 // L'écran part au bout de 2,6 s (ou dès qu'on le touche, une fois
@@ -17,9 +16,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rive/rive.dart';
 
 import '../../core/services/storage_service.dart';
+import '../../shared/widgets/kunfox/kunfox_rive.dart';
 
 /// Le bleu nuit de Kunfox, le même que le fond de l'animation Rive.
 const Color kNuitKunfox = Color(0xFF0E1730);
@@ -35,6 +34,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   late final AnimationController _texte = AnimationController(vsync: this, duration: const Duration(milliseconds: 1400));
+  HumeurKunfox _humeur = HumeurKunfox.joie;
   Timer? _depart;
   bool _parti = false;
 
@@ -54,6 +54,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       } else {
         Future.delayed(const Duration(milliseconds: 1050), () {
           if (mounted) _texte.forward();
+        });
+        // Après le saut de joie, Kabi fait coucou.
+        Future.delayed(const Duration(milliseconds: 1300), () {
+          if (mounted) setState(() => _humeur = HumeurKunfox.salut);
         });
         _depart = Timer(const Duration(milliseconds: 2600), _partir);
       }
@@ -80,18 +84,35 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          // Un toucher écourte l'attente, mais jamais l'entrée du renard.
+          // Un toucher écourte l'attente, mais jamais l'entrée de Kabi.
           if (_texte.value > 0.5) _partir();
         },
         child: Stack(
           children: [
-            // L'animation occupe l'écran ; son artboard (400 × 800) est
-            // centré et garde ses proportions.
-            const Positioned.fill(
-              child: RiveAnimation.asset(
-                'assets/rive/kunfox_splash.riv',
-                fit: BoxFit.cover,
-                stateMachines: ['Ouverture'],
+            // Le halo derrière Kabi.
+            Align(
+              alignment: const Alignment(0, -0.3),
+              child: Container(
+                width: 340,
+                height: 340,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(colors: [_orange.withValues(alpha: 0.28), _orange.withValues(alpha: 0)]),
+                ),
+              ),
+            ),
+            // Kabi surgit d'en bas avec un rebond.
+            Align(
+              alignment: const Alignment(0, -0.3),
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: MediaQuery.of(context).disableAnimations ? 1 : 0, end: 1),
+                duration: const Duration(milliseconds: 900),
+                curve: Curves.elasticOut,
+                builder: (context, t, enfant) => Opacity(
+                  opacity: t.clamp(0.0, 1.0),
+                  child: Transform.translate(offset: Offset(0, 140 * (1 - t)), child: enfant),
+                ),
+                child: KunfoxMascotte(humeur: _humeur, taille: 210),
               ),
             ),
             Align(
