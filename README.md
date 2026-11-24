@@ -1,63 +1,114 @@
-Voici la version mise à jour du README.md d'Ouro Prep intégrant ton nom officiel dans la section auteur.
-Tu n'as plus qu'à remplacer le fichier sur ton dépôt GitHub !
-🐍 Ouro Prep
-> Plateforme Éducative Hors-Ligne & Décentralisée (Cameroun - Baccalauréat)
-> Réseau Mesh Peer-to-Peer & Intelligence Artificielle Embarquée (Edge AI)
-> 
-License: MIT
+<div align="center">
 
-📌 Présentation du Projet
-Ouro Prep est une application mobile éducative conçue pour permettre aux étudiants camerounais de réviser les épreuves du Baccalauréat sans aucune connexion Internet ni couverture réseau mobile.
-L'application résout la problématique de la fracture numérique grâce à deux briques technologiques majeures :
- * Un Réseau Mesh Décentralisé (P2P) : Permet la distribution et le partage des ressources éducatives, quiz et corrections directement de téléphone à téléphone.
- * Une IA Embarquée (Edge AI) : Un moteur d'inférence local qui exécute un modèle de langage quantifié directement sur le processeur de l'appareil (ARM64) pour faire office de tuteur pédagogique hors-ligne.
-🏗️ Architecture Technique
-┌─────────────────────────────────────────────────────────────────┐
-│                      Ouro Prep Application                      │
-├────────────────────────────────┬────────────────────────────────┤
-│          UI / Frontend         │         Business Logic         │
-│     (Android / Mobile Interface)│   (Quiz Engine & Progress Track) │
-├────────────────────────────────┴────────────────────────────────┤
-│                        Core Engine Layer                        │
-├────────────────────────────────┬────────────────────────────────┤
-│       Mesh Network Module      │          Edge AI Engine        │
-│   • Wi-Fi Direct / Bluetooth LE│   • Quantized LLM (INT4/INT8)  │
-│   • P2P Packet Routing Protocol│   • ARM64 Local Inference      │
-│   • Local Content Sync         │   • Zero Cloud Dependency      │
-└────────────────────────────────┴────────────────────────────────┘
+<img src="site/public/icone.png" width="104" height="104" alt="Kunfox">
 
-🚀 Fonctionnalités Clés
- * Sync P2P (Réseau Mesh) : Échange automatique de contenus et de résultats de révision entre téléphones à proximité via Wi-Fi Direct / Bluetooth LE.
- * Tuteur IA Local : Explication des concepts complexes du Baccalauréat sans appel API ni connexion serveur.
- * Annales & Exercices du Bac : Banque de sujets corrigés structurée pour le programme officiel camerounais.
- * Consommation Optimisée : Gestion stricte de la mémoire RAM (< 2 GB) et de la batterie pour les appareils à ressources limitées.
-🛠️ Stack Technique
- * Langages : C++ (Cœur réseau & inférence bas-niveau), Python (Prototypes & traitement de données), Kotlin/Java (Mobile).
- * Intelligence Artificielle : Quantification de modèles LLM (GGUF / INT4), Inférence locale sur CPU ARM64.
- * Réseaux & Protocoles : Sockets C++, P2P Routing, Wi-Fi Direct, BLE.
- * Build System & Outils : CMake, Git, Android NDK.
-⚡ Prise en main & Installation (Local Setup)
-Prérequis
- * Android SDK & NDK (pour la compilation du cœur C++)
- * CMake \ge 3.18
- * Compilateur C++17
-Clonage & Compilation
+# Kunfox
 
+**A few minutes a day to pass your Baccalauréat — even without a connection.**
 
-# 2. Recompiler le moteur C++ embarqué
-mkdir build && cd build
-cmake ..
-make -j4
+Offline-first revision for students in Cameroon: short lessons, quizzes that explain every mistake, and a daily streak.
 
-🗺️ Feuille de Route (Roadmap)
- * [x] Spécification de l'architecture P2P & Moteur d'évaluation
- * [x] Intégration du modèle IA quantifié sur processeur ARM64
- * [ ] Optimisation des temps de routage des paquets Mesh (< 2\text{s})
- * [ ] Phase Pilote : Déploiement test sur une flotte de 10 appareils
- * [ ] Intégration des mises à jour distantes sécurisées (OTA)
-👤 Auteur
-Effi Djimeli Miguel Batime
-Fondateur & Architecte Logiciel / Systèmes Embarqués & IA
- * LinkedIn : https://www.linkedin.com/in/miguel-effi-752011424?utm_source=share_via&utm_content=profile&utm_medium=member_android
-📄 Licence
-Ce projet est sous licence MIT - voir le fichier LICENSE pour plus de détails.
+[![CI](https://github.com/rito27959-arch/educative_app/actions/workflows/ci.yml/badge.svg)](https://github.com/rito27959-arch/educative_app/actions/workflows/ci.yml)
+![Flutter](https://img.shields.io/badge/Flutter-Riverpod%20%C2%B7%20GoRouter-14213D?style=flat-square&logo=flutter&logoColor=white)
+![Offline first](https://img.shields.io/badge/offline-first-FF6B2B?style=flat-square)
+![Curriculum](https://img.shields.io/badge/curriculum-Cameroon%20Bac-14213D?style=flat-square)
+![Status](https://img.shields.io/badge/status-in%20development-8E8E93?style=flat-square)
+
+[**Website**](site) &nbsp;·&nbsp; [**Architecture**](#architecture) &nbsp;·&nbsp; [**Build**](#build)
+
+</div>
+
+<br>
+
+## Why Kunfox
+
+Many students revise on an entry-level phone, with a limited data plan and a network that drops. The best-known learning apps assume the opposite: a permanent connection and a recent phone. **Kunfox starts from the reality of its users.**
+
+<table>
+<tr>
+<td width="25%" valign="top"><strong>Offline first</strong><br><sub>Lessons and quizzes live inside the app. The internet is only for syncing — never for learning.</sub></td>
+<td width="25%" valign="top"><strong>Little, but daily</strong><br><sub>Lessons of a few minutes and a daily streak, rather than long sessions you abandon.</sub></td>
+<td width="25%" valign="top"><strong>Mistakes explain</strong><br><sub>Every wrong answer is followed by an explanation, not a penalty.</sub></td>
+<td width="25%" valign="top"><strong>Respect for students</strong><br><sub>No targeted advertising, no resale of data.</sub></td>
+</tr>
+</table>
+
+## What's inside
+
+| Area | Feature folders |
+|:--|:--|
+| **Learn** | `curriculum` (chapters, lessons, chapter and Bac exams), `courses`, `reader`, `mindmap` |
+| **Practise** | `quiz`, `series`, `voice_coach` |
+| **Stay motivated** | `gamification`, `dashboard`, `profile` |
+| **Together** | `forum`, `calls` — revising in groups leans on [Droplet](https://dropletmesh.app), the messenger that works without internet |
+| **Start** | `splash`, `onboarding`, `auth`, `settings` |
+
+Current content covers the Cameroonian Baccalauréat — science, literary and technical streams. Other levels and countries will follow.
+
+## Architecture
+
+Clean Architecture, feature-first.
+
+```mermaid
+flowchart TB
+    UI["Features<br/><sub>lib/features/*</sub>"] --> DS["Design system<br/><sub>lib/design_system</sub>"]
+    UI --> ST["State · Riverpod<br/>Routing · GoRouter"]
+    ST --> CORE["Core services<br/><sub>lib/core/services</sub>"]
+    CORE --> SYNC["Offline-first sync"]
+    CORE --> P2P["Mesh P2P<br/><sub>BLE → native P2P → local Wi-Fi</sub>"]
+    CORE --> RTC["WebRTC voice<br/><sub>over local Wi-Fi</sub>"]
+    CORE --> API["REST + WebSocket"]
+    classDef k fill:#14213D,stroke:#FF6B2B,color:#fff
+    class UI,DS,ST,CORE,SYNC,P2P,RTC,API k
+```
+
+| Service | Purpose |
+|:--|:--|
+| `ApiService` | REST client with retry, cache and interceptors |
+| `AuthService` | JWT authentication with refresh |
+| `SyncService` | Offline-first sync engine |
+| `WebSocketService` | Real-time communication |
+| `WebRtcCallService` | Peer-to-peer voice calls |
+| `AnalyticsService` | First-party event tracking — no third-party SDK |
+
+## Build
+
+```bash
+./scripts/build.sh analyze              # static analysis (0 errors required)
+./scripts/build.sh debug                # fast debug APK
+./scripts/build.sh release_obfuscated   # obfuscated + shrunk release APK
+```
+
+Or directly:
+
+```bash
+flutter analyze lib/
+flutter test
+flutter build apk --release --target-platform android-arm64 --obfuscate --split-debug-info=build/debug-info
+```
+
+## Website
+
+[`site/`](site) is the Kunfox website, built with Astro and destined for `kunfox.dropletmesh.app`: a light *Dawn* and dark *Fox Night* theme, an opening animation where the fox's cap drops onto its ear, and a phone whose screen follows the story as you scroll.
+
+```sh
+cd site && npm install && npm run dev
+```
+
+## Status
+
+Kunfox is **in development** and not yet published on app stores. The Android package is still named `ouro_prep`, the project's earlier name.
+
+## Author
+
+Effi Djimeli Miguel Batime — founder · [LinkedIn](https://www.linkedin.com/in/miguel-effi-752011424)
+
+<br>
+
+<div align="center">
+<sub>
+Part of the <a href="https://dropletmesh.app">Droplet</a> family.
+<br><br>
+Designed and built in Yaoundé, Cameroon.
+</sub>
+</div>
